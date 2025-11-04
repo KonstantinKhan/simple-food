@@ -1,0 +1,140 @@
+openapi: 3.0.3
+info:
+  title: Simple Food API - Products
+  version: 0.1.0-draft
+  description: Product entities specification
+servers: []
+paths:
+  /products:
+    get:
+      summary: List products
+      tags: [Products]
+      responses:
+        '200':
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+    post:
+      summary: Create product
+      tags: [Products]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+  /products/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: './spec-simple-food-api.yaml#/components/schemas/Id'
+    get:
+      summary: Get product by id
+      tags: [Products]
+      responses:
+        '200':
+          description: Product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Not found
+  /products/search:
+    post:
+      summary: Search products
+      tags: [Products]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Search criteria
+              properties:
+                query:
+                  type: string
+                  description: Free-text query over title and groups
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+    put:
+      summary: Replace product
+      tags: [Products]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Not found
+    delete:
+      summary: Delete product
+      tags: [Products]
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Not found
+components:
+  schemas:
+    Product:
+      type: object
+      description: Product nutritional unit
+      properties:
+        id:
+          $ref: './spec-simple-food-api.yaml#/components/schemas/Id'
+        title:
+          type: string
+        calories:
+          type: number
+          format: float
+        proteins:
+          type: number
+          format: float
+        fats:
+          type: number
+          format: float
+        carbohydrates:
+          type: number
+          format: float
+        weight:
+          $ref: './spec-simple-food-api.yaml#/components/schemas/Weight'
+        author:
+          $ref: './spec-simple-food-api.yaml#/components/schemas/Author'
+        type:
+          type: string
+        groups:
+          type: array
+          items:
+            type: string
+      required: [id, title, calories, proteins, fats, carbohydrates, weight]
+
+

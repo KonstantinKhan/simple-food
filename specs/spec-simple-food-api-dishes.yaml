@@ -1,0 +1,160 @@
+openapi: 3.0.3
+info:
+  title: Simple Food API - Dishes
+  version: 0.1.0-draft
+  description: Dish entities specification
+servers: []
+paths:
+  /dishes:
+    get:
+      summary: List dishes
+      tags: [Dishes]
+      responses:
+        '200':
+          description: List of dishes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dish'
+    post:
+      summary: Create dish
+      tags: [Dishes]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dish'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dish'
+  /dishes/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: './spec-simple-food-api.yaml#/components/schemas/Id'
+    get:
+      summary: Get dish by id
+      tags: [Dishes]
+      responses:
+        '200':
+          description: Dish
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dish'
+        '404':
+          description: Not found
+  /dishes/search:
+    post:
+      summary: Search dishes
+      tags: [Dishes]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Search criteria
+              properties:
+                query:
+                  type: string
+                  description: Free-text query over title, groups and recipes
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dish'
+    put:
+      summary: Replace dish
+      tags: [Dishes]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dish'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dish'
+        '404':
+          description: Not found
+    delete:
+      summary: Delete dish
+      tags: [Dishes]
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Not found
+components:
+  schemas:
+    Dish:
+      type: object
+      description: Dish composed of products and recipes
+      properties:
+        id:
+          $ref: './spec-simple-food-api.yaml#/components/schemas/Id'
+        title:
+          type: string
+        calories:
+          type: number
+          format: float
+        proteins:
+          type: number
+          format: float
+        fats:
+          type: number
+          format: float
+        carbohydrates:
+          type: number
+          format: float
+        weight:
+          $ref: './spec-simple-food-api.yaml#/components/schemas/Weight'
+        author:
+          $ref: './spec-simple-food-api.yaml#/components/schemas/Author'
+        type:
+          type: string
+        groups:
+          type: array
+          items:
+            type: string
+        recipes:
+          type: array
+          description: Preparation steps
+          items:
+            type: string
+        products:
+          type: array
+          description: Products used in the dish with portions
+          items:
+            $ref: '#/components/schemas/ProductPortion'
+      required: [id, title, calories, proteins, fats, carbohydrates, weight, measure]
+
+    ProductPortion:
+      type: object
+      description: Reference to a product with portion information
+      properties:
+        productId:
+          $ref: './spec-simple-food-api.yaml#/components/schemas/Id'
+        weight:
+          $ref: './spec-simple-food-api.yaml#/components/schemas/Weight'
+      required: [productId, weight]
+
+

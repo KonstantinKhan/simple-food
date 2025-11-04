@@ -1,0 +1,102 @@
+# Build outputs
+/build/
+/**/build/
+/out/
+/bin/
+/target/
+
+# Gradle
+.gradle/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+.gradle/6.*/
+.gradle/7.*/
+.gradle/8.*/
+
+# IntelliJ IDEA / Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+/.project
+/.classpath
+/.settings/
+.cxx/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Kotlin/Java
+*.class
+hs_err_pid*
+
+# Local env/config
+*.local.*
+*.env
+.env.*
+
+# Generated
+app/build/
+
+# Gradle Wrapper archives
+gradle/wrapper/dists/
+
+# Cache
+.cache/
+
+# Temporary
+*.tmp
+*.swp
+*.swo
+
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Kotlin/Gradle common
+*.log
+.DS_Store
+local.properties
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+# Editor configs
+.editorconfig
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/

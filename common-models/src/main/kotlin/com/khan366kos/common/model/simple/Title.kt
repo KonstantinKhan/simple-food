@@ -1,4 +1,4 @@
-package com.khan366kos.common.model.simple
+package com.khan366kos.common.model
 
 @JvmInline
 value class Title(val value: String) {

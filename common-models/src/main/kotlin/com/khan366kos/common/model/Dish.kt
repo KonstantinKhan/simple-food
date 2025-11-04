@@ -1,7 +1,5 @@
 package com.khan366kos.common.model
 
-import com.khan366kos.common.model.simple.*
-
 data class Dish(
     val id: Id,
     val title: Title,

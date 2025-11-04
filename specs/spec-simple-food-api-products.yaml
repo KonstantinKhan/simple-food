@@ -67,7 +67,7 @@ paths:
               properties:
                 query:
                   type: string
-                  description: Free-text query over title and groups
+                  description: Free-text query over title and categories
       responses:
         '200':
           description: Search results
@@ -131,7 +131,7 @@ components:
           $ref: './spec-simple-food-api.yaml#/components/schemas/Author'
         type:
           type: string
-        groups:
+        categories:
           type: array
           items:
             type: string

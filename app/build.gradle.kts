@@ -12,6 +12,7 @@ application {
 }
 
 dependencies {
+    implementation(project(":common-models"))
     implementation(project(":transport-models"))
 
     implementation(libs.ktor.server.core)

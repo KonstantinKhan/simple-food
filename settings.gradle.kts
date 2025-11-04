@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 
 include(":app")
 include(":transport-models")
+include(":common-models")

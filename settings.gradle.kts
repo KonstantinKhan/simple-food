@@ -7,5 +7,4 @@ dependencyResolutionManagement {
 }
 
 include(":app")
-include(":feature-cities")
-include(":feature-users")
+include(":transport-models")

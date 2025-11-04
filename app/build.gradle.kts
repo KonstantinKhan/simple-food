@@ -12,8 +12,7 @@ application {
 }
 
 dependencies {
-    implementation(project(":feature-cities"))
-    implementation(project(":feature-users"))
+    implementation(project(":transport-models"))
 
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.serialization.kotlinx.json)

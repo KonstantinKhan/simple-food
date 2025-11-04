@@ -20,7 +20,7 @@ val openApiOutputDir = layout.buildDirectory.dir("generated/openapi")
 
 openApiGenerate {
     generatorName.set("kotlin")
-    inputSpec.set("${rootDir}/specs/openapi.yaml")
+    inputSpec.set("${rootDir}/specs/spec-simple-food-api.yaml")
     outputDir.set(openApiOutputDir.get().asFile.absolutePath)
     packageName.set("com.khan366kos.transport")
     apiPackage.set("com.khan366kos.transport.api")

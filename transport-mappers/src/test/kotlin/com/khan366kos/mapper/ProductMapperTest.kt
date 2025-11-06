@@ -20,7 +20,6 @@ class ProductMapperTest : FunSpec({
         carbohydrates = 0f,
         weight = TransportWeight(`value` = 100f, measure = TransportMeasure.g),
         author = TransportAuthor(id = UUID.randomUUID(), name = "John", email = "john@example.com"),
-        type = "meat",
         categories = listOf("protein", "diet")
     )
 
@@ -35,9 +34,8 @@ class ProductMapperTest : FunSpec({
         c.fats.value shouldBe t.fats.toDouble()
         c.carbohydrates.value shouldBe t.carbohydrates.toDouble()
         c.weight.value shouldBe t.weight.`value`.toDouble()
-        c.weight.measure.value shouldBe c.weight.measure.value
-        c.author.id.value shouldBe t.author.id.toString()
-        c.type.value shouldBe t.type
+        c.weight.measure.name shouldBe c.weight.measure.name
+        c.author.id.value shouldBe t.author?.id.toString()
         c.categories.map { it.value } shouldBe t.categories
     }
 
@@ -54,8 +52,7 @@ class ProductMapperTest : FunSpec({
         back.carbohydrates shouldBe t.carbohydrates
         back.weight.`value` shouldBe t.weight.`value`
         back.weight.measure shouldBe t.weight.measure
-        back.author.id shouldBe t.author.id
-        back.type shouldBe t.type
+        back.author?.id shouldBe t.author?.id
         back.categories shouldBe t.categories
     }
 })

@@ -21,7 +21,6 @@ class DishMapperTest : FunSpec({
         carbohydrates = 6f,
         weight = TransportWeight(`value` = 250f, measure = TransportMeasure.g),
         author = TransportAuthor(id = UUID.randomUUID(), name = "John", email = "john@example.com"),
-        type = "salad",
         categories = listOf("healthy", "lunch"),
         recipes = listOf("Cut", "Mix", "Serve"),
         products = listOf(
@@ -47,12 +46,11 @@ class DishMapperTest : FunSpec({
         c.fats.value shouldBe t.fats.toDouble()
         c.carbohydrates.value shouldBe t.carbohydrates.toDouble()
         c.weight.value shouldBe t.weight.`value`.toDouble()
-        c.author.id.value shouldBe t.author.id.toString()
-        c.type.value shouldBe t.type
+        c.author.id.value shouldBe t.author?.id.toString()
         c.categories.map { it.value } shouldBe t.categories
         c.recipes.map { it.value } shouldBe t.recipes
-        c.products.size shouldBe t.products.size
-        c.products.map { it.productId.value } shouldBe t.products.map { it.productId.toString() }
+        c.products?.size shouldBe t.products?.size
+        c.products?.map { it.productId.value } shouldBe t.products?.map { it.productId.toString() }
     }
 
     test("Common -> Transport roundtrip preserves semantic values") {
@@ -68,12 +66,11 @@ class DishMapperTest : FunSpec({
         back.carbohydrates shouldBe t.carbohydrates
         back.weight.`value` shouldBe t.weight.`value`
         back.weight.measure shouldBe t.weight.measure
-        back.author.id shouldBe t.author.id
-        back.type shouldBe t.type
+        back.author?.id shouldBe t.author?.id
         back.categories shouldBe t.categories
         back.recipes shouldBe t.recipes
-        back.products.map { it.productId } shouldBe t.products.map { it.productId }
-        back.products.map { it.weight.`value` } shouldBe t.products.map { it.weight.`value` }
+        back.products?.map { it.productId } shouldBe t.products?.map { it.productId }
+        back.products?.map { it.weight.`value` } shouldBe t.products?.map { it.weight.`value` }
     }
 })
 

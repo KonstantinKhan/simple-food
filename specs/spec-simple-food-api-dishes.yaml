@@ -129,8 +129,6 @@ components:
           $ref: './spec-simple-food-api.yaml#/components/schemas/Weight'
         author:
           $ref: './spec-simple-food-api.yaml#/components/schemas/Author'
-        type:
-          type: string
         categories:
           type: array
           items:

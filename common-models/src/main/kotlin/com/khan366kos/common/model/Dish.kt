@@ -9,7 +9,6 @@ data class Dish(
     val carbohydrates: Carbohydrates,
     val weight: Weight,
     val author: Author,
-    val type: DishType,
     val categories: List<Category>,
     val recipes: List<RecipeStep>,
     val products: List<ProductPortion>
@@ -24,7 +23,6 @@ data class Dish(
             carbohydrates = Carbohydrates.NONE,
             weight = Weight.NONE,
             author = Author.NONE,
-            type = DishType.NONE,
             categories = emptyList(),
             recipes = emptyList(),
             products = emptyList()

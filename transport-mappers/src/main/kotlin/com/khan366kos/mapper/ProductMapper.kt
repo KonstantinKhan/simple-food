@@ -3,20 +3,16 @@ package com.khan366kos.mapper
 import com.khan366kos.common.model.Calories as CommonCalories
 import com.khan366kos.common.model.Carbohydrates as CommonCarbohydrates
 import com.khan366kos.common.model.Fats as CommonFats
-import com.khan366kos.common.model.Id as CommonId
 import com.khan366kos.common.model.Measure as CommonMeasure
 import com.khan366kos.common.model.Product as CommonProduct
-import com.khan366kos.common.model.ProductType as CommonProductType
 import com.khan366kos.common.model.Proteins as CommonProteins
 import com.khan366kos.common.model.Title as CommonTitle
 import com.khan366kos.transport.model.Product as TransportProduct
 import java.util.UUID
 
-internal fun Double?.orZero(): Double = this ?: 0.0
-
 fun TransportProduct.toCommon(): CommonProduct = CommonProduct(
     id = id.toCommonId(),
-    title = (title).let { CommonTitle(it) },
+    title = CommonTitle(title),
     calories = CommonCalories(
         name = "Calories",
         shortName = "kcal",
@@ -43,7 +39,6 @@ fun TransportProduct.toCommon(): CommonProduct = CommonProduct(
     ),
     weight = weight.toCommon(),
     author = author.toCommon(),
-    type = CommonProductType(type ?: ""),
     categories = (categories ?: emptyList()).map { it.toCommonCategory() }
 )
 
@@ -56,7 +51,6 @@ fun CommonProduct.toTransport(): TransportProduct = TransportProduct(
     carbohydrates = carbohydrates.value.toFloat(),
     weight = weight.toTransport(),
     author = author.toTransport(),
-    type = type.value,
     categories = categories.map { it.value }
 )
 

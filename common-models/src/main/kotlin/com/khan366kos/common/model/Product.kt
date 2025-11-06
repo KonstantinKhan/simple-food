@@ -9,7 +9,6 @@ data class Product(
     val carbohydrates: Carbohydrates,
     val weight: Weight,
     val author: Author,
-    val type: ProductType,
     val categories: List<Category>
 ) {
     companion object {
@@ -22,7 +21,6 @@ data class Product(
             carbohydrates = Carbohydrates.NONE,
             weight = Weight.NONE,
             author = Author.NONE,
-            type = ProductType.NONE,
             categories = emptyList()
         )
     }

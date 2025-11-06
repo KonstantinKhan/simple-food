@@ -1,17 +1,17 @@
 package com.khan366kos.common.model.simple
 
-import com.khan366kos.common.model.Measure
+import com.khan366kos.common.model.BeMeasure
 
-data class Calories(
+data class BeCalories(
     val title: String,
     val shortTitle: String,
-    val measure: Measure
+    val measure: BeMeasure
 ) {
     companion object {
-        val NONE = Calories(
+        val NONE = BeCalories(
             title = "",
             shortTitle = "",
-            measure = Measure.NONE
+            measure = BeMeasure.NONE
         )
     }
 }

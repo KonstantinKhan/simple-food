@@ -5,53 +5,55 @@ import io.kotest.matchers.shouldBe
 import java.util.UUID
 import com.khan366kos.transport.model.Product as TransportProduct
 import com.khan366kos.transport.model.Measure as TransportMeasure
-import com.khan366kos.transport.model.Weight1 as TransportWeight
+import com.khan366kos.transport.model.Weight as TransportWeight
 import com.khan366kos.transport.model.Author as TransportAuthor
-import com.khan366kos.common.model.Product as CommonProduct
+import com.khan366kos.transport.model.NutritionalValue as TransportNutritionalValue
+import com.khan366kos.common.model.BeProduct as CommonProduct
+import com.khan366kos.mapper.toContext.*
+import com.khan366kos.mapper.toTransport.*
 
 class ProductMapperTest : FunSpec({
 
-    fun sampleTransportProduct(): TransportProduct = TransportProduct(
-        id = UUID.randomUUID(),
-        title = "Chicken breast",
-        calories = 165f,
-        proteins = 31f,
-        fats = 3.6f,
-        carbohydrates = 0f,
-        weight = TransportWeight(`value` = 100f, measure = TransportMeasure.g),
-        author = TransportAuthor(id = UUID.randomUUID(), name = "John", email = "john@example.com"),
-        categories = listOf("protein", "diet")
-    )
+    fun sampleTransportProduct(): TransportProduct {
+        val measureGram = TransportMeasure(measureName = "gram", measureShortName = "g")
+        fun nv(t: String, s: String) = TransportNutritionalValue(title = t, shortTitle = s, measure = measureGram)
+        return TransportProduct(
+            productId = UUID.randomUUID(),
+            productName = "Chicken breast",
+            productCalories = nv("Calories", "kcal"),
+            productProteins = nv("Proteins", "g"),
+            productFats = nv("Fats", "g"),
+            productCarbohydrates = nv("Carbohydrates", "g"),
+            weight = TransportWeight(weightValue = 100f, measure = measureGram),
+            author = TransportAuthor(id = UUID.randomUUID(), name = "John", email = "john@example.com"),
+            categories = listOf("protein", "diet")
+        )
+    }
 
     test("Transport -> Common mapping maps all fields") {
         val t = sampleTransportProduct()
-        val c = t.toCommon()
+        val c = t.toContext()
 
-        c.id.value shouldBe t.id.toString()
-        c.title.value shouldBe t.title
-        c.calories.value shouldBe t.calories.toDouble()
-        c.proteins.value shouldBe t.proteins.toDouble()
-        c.fats.value shouldBe t.fats.toDouble()
-        c.carbohydrates.value shouldBe t.carbohydrates.toDouble()
-        c.weight.value shouldBe t.weight.`value`.toDouble()
-        c.weight.measure.name shouldBe c.weight.measure.name
-        c.author.id.value shouldBe t.author?.id.toString()
-        c.categories.map { it.value } shouldBe t.categories
+        c.productId.value shouldBe t.productId.toString()
+        c.productName shouldBe t.productName
+        c.productCalories.title shouldBe t.productCalories.title
+        c.productCalories.shortTitle shouldBe t.productCalories.shortTitle
+        c.productCalories.measure shouldBe t.productCalories.measure.toContext()
+        c.productProteins.title shouldBe t.productProteins.title
+        c.productFats.title shouldBe t.productFats.title
+        c.productCarbohydrates.title shouldBe t.productCarbohydrates.title
+        c.weight.value shouldBe t.weight.weightValue.toDouble()
+        c.weight.measure shouldBe t.weight.measure.toContext()
+        c.author.authorId.value shouldBe t.author?.id.toString()
+        c.categories.value.map { it.value } shouldBe t.categories
     }
 
     test("Common -> Transport roundtrip preserves semantic values") {
         val t = sampleTransportProduct()
-        val c: CommonProduct = t.toCommon()
+        val c: CommonProduct = t.toContext()
         val back: TransportProduct = c.toTransport()
 
-        back.id shouldBe t.id
-        back.title shouldBe t.title
-        back.calories shouldBe t.calories
-        back.proteins shouldBe t.proteins
-        back.fats shouldBe t.fats
-        back.carbohydrates shouldBe t.carbohydrates
-        back.weight.`value` shouldBe t.weight.`value`
-        back.weight.measure shouldBe t.weight.measure
+        back shouldBe t
         back.author?.id shouldBe t.author?.id
         back.categories shouldBe t.categories
     }

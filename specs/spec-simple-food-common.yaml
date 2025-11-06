@@ -22,12 +22,12 @@ components:
       type: object
       description: Quantity with measurement unit
       properties:
-        value:
+        weightValue:
           type: number
           format: float
         measure:
           $ref: '#/components/schemas/Measure'
-      required: [value, measure]
+      required: [weightValue, measure]
 
     Error:
       type: object

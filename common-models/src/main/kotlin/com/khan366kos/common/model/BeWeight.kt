@@ -1,13 +1,13 @@
 package com.khan366kos.common.model
 
-data class Weight(
+data class BeWeight(
     val value: Double,
-    val measure: Measure
+    val measure: BeMeasure
 ) {
     companion object {
-        val NONE = Weight(
+        val NONE = BeWeight(
             value = 0.0,
-            measure = Measure.g
+            measure = BeMeasure.NONE
         )
     }
 }

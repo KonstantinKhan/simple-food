@@ -1,57 +1,61 @@
 package com.khan366kos.mapper
 
-import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.doubles.plusOrMinus
-import java.util.UUID
-import com.khan366kos.transport.model.Measure as TransportMeasure
-import com.khan366kos.transport.model.Weight as TransportWeight
-import com.khan366kos.transport.model.Author as TransportAuthor
+import com.khan366kos.common.model.BeId
 import com.khan366kos.common.model.BeMeasure
 import com.khan366kos.common.model.BeWeight
-import com.khan366kos.common.model.BeId
 import com.khan366kos.mapper.toContext.*
 import com.khan366kos.mapper.toTransport.*
+import com.khan366kos.transport.model.Author as TransportAuthor
+import com.khan366kos.transport.model.Measure as TransportMeasure
+import com.khan366kos.transport.model.Weight as TransportWeight
+import io.kotest.core.spec.style.ShouldSpec
+import io.kotest.matchers.doubles.plusOrMinus
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
+import java.util.UUID
 
-class BaseTypesMapperTest : FunSpec({
+class BaseTypesMapperTest :
+    ShouldSpec({
+        should("Measure mapping roundtrip") {
+            val expected = TransportMeasure(measureName = "milliliter", measureShortName = "ml")
+            val actual: BeMeasure = expected.toContext()
+            with(actual) {
+                measureName shouldBe "milliliter"
+                measureShortName shouldBe "ml"
+                toTransport() shouldBe expected
+            }
+        }
 
-    test("Measure mapping roundtrip") {
-        val t = TransportMeasure(measureName = "milliliter", measureShortName = "ml")
-        val c: BeMeasure = t.toContext()
-        c.measureName shouldBe "milliliter"
-        c.measureShortName shouldBe "ml"
-        c.toTransport() shouldBe t
-    }
+        should("Weight mapping roundtrip preserves value and measure") {
+            val measure = TransportMeasure(measureName = "gram", measureShortName = "g")
+            val expected = TransportWeight(weightValue = 123.4f, measure = measure)
+            val actual: BeWeight = expected.toContext()
+            with(actual) {
+                value shouldBe (123.4 plusOrMinus 1e-4)
+                this.measure shouldBe measure.toContext()
+                val back = toTransport()
+                back shouldBe expected
+            }
+        }
 
-    test("Weight mapping roundtrip preserves value and measure") {
-        val tm = TransportMeasure(measureName = "gram", measureShortName = "g")
-        val t = TransportWeight(weightValue = 123.4f, measure = tm)
-        val c: BeWeight = t.toContext()
-        c.value shouldBe (123.4 plusOrMinus 1e-4)
-        c.measure shouldBe tm.toContext()
+        should("BeId <-> UUID roundtrip") {
+            val expected = UUID.randomUUID()
+            val actual = BeId(expected).asUUID()
+            actual shouldBe expected
+        }
 
-        val back = c.toTransport()
-        back shouldBe t
-    }
-
-    test("BeId <-> UUID roundtrip") {
-        val valid = UUID.randomUUID()
-        val id = BeId(valid)
-        id.asUUID() shouldBe valid
-    }
-
-    test("Author mapping fills defaults on null fields") {
-        val t = TransportAuthor(id = UUID.randomUUID(), name = null, email = null)
-        val c = t.toContext()
-        c.name shouldBe ""
-        c.email shouldBe ""
-
-        val back = c.toTransport()
-        back.id shouldBe UUID.fromString(c.authorId.value)
-        back.name.shouldNotBeNull()
-        back.email.shouldNotBeNull()
-    }
-})
-
-
+        should("Author mapping fills defaults on null fields") {
+            val expected = TransportAuthor(id = UUID.randomUUID(), name = null, email = null)
+            val actual = expected.toContext()
+            with(actual) {
+                name shouldBe ""
+                email shouldBe ""
+            }
+            val back = actual.toTransport()
+            with(back) {
+                id shouldBe UUID.fromString(actual.authorId.value)
+                name.shouldNotBeNull()
+                email.shouldNotBeNull()
+            }
+        }
+    })

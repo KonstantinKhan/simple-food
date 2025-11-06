@@ -1,6 +1,6 @@
 package com.khan366kos.mapper
 
-import io.kotest.core.spec.style.FunSpec
+import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
 import java.util.UUID
 import com.khan366kos.transport.model.Product as TransportProduct
@@ -12,7 +12,7 @@ import com.khan366kos.common.model.BeProduct as CommonProduct
 import com.khan366kos.mapper.toContext.*
 import com.khan366kos.mapper.toTransport.*
 
-class ProductMapperTest : FunSpec({
+class ProductMapperTest : ShouldSpec({
 
     fun sampleTransportProduct(): TransportProduct {
         val measureGram = TransportMeasure(measureName = "gram", measureShortName = "g")
@@ -30,32 +30,32 @@ class ProductMapperTest : FunSpec({
         )
     }
 
-    test("Transport -> Common mapping maps all fields") {
-        val t = sampleTransportProduct()
-        val c = t.toContext()
+    should("Transport -> Common mapping maps all fields") {
+        val expected = sampleTransportProduct()
+        val actual = expected.toContext()
 
-        c.productId.value shouldBe t.productId.toString()
-        c.productName shouldBe t.productName
-        c.productCalories.title shouldBe t.productCalories.title
-        c.productCalories.shortTitle shouldBe t.productCalories.shortTitle
-        c.productCalories.measure shouldBe t.productCalories.measure.toContext()
-        c.productProteins.title shouldBe t.productProteins.title
-        c.productFats.title shouldBe t.productFats.title
-        c.productCarbohydrates.title shouldBe t.productCarbohydrates.title
-        c.weight.value shouldBe t.weight.weightValue.toDouble()
-        c.weight.measure shouldBe t.weight.measure.toContext()
-        c.author.authorId.value shouldBe t.author?.id.toString()
-        c.categories.value.map { it.value } shouldBe t.categories
+        actual.productId.value shouldBe expected.productId.toString()
+        actual.productName shouldBe expected.productName
+        actual.productCalories.title shouldBe expected.productCalories.title
+        actual.productCalories.shortTitle shouldBe expected.productCalories.shortTitle
+        actual.productCalories.measure shouldBe expected.productCalories.measure.toContext()
+        actual.productProteins.title shouldBe expected.productProteins.title
+        actual.productFats.title shouldBe expected.productFats.title
+        actual.productCarbohydrates.title shouldBe expected.productCarbohydrates.title
+        actual.weight.value shouldBe expected.weight.weightValue.toDouble()
+        actual.weight.measure shouldBe expected.weight.measure.toContext()
+        actual.author.authorId.value shouldBe expected.author?.id.toString()
+        actual.categories.value.map { it.value } shouldBe expected.categories
     }
 
-    test("Common -> Transport roundtrip preserves semantic values") {
-        val t = sampleTransportProduct()
-        val c: CommonProduct = t.toContext()
-        val back: TransportProduct = c.toTransport()
+    should("Common -> Transport roundtrip preserves semantic values") {
+        val expected = sampleTransportProduct()
+        val context: CommonProduct = expected.toContext()
+        val actual: TransportProduct = context.toTransport()
 
-        back shouldBe t
-        back.author?.id shouldBe t.author?.id
-        back.categories shouldBe t.categories
+        actual shouldBe expected
+        actual.author?.id shouldBe expected.author?.id
+        actual.categories shouldBe expected.categories
     }
 })
 

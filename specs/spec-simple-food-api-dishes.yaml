@@ -41,7 +41,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './spec-simple-food-api.yaml#/components/schemas/Error'
+                $ref: './spec-simple-food-common.yaml#/components/schemas/Error'
   /dishes/{id}:
     parameters:
       - name: id
@@ -65,7 +65,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './spec-simple-food-api.yaml#/components/schemas/Error'
+                $ref: './spec-simple-food-common.yaml#/components/schemas/Error'
     put:
       operationId: updateDish
       summary: Replace dish
@@ -88,7 +88,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './spec-simple-food-api.yaml#/components/schemas/Error'
+                $ref: './spec-simple-food-common.yaml#/components/schemas/Error'
     delete:
       operationId: deleteDish
       summary: Delete dish
@@ -101,7 +101,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './spec-simple-food-api.yaml#/components/schemas/Error'
+                $ref: './spec-simple-food-common.yaml#/components/schemas/Error'
   /dishes/search:
     post:
       operationId: searchDishes
@@ -146,17 +146,17 @@ components:
         title:
           type: string
         calories:
-          $ref: './spec-simple-food-api.yaml#/components/schemas/NutritionalValue'
+          $ref: './spec-simple-food-common.yaml#/components/schemas/NutritionalValue'
         proteins:
-          $ref: './spec-simple-food-api.yaml#/components/schemas/NutritionalValue'
+          $ref: './spec-simple-food-common.yaml#/components/schemas/NutritionalValue'
         fats:
-          $ref: './spec-simple-food-api.yaml#/components/schemas/NutritionalValue'
+          $ref: './spec-simple-food-common.yaml#/components/schemas/NutritionalValue'
         carbohydrates:
-          $ref: './spec-simple-food-api.yaml#/components/schemas/NutritionalValue'
+          $ref: './spec-simple-food-common.yaml#/components/schemas/NutritionalValue'
         weight:
-          $ref: './spec-simple-food-api.yaml#/components/schemas/Weight'
+          $ref: './spec-simple-food-common.yaml#/components/schemas/Weight'
         author:
-          $ref: './spec-simple-food-api.yaml#/components/schemas/Author'
+          $ref: './spec-simple-food-common.yaml#/components/schemas/Author'
         categories:
           type: array
           items:
@@ -180,7 +180,7 @@ components:
         productId:
           $ref: './spec-simple-food-api-products.yaml#/components/schemas/ProductId'
         weight:
-          $ref: './spec-simple-food-api.yaml#/components/schemas/Weight'
+          $ref: './spec-simple-food-common.yaml#/components/schemas/Weight'
       required: [productId, weight]
 
 

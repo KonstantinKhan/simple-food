@@ -46,6 +46,12 @@ openApiGenerate {
     )
 }
 
+tasks.named("openApiGenerate").configure {
+    doFirst {
+        delete(layout.buildDirectory.get().asFile)
+    }
+}
+
 sourceSets {
     main {
         java.srcDir(openApiOutputDir.map { it.dir("src/main/kotlin") })

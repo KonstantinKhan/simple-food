@@ -1,0 +1,100 @@
+openapi: 3.0.3
+info:
+  title: Simple Food API - Common
+  version: 0.1.0-draft
+  description: Common reusable schemas for Simple Food API
+servers: []
+components:
+  schemas:
+    Measure:
+      type: object
+      description: Measurement unit for weights/amounts
+      properties:
+        measureName:
+          type: string
+          description: Full name of the measurement unit
+        measureShortName:
+          type: string
+          description: Short abbreviation of the measurement unit
+      required: [measureName, measureShortName]
+
+    Weight:
+      type: object
+      description: Quantity with measurement unit
+      properties:
+        value:
+          type: number
+          format: float
+        measure:
+          $ref: '#/components/schemas/Measure'
+      required: [value, measure]
+
+    Error:
+      type: object
+      description: Standard error object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+      required: [code, message]
+
+    Author:
+      type: object
+      description: Author of the entity or request initiator
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+      required: [id]
+
+    NutritionalValue:
+      type: object
+      description: Nutritional value with title and measurement
+      properties:
+        title:
+          type: string
+          description: Full title of the nutritional value
+        shortTitle:
+          type: string
+          description: Short abbreviation of the nutritional value
+        measure:
+          $ref: '#/components/schemas/Measure'
+      required: [title, shortTitle, measure]
+
+    BaseRequest:
+      type: object
+      description: Base request envelope for API operations
+      properties:
+        requestId:
+          type: string
+          format: uuid
+        timestamp:
+          type: string
+          format: date-time
+        author:
+          $ref: '#/components/schemas/Author'
+      required: [requestId, timestamp]
+
+    BaseResponse:
+      type: object
+      description: Base response envelope for API operations
+      properties:
+        requestId:
+          type: string
+          format: uuid
+        success:
+          type: boolean
+        error:
+          $ref: '#/components/schemas/Error'
+      required: [requestId, success]
+
+

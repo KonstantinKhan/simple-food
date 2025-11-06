@@ -1,7 +1,8 @@
 package com.khan366kos
 
+import com.fasterxml.jackson.databind.SerializationFeature
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
+import io.ktor.serialization.jackson.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
@@ -12,7 +13,10 @@ fun Application.configureHTTP() {
         header("X-Engine", "Ktor")
     }
     install(ContentNegotiation) {
-        json()
+        jackson {
+            enable(SerializationFeature.INDENT_OUTPUT)
+            findAndRegisterModules()
+        }
     }
     install(CORS) {
         allowMethod(HttpMethod.Options)

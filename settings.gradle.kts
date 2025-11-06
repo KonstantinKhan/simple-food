@@ -6,7 +6,7 @@ dependencyResolutionManagement {
     }
 }
 
-include(":app")
+include(":simple-food-product-app")
 include(":transport-models")
 include(":common-models")
 include(":transport-mappers")

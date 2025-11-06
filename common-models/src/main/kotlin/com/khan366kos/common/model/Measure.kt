@@ -1,11 +1,15 @@
 package com.khan366kos.common.model
 
-enum class Measure {
-    g,
-    kg,
-    ml,
-    l,
-    pcs
+data class Measure(
+    val measureName: String,
+    val measureShortName: String
+) {
+    companion object {
+        val NONE = Measure(
+            measureName = "",
+            measureShortName = ""
+        )
+    }
 }
 
 

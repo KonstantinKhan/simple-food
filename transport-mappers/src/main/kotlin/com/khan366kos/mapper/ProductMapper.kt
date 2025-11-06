@@ -1,8 +1,8 @@
 package com.khan366kos.mapper
 
-import com.khan366kos.common.model.Calories as CommonCalories
-import com.khan366kos.common.model.Carbohydrates as CommonCarbohydrates
-import com.khan366kos.common.model.Fats as CommonFats
+import com.khan366kos.common.model.simple.Calories as CommonCalories
+import com.khan366kos.common.model.simple.Carbohydrates as CommonCarbohydrates
+import com.khan366kos.common.model.simple.Fats as CommonFats
 import com.khan366kos.common.model.Measure as CommonMeasure
 import com.khan366kos.common.model.Product as CommonProduct
 import com.khan366kos.common.model.Proteins as CommonProteins

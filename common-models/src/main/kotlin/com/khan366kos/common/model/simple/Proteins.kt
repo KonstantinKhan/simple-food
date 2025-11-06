@@ -1,19 +1,17 @@
-package com.khan366kos.common.model
+package com.khan366kos.common.model.simple
 
 import com.khan366kos.common.model.Measure
 
 data class Proteins(
-    val name: String,
-    val shortName: String,
-    val measure: Measure,
-    val value: Double
+    val title: String,
+    val shortTitle: String,
+    val measure: Measure
 ) {
     companion object {
         val NONE = Proteins(
-            name = "",
-            shortName = "",
-            measure = Measure.g,
-            value = 0.0
+            title = "",
+            shortTitle = "",
+            measure = Measure.NONE
         )
     }
 }

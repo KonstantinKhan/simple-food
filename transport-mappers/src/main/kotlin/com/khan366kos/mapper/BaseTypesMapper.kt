@@ -1,7 +1,7 @@
 package com.khan366kos.mapper
 
 import com.khan366kos.common.model.Author as CommonAuthor
-import com.khan366kos.common.model.Category as CommonCategory
+import com.khan366kos.common.model.simple.Category as CommonCategory
 import com.khan366kos.common.model.Id as CommonId
 import com.khan366kos.common.model.Measure as CommonMeasure
 import com.khan366kos.common.model.Title as CommonTitle

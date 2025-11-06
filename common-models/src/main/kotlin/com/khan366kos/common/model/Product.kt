@@ -1,27 +1,33 @@
 package com.khan366kos.common.model
 
+import com.khan366kos.common.model.simple.Calories
+import com.khan366kos.common.model.simple.Carbohydrates
+import com.khan366kos.common.model.simple.Fats
+import com.khan366kos.common.model.simple.Categories
+import com.khan366kos.common.model.simple.Proteins
+
 data class Product(
-    val id: Id,
-    val title: Title,
-    val calories: Calories,
-    val proteins: Proteins,
-    val fats: Fats,
-    val carbohydrates: Carbohydrates,
+    val productId: Id,
+    val productName: String,
+    val productCalories: Calories,
+    val productProteins: Proteins,
+    val productFats: Fats,
+    val productCarbohydrates: Carbohydrates,
     val weight: Weight,
     val author: Author,
-    val categories: List<Category>
+    val categories: Categories
 ) {
     companion object {
         val NONE = Product(
-            id = Id.NONE,
-            title = Title.NONE,
-            calories = Calories.NONE,
-            proteins = Proteins.NONE,
-            fats = Fats.NONE,
-            carbohydrates = Carbohydrates.NONE,
+            productId = Id.NONE,
+            productName = "",
+            productCalories = Calories.NONE,
+            productProteins = Proteins.NONE,
+            productFats = Fats.NONE,
+            productCarbohydrates = Carbohydrates.NONE,
             weight = Weight.NONE,
             author = Author.NONE,
-            categories = emptyList()
+            categories = Categories.NONE
         )
     }
 }

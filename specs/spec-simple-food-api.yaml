@@ -52,9 +52,16 @@ components:
       required: [requestId, success]
 
     Measure:
-      type: string
+      type: object
       description: Measurement unit for weights/amounts
-      enum: [g, kg, ml, l, pcs]
+      properties:
+        measureName:
+          type: string
+          description: Full name of the measurement unit
+        measureShortName:
+          type: string
+          description: Short abbreviation of the measurement unit
+      required: [measureName, measureShortName]
 
     Weight:
       type: object
@@ -94,9 +101,19 @@ components:
           format: email
       required: [id]
 
-    Id:
-      type: string
-      format: uuid
+    NutritionalValue:
+      type: object
+      description: Nutritional value with title and measurement
+      properties:
+        title:
+          type: string
+          description: Full title of the nutritional value
+        shortTitle:
+          type: string
+          description: Short abbreviation of the nutritional value
+        measure:
+          $ref: '#/components/schemas/Measure'
+      required: [title, shortTitle, measure]
 
     Product:
       $ref: './spec-simple-food-api-products.yaml#/components/schemas/Product'

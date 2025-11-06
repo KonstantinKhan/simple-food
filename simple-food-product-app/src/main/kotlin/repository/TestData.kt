@@ -18,21 +18,25 @@ object TestData {
             productCalories = BeCalories(
                 title = "Калории",
                 shortTitle = "ккал",
+                value = 165.0,
                 measure = measure100g
             ),
             productProteins = BeProteins(
                 title = "Белки",
                 shortTitle = "Б",
+                value = 31.0,
                 measure = measure100g
             ),
             productFats = BeFats(
                 title = "Жиры",
                 shortTitle = "Ж",
+                value = 3.6,
                 measure = measure100g
             ),
             productCarbohydrates = BeCarbohydrates(
                 title = "Углеводы",
                 shortTitle = "У",
+                value = 0.0,
                 measure = measure100g
             ),
             weight = BeWeight(value = 100.0, measure = measure100g),
@@ -56,21 +60,25 @@ object TestData {
             productCalories = BeCalories(
                 title = "Калории",
                 shortTitle = "ккал",
+                value = 365.0,
                 measure = measure100g
             ),
             productProteins = BeProteins(
                 title = "Белки",
                 shortTitle = "Б",
+                value = 7.5,
                 measure = measure100g
             ),
             productFats = BeFats(
                 title = "Жиры",
                 shortTitle = "Ж",
+                value = 0.6,
                 measure = measure100g
             ),
             productCarbohydrates = BeCarbohydrates(
                 title = "Углеводы",
                 shortTitle = "У",
+                value = 79.0,
                 measure = measure100g
             ),
             weight = BeWeight(value = 100.0, measure = measure100g),
@@ -94,21 +102,25 @@ object TestData {
             productCalories = BeCalories(
                 title = "Калории",
                 shortTitle = "ккал",
+                value = 884.0,
                 measure = measure100g
             ),
             productProteins = BeProteins(
                 title = "Белки",
                 shortTitle = "Б",
+                value = 0.0,
                 measure = measure100g
             ),
             productFats = BeFats(
                 title = "Жиры",
                 shortTitle = "Ж",
+                value = 100.0,
                 measure = measure100g
             ),
             productCarbohydrates = BeCarbohydrates(
                 title = "Углеводы",
                 shortTitle = "У",
+                value = 0.0,
                 measure = measure100g
             ),
             weight = BeWeight(value = 100.0, measure = measure100g),

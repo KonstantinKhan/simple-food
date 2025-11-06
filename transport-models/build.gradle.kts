@@ -47,8 +47,9 @@ openApiGenerate {
 }
 
 tasks.named("openApiGenerate").configure {
+    outputs.upToDateWhen { false }
     doFirst {
-        delete(layout.buildDirectory.get().asFile)
+        delete(openApiOutputDir.get().asFile)
     }
 }
 

@@ -24,24 +24,28 @@ fun TransportAuthor.toContext(): BeAuthor = BeAuthor(
 fun TransportNutritionalValue.toContextCalories(): BeCalories = BeCalories(
     title = title,
     shortTitle = shortTitle,
+    value = nutritionalValue.toDouble(),
     measure = measure.toContext()
 )
 
 fun TransportNutritionalValue.toContextProteins(): BeProteins = BeProteins(
     title = title,
     shortTitle = shortTitle,
+    value = nutritionalValue.toDouble(),
     measure = measure.toContext()
 )
 
 fun TransportNutritionalValue.toContextFats(): BeFats = BeFats(
     title = title,
     shortTitle = shortTitle,
+    value = nutritionalValue.toDouble(),
     measure = measure.toContext()
 )
 
 fun TransportNutritionalValue.toContextCarbohydrates(): BeCarbohydrates = BeCarbohydrates(
     title = title,
     shortTitle = shortTitle,
+    value = nutritionalValue.toDouble(),
     measure = measure.toContext()
 )
 

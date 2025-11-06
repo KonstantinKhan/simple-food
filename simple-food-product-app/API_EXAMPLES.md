@@ -27,6 +27,7 @@ GET http://localhost:8080/products
     "productCalories": {
       "title": "Калории",
       "shortTitle": "ккал",
+      "nutritionalValue": 165.0,
       "measure": {
         "measureName": "грамм",
         "measureShortName": "г"
@@ -67,6 +68,7 @@ Content-Type: application/json
   "productCalories": {
     "title": "Калории",
     "shortTitle": "ккал",
+    "nutritionalValue": 343.0,
     "measure": {
       "measureName": "грамм",
       "measureShortName": "г"
@@ -75,6 +77,7 @@ Content-Type: application/json
   "productProteins": {
     "title": "Белки",
     "shortTitle": "Б",
+    "nutritionalValue": 13.0,
     "measure": {
       "measureName": "грамм",
       "measureShortName": "г"
@@ -83,6 +86,7 @@ Content-Type: application/json
   "productFats": {
     "title": "Жиры",
     "shortTitle": "Ж",
+    "nutritionalValue": 3.4,
     "measure": {
       "measureName": "грамм",
       "measureShortName": "г"
@@ -91,6 +95,7 @@ Content-Type: application/json
   "productCarbohydrates": {
     "title": "Углеводы",
     "shortTitle": "У",
+    "nutritionalValue": 71.5,
     "measure": {
       "measureName": "грамм",
       "measureShortName": "г"

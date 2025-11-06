@@ -17,14 +17,14 @@ class DishMapperTest : ShouldSpec({
 
     fun sampleDish(): TransportDish {
         val measureGram = TransportMeasure(measureName = "gram", measureShortName = "g")
-        fun nv(t: String, s: String) = TransportNutritionalValue(title = t, shortTitle = s, measure = measureGram)
+        fun nv(t: String, s: String, v: Float = 0f) = TransportNutritionalValue(title = t, shortTitle = s, nutritionalValue = v, measure = measureGram)
         return TransportDish(
             id = UUID.randomUUID(),
             title = "Chicken salad",
-            calories = nv("Calories", "kcal"),
-            proteins = nv("Proteins", "g"),
-            fats = nv("Fats", "g"),
-            carbohydrates = nv("Carbohydrates", "g"),
+            calories = nv("Calories", "kcal", 300f),
+            proteins = nv("Proteins", "g", 25f),
+            fats = nv("Fats", "g", 10f),
+            carbohydrates = nv("Carbohydrates", "g", 15f),
             weight = TransportWeight(weightValue = 250f, measure = measureGram),
             author = TransportAuthor(id = UUID.randomUUID(), name = "John", email = "john@example.com"),
             categories = listOf("healthy", "lunch"),

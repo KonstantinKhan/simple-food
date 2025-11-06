@@ -66,9 +66,13 @@ components:
         shortTitle:
           type: string
           description: Short abbreviation of the nutritional value
+        nutritionalValue:
+          type: number
+          format: float
+          description: The nutritional value amount
         measure:
           $ref: '#/components/schemas/Measure'
-      required: [title, shortTitle, measure]
+      required: [title, shortTitle, nutritionalValue, measure]
 
     BaseRequest:
       type: object

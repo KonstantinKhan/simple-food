@@ -34,23 +34,27 @@ fun BeAuthor.toTransport(): TransportAuthor = TransportAuthor(
 fun BeCalories.toTransport(): TransportNutritionalValue = TransportNutritionalValue(
     title = title,
     shortTitle = shortTitle,
+    nutritionalValue = value.toFloat(),
     measure = measure.toTransport()
 )
 
 fun BeProteins.toTransport(): TransportNutritionalValue = TransportNutritionalValue(
     title = title,
     shortTitle = shortTitle,
+    nutritionalValue = value.toFloat(),
     measure = measure.toTransport()
 )
 
 fun BeFats.toTransport(): TransportNutritionalValue = TransportNutritionalValue(
     title = title,
     shortTitle = shortTitle,
+    nutritionalValue = value.toFloat(),
     measure = measure.toTransport()
 )
 
 fun BeCarbohydrates.toTransport(): TransportNutritionalValue = TransportNutritionalValue(
     title = title,
     shortTitle = shortTitle,
+    nutritionalValue = value.toFloat(),
     measure = measure.toTransport()
 )

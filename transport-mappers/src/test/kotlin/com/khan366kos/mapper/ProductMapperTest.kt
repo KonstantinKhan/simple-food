@@ -16,14 +16,14 @@ class ProductMapperTest : ShouldSpec({
 
     fun sampleTransportProduct(): TransportProduct {
         val measureGram = TransportMeasure(measureName = "gram", measureShortName = "g")
-        fun nv(t: String, s: String) = TransportNutritionalValue(title = t, shortTitle = s, measure = measureGram)
+        fun nv(t: String, s: String, v: Float = 0f) = TransportNutritionalValue(title = t, shortTitle = s, nutritionalValue = v, measure = measureGram)
         return TransportProduct(
             productId = UUID.randomUUID(),
             productName = "Chicken breast",
-            productCalories = nv("Calories", "kcal"),
-            productProteins = nv("Proteins", "g"),
-            productFats = nv("Fats", "g"),
-            productCarbohydrates = nv("Carbohydrates", "g"),
+            productCalories = nv("Calories", "kcal", 165f),
+            productProteins = nv("Proteins", "g", 31f),
+            productFats = nv("Fats", "g", 3.6f),
+            productCarbohydrates = nv("Carbohydrates", "g", 0f),
             weight = TransportWeight(weightValue = 100f, measure = measureGram),
             author = TransportAuthor(id = UUID.randomUUID(), name = "John", email = "john@example.com"),
             categories = listOf("protein", "diet")

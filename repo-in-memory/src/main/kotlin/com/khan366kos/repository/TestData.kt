@@ -8,10 +8,10 @@ import java.util.UUID
  * Тестовые данные для демонстрации API
  */
 object TestData {
-    
+
     fun createSampleProducts(): List<BeProduct> {
         val measure100g = BeMeasure(measureName = "грамм", measureShortName = "г")
-        
+
         val product1 = BeProduct(
             productId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440001")),
             productName = "Куриная грудка",
@@ -53,7 +53,7 @@ object TestData {
                 )
             )
         )
-        
+
         val product2 = BeProduct(
             productId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440002")),
             productName = "Рис белый",
@@ -95,7 +95,7 @@ object TestData {
                 )
             )
         )
-        
+
         val product3 = BeProduct(
             productId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440003")),
             productName = "Оливковое масло",
@@ -136,8 +136,7 @@ object TestData {
                 )
             )
         )
-        
+
         return listOf(product1, product2, product3)
     }
 }
-

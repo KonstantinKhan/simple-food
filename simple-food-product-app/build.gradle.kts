@@ -6,6 +6,10 @@ plugins {
 group = "com.khan366kos"
 version = "0.0.1"
 
+kotlin {
+    jvmToolchain(21)
+}
+
 application {
     mainClass = "io.ktor.server.netty.EngineMain"
 }

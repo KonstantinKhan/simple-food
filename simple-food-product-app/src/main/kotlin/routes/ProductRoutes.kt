@@ -1,6 +1,10 @@
 package com.khan366kos.routes
 
 import com.khan366kos.common.model.BeId
+import com.khan366kos.common.model.BeProduct
+import com.khan366kos.common.repository.DbProductFilterRequest
+import com.khan366kos.common.repository.DbProductIdRequest
+import com.khan366kos.common.repository.DbProductRequest
 import com.khan366kos.mapper.toContext.toContext
 import com.khan366kos.mapper.toTransport.toTransport
 import com.khan366kos.repository.ProductRepository
@@ -14,183 +18,177 @@ import io.ktor.server.routing.*
 import java.util.*
 
 fun Route.productRoutes(repository: ProductRepository) {
-    
+
     route("/products") {
-        
-        // GET /products - Список всех продуктов
         get {
-            val products = repository.findAll()
-            call.respond(products.map { it.toTransport() })
+            val response = repository.products()
+            call.respond(response.result.map { it.toTransport() })
         }
-        
-        // POST /products - Создание продукта
+
         post {
             try {
                 val transportProduct = call.receive<Product>()
                 val beProduct = transportProduct.toContext()
-                val created = repository.create(beProduct)
-                call.respond(HttpStatusCode.Created, created.toTransport())
+                val response = repository.newProduct(DbProductRequest(beProduct))
+                if (response.isSuccess) {
+                    call.respond(HttpStatusCode.Created, response.result.toTransport())
+                } else {
+                    call.respond(
+                            HttpStatusCode.BadRequest,
+                            Error(code = "BAD_REQUEST", message = "Failed to create product")
+                    )
+                }
             } catch (e: Exception) {
                 call.respond(
-                    HttpStatusCode.BadRequest,
-                    Error(
-                        code = "BAD_REQUEST",
-                        message = "Invalid product data: ${e.message}"
-                    )
+                        HttpStatusCode.BadRequest,
+                        Error(code = "BAD_REQUEST", message = "Invalid product data: ${e.message}")
                 )
             }
         }
-        
-        // POST /products/search - Поиск продуктов
+
         post("/search") {
             try {
                 val searchRequest = call.receive<ProductSearchRequest>()
-                val results = repository.search(searchRequest.query)
-                call.respond(results.map { it.toTransport() })
+                val response = repository.foundProducts(DbProductFilterRequest(searchRequest.query))
+                call.respond(response.result.map { it.toTransport() })
             } catch (e: Exception) {
                 call.respond(
-                    HttpStatusCode.BadRequest,
-                    Error(
-                        code = "BAD_REQUEST",
-                        message = "Invalid search request: ${e.message}"
-                    )
+                        HttpStatusCode.BadRequest,
+                        Error(
+                                code = "BAD_REQUEST",
+                                message = "Invalid search request: ${e.message}"
+                        )
                 )
             }
         }
-        
-        // GET /products/{id} - Получение продукта по ID
+
         get("/{id}") {
-            val idParam = call.parameters["id"]
-            if (idParam == null) {
-                call.respond(
-                    HttpStatusCode.BadRequest,
-                    Error(
-                        code = "BAD_REQUEST",
-                        message = "Product ID is required"
-                    )
-                )
-                return@get
-            }
-            
+            val idParam =
+                    call.parameters["id"]
+                            ?: run {
+                                call.respond(
+                                        HttpStatusCode.BadRequest,
+                                        Error(
+                                                code = "BAD_REQUEST",
+                                                message = "Product ID is required"
+                                        )
+                                )
+                                return@get
+                            }
+
             try {
                 val uuid = UUID.fromString(idParam)
                 val productId = BeId(uuid)
-                val product = repository.findById(productId)
-                
-                if (product == null) {
-                    call.respond(
-                        HttpStatusCode.NotFound,
-                        Error(
-                            code = "NOT_FOUND",
-                            message = "Product with id $idParam not found"
-                        )
-                    )
+                val response = repository.product(DbProductIdRequest(productId))
+
+                if (response.isSuccess && response.result != BeProduct.NONE) {
+                    call.respond(response.result.toTransport())
                 } else {
-                    call.respond(product.toTransport())
+                    call.respond(
+                            HttpStatusCode.NotFound,
+                            Error(
+                                    code = "NOT_FOUND",
+                                    message = "Product with id $idParam not found"
+                            )
+                    )
                 }
             } catch (e: IllegalArgumentException) {
                 call.respond(
-                    HttpStatusCode.BadRequest,
-                    Error(
-                        code = "BAD_REQUEST",
-                        message = "Invalid product ID format: ${e.message}"
-                    )
+                        HttpStatusCode.BadRequest,
+                        Error(
+                                code = "BAD_REQUEST",
+                                message = "Invalid product ID format: ${e.message}"
+                        )
                 )
             }
         }
-        
-        // PUT /products/{id} - Обновление продукта
+
         put("/{id}") {
-            val idParam = call.parameters["id"]
-            if (idParam == null) {
-                call.respond(
-                    HttpStatusCode.BadRequest,
-                    Error(
-                        code = "BAD_REQUEST",
-                        message = "Product ID is required"
-                    )
-                )
-                return@put
-            }
-            
+            val idParam =
+                    call.parameters["id"]
+                            ?: run {
+                                call.respond(
+                                        HttpStatusCode.BadRequest,
+                                        Error(
+                                                code = "BAD_REQUEST",
+                                                message = "Product ID is required"
+                                        )
+                                )
+                                return@put
+                            }
+
             try {
                 val uuid = UUID.fromString(idParam)
-                val productId = BeId(uuid)
                 val transportProduct = call.receive<Product>()
-                val beProduct = transportProduct.toContext()
-                
-                val updated = repository.update(productId, beProduct)
-                if (updated == null) {
-                    call.respond(
-                        HttpStatusCode.NotFound,
-                        Error(
-                            code = "NOT_FOUND",
-                            message = "Product with id $idParam not found"
-                        )
-                    )
+                val beProduct = transportProduct.toContext().copy(productId = BeId(uuid))
+                val response = repository.updatedProduct(DbProductRequest(beProduct))
+
+                if (response.isSuccess && response.result != BeProduct.NONE) {
+                    call.respond(response.result.toTransport())
                 } else {
-                    call.respond(updated.toTransport())
+                    call.respond(
+                            HttpStatusCode.NotFound,
+                            Error(
+                                    code = "NOT_FOUND",
+                                    message = "Product with id $idParam not found"
+                            )
+                    )
                 }
             } catch (e: IllegalArgumentException) {
                 call.respond(
-                    HttpStatusCode.BadRequest,
-                    Error(
-                        code = "BAD_REQUEST",
-                        message = "Invalid product ID format: ${e.message}"
-                    )
+                        HttpStatusCode.BadRequest,
+                        Error(
+                                code = "BAD_REQUEST",
+                                message = "Invalid product ID format: ${e.message}"
+                        )
                 )
             } catch (e: Exception) {
                 call.respond(
-                    HttpStatusCode.BadRequest,
-                    Error(
-                        code = "BAD_REQUEST",
-                        message = "Invalid product data: ${e.message}"
-                    )
+                        HttpStatusCode.BadRequest,
+                        Error(code = "BAD_REQUEST", message = "Invalid product data: ${e.message}")
                 )
             }
         }
-        
-        // DELETE /products/{id} - Удаление продукта
+
         delete("/{id}") {
-            val idParam = call.parameters["id"]
-            if (idParam == null) {
-                call.respond(
-                    HttpStatusCode.BadRequest,
-                    Error(
-                        code = "BAD_REQUEST",
-                        message = "Product ID is required"
-                    )
-                )
-                return@delete
-            }
-            
+            val idParam =
+                    call.parameters["id"]
+                            ?: run {
+                                call.respond(
+                                        HttpStatusCode.BadRequest,
+                                        Error(
+                                                code = "BAD_REQUEST",
+                                                message = "Product ID is required"
+                                        )
+                                )
+                                return@delete
+                            }
+
             try {
                 val uuid = UUID.fromString(idParam)
                 val productId = BeId(uuid)
-                
-                val deleted = repository.delete(productId)
-                if (deleted) {
+                val response = repository.deletedProduct(DbProductIdRequest(productId))
+
+                if (response.isSuccess && response.result != BeProduct.NONE) {
                     call.respond(HttpStatusCode.NoContent)
                 } else {
                     call.respond(
-                        HttpStatusCode.NotFound,
-                        Error(
-                            code = "NOT_FOUND",
-                            message = "Product with id $idParam not found"
-                        )
+                            HttpStatusCode.NotFound,
+                            Error(
+                                    code = "NOT_FOUND",
+                                    message = "Product with id $idParam not found"
+                            )
                     )
                 }
             } catch (e: IllegalArgumentException) {
                 call.respond(
-                    HttpStatusCode.BadRequest,
-                    Error(
-                        code = "BAD_REQUEST",
-                        message = "Invalid product ID format: ${e.message}"
-                    )
+                        HttpStatusCode.BadRequest,
+                        Error(
+                                code = "BAD_REQUEST",
+                                message = "Invalid product ID format: ${e.message}"
+                        )
                 )
             }
         }
     }
 }
-
-

@@ -37,6 +37,7 @@ curl -s -X POST http://localhost:8080/products \
   "productCalories": {
     "title": "Калории",
     "shortTitle": "ккал",
+    "nutritionalValue": 343.0,
     "measure": {
       "measureName": "грамм",
       "measureShortName": "г"
@@ -45,6 +46,7 @@ curl -s -X POST http://localhost:8080/products \
   "productProteins": {
     "title": "Белки",
     "shortTitle": "Б",
+    "nutritionalValue": 13.0,
     "measure": {
       "measureName": "грамм",
       "measureShortName": "г"
@@ -53,6 +55,7 @@ curl -s -X POST http://localhost:8080/products \
   "productFats": {
     "title": "Жиры",
     "shortTitle": "Ж",
+    "nutritionalValue": 3.4,
     "measure": {
       "measureName": "грамм",
       "measureShortName": "г"
@@ -61,6 +64,7 @@ curl -s -X POST http://localhost:8080/products \
   "productCarbohydrates": {
     "title": "Углеводы",
     "shortTitle": "У",
+    "nutritionalValue": 71.5,
     "measure": {
       "measureName": "грамм",
       "measureShortName": "г"
@@ -72,6 +76,11 @@ curl -s -X POST http://localhost:8080/products \
       "measureName": "грамм",
       "measureShortName": "г"
     }
+  },
+  "author": {
+    "id": "550e8400-e29b-41d4-a716-446655440099",
+    "name": "Admin",
+    "email": "admin@example.com"
   },
   "categories": ["Крупы", "Гарнир"]
 }' | jq '.productName'
@@ -88,6 +97,7 @@ curl -s -X PUT http://localhost:8080/products/550e8400-e29b-41d4-a716-4466554400
   "productCalories": {
     "title": "Калории",
     "shortTitle": "ккал",
+    "nutritionalValue": 165.0,
     "measure": {
       "measureName": "грамм",
       "measureShortName": "г"
@@ -96,6 +106,7 @@ curl -s -X PUT http://localhost:8080/products/550e8400-e29b-41d4-a716-4466554400
   "productProteins": {
     "title": "Белки",
     "shortTitle": "Б",
+    "nutritionalValue": 31.0,
     "measure": {
       "measureName": "грамм",
       "measureShortName": "г"
@@ -104,6 +115,7 @@ curl -s -X PUT http://localhost:8080/products/550e8400-e29b-41d4-a716-4466554400
   "productFats": {
     "title": "Жиры",
     "shortTitle": "Ж",
+    "nutritionalValue": 3.6,
     "measure": {
       "measureName": "грамм",
       "measureShortName": "г"
@@ -112,6 +124,7 @@ curl -s -X PUT http://localhost:8080/products/550e8400-e29b-41d4-a716-4466554400
   "productCarbohydrates": {
     "title": "Углеводы",
     "shortTitle": "У",
+    "nutritionalValue": 0.0,
     "measure": {
       "measureName": "грамм",
       "measureShortName": "г"
@@ -123,6 +136,11 @@ curl -s -X PUT http://localhost:8080/products/550e8400-e29b-41d4-a716-4466554400
       "measureName": "грамм",
       "measureShortName": "г"
     }
+  },
+  "author": {
+    "id": "550e8400-e29b-41d4-a716-446655440099",
+    "name": "Admin",
+    "email": "admin@example.com"
   },
   "categories": ["Мясо", "Птица"]
 }' | jq '.productName'
@@ -143,7 +161,19 @@ echo ""
 
 # 8. Удаление продукта
 echo "8. DELETE /products/{id} - Удаление продукта:"
-curl -s -X DELETE http://localhost:8080/products/550e8400-e29b-41d4-a716-446655440010 -w "\nHTTP Status: %{http_code}\n"
+HTTP_CODE=$(curl -s -o /tmp/delete_response.json -w "%{http_code}" -X DELETE http://localhost:8080/products/550e8400-e29b-41d4-a716-446655440010)
+if [ "$HTTP_CODE" = "204" ]; then
+    echo "Продукт успешно удален (HTTP $HTTP_CODE)"
+elif [ "$HTTP_CODE" = "404" ]; then
+    echo "Ошибка: Продукт не найден"
+    cat /tmp/delete_response.json | jq '.code, .message'
+else
+    echo "HTTP Status: $HTTP_CODE"
+    if [ -s /tmp/delete_response.json ]; then
+        cat /tmp/delete_response.json | jq '.'
+    fi
+fi
+rm -f /tmp/delete_response.json
 echo ""
 echo ""
 

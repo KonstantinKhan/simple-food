@@ -2,52 +2,63 @@ package com.khan366kos.repository
 
 import com.khan366kos.common.model.BeId
 import com.khan366kos.common.model.BeProduct
+import com.khan366kos.common.repository.*
 import java.util.concurrent.ConcurrentHashMap
 
-/**
- * In-memory репозиторий для хранения продуктов
- */
-class ProductRepository {
+class ProductRepository : IRepoProduct {
     private val products = ConcurrentHashMap<BeId, BeProduct>()
-    
+
     init {
-        // Инициализируем репозиторий с тестовыми данными
-        TestData.createSampleProducts().forEach { product ->
-            products[product.productId] = product
+        TestData.createSampleProducts().forEach { product -> products[product.productId] = product }
+    }
+
+    override fun products(): DbProductsResponse {
+        val allProducts = products.values.toList()
+        return DbProductsResponse(isSuccess = true, result = allProducts)
+    }
+
+    override fun product(request: DbProductIdRequest): DbProductResponse {
+        val product = products[request.id]
+        return if (product != null) {
+            DbProductResponse(isSuccess = true, result = product)
+        } else {
+            DbProductResponse(isSuccess = false, result = BeProduct.NONE)
         }
     }
 
-    fun findAll(): List<BeProduct> {
-        return products.values.toList()
+    override fun newProduct(request: DbProductRequest): DbProductResponse {
+        products[request.product.productId] = request.product
+        return DbProductResponse(isSuccess = true, result = request.product)
     }
 
-    fun findById(id: BeId): BeProduct? {
-        return products[id]
-    }
-
-    fun create(product: BeProduct): BeProduct {
-        products[product.productId] = product
-        return product
-    }
-
-    fun update(id: BeId, product: BeProduct): BeProduct? {
-        if (!products.containsKey(id)) {
-            return null
+    override fun updatedProduct(request: DbProductRequest): DbProductResponse {
+        val id = request.product.productId
+        return if (products.containsKey(id)) {
+            products[id] = request.product
+            DbProductResponse(isSuccess = true, result = request.product)
+        } else {
+            DbProductResponse(isSuccess = false, result = BeProduct.NONE)
         }
-        products[id] = product
-        return product
     }
 
-    fun delete(id: BeId): Boolean {
-        return products.remove(id) != null
-    }
-
-    fun search(query: String): List<BeProduct> {
-        val lowerQuery = query.lowercase()
-        return products.values.filter { product ->
-            product.productName.lowercase().contains(lowerQuery) ||
-            product.categories.value.any { it.value.lowercase().contains(lowerQuery) }
+    override fun deletedProduct(request: DbProductIdRequest): DbProductResponse {
+        val product = products.remove(request.id)
+        return if (product != null) {
+            DbProductResponse(isSuccess = true, result = product)
+        } else {
+            DbProductResponse(isSuccess = false, result = BeProduct.NONE)
         }
+    }
+
+    override fun foundProducts(request: DbProductFilterRequest): DbProductsResponse {
+        val lowerQuery = request.searchStr.lowercase()
+        val foundProducts =
+                products.values.filter { product ->
+                    product.productName.lowercase().contains(lowerQuery) ||
+                            product.categories.value.any {
+                                it.value.lowercase().contains(lowerQuery)
+                            }
+                }
+        return DbProductsResponse(isSuccess = true, result = foundProducts)
     }
 }
-

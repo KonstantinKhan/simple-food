@@ -10,7 +10,7 @@ kotlin {
 }
 
 dependencies {
-    implementation(project(":common-models"))
+    implementation(project(":simple-food-common-models"))
 
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.kotest.assertions.core)

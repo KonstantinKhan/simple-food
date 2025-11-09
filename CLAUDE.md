@@ -51,7 +51,7 @@ Simple Food is a Kotlin/Ktor multi-module food product and dish management API. 
 
 The project uses a 7-module architecture:
 
-### 1. `common-models`
+### 1. `simple-food-common-models`
 - **Purpose**: Business/domain models (Be* prefix) shared across products and dishes
 - **No external dependencies** at runtime
 - **Key types**: `BeProduct`, `BeDish`, `BeAuthor`, `BeWeight`, `BeId`
@@ -61,7 +61,7 @@ The project uses a 7-module architecture:
 
 ### 2. `measures`
 - **Purpose**: Standalone module for units of measurement (gram, kilogram, liter, etc.)
-- **Dependencies**: `common-models` (for `BeId`)
+- **Dependencies**: `simple-food-common-models` (for `BeId`)
 - **Key types**: `BeMeasure`, `BeMeasureTranslation`, `BeMeasureWithTranslations`
 - **Repository interfaces**: `IRepoMeasure` with request/response models
 - **Implementations**:
@@ -79,7 +79,7 @@ The project uses a 7-module architecture:
 
 ### 4. `transport-mappers`
 - **Purpose**: Bidirectional conversion between transport and business models
-- **Dependencies**: `common-models`, `transport-models`
+- **Dependencies**: `simple-food-common-models`, `transport-models`
 - **Key functions**:
   - `Product.toContext()` - transport → business
   - `BeProduct.toTransport()` - business → transport
@@ -88,7 +88,7 @@ The project uses a 7-module architecture:
 
 ### 5. `repo-in-memory`
 - **Purpose**: In-memory repository implementation using `ConcurrentHashMap`
-- **Dependencies**: `common-models`
+- **Dependencies**: `simple-food-common-models`
 - **Implementation**: `ProductRepository` class
 - **Storage**: Thread-safe in-memory storage (data lost on restart)
 - **Test data**: Pre-loads 3 sample products on initialization
@@ -96,7 +96,7 @@ The project uses a 7-module architecture:
 
 ### 6. `repo-postgresql`
 - **Purpose**: PostgreSQL repository implementation using Exposed ORM (DSL API)
-- **Dependencies**: `common-models`, Exposed, PostgreSQL driver, Flyway, HikariCP
+- **Dependencies**: `simple-food-common-models`, Exposed, PostgreSQL driver, Flyway, HikariCP
 - **Implementation**: `ProductRepositoryPostgres` class
 - **Storage**: Persistent PostgreSQL database with connection pooling
 - **Migrations**: Flyway-managed schema migrations in `src/main/resources/db/migration/`
@@ -143,7 +143,7 @@ HTTP Response (JSON)
 - Error codes: `BAD_REQUEST`, `NOT_FOUND`, `INTERNAL_SERVER_ERROR`
 
 ### Repository Pattern
-- All repositories implement `IRepo*` interfaces from common-models
+- All repositories implement `IRepo*` interfaces from simple-food-common-models
 - Request/Response wrappers: `DbProductRequest`, `DbProductResponse`, etc.
 - Returns `DbProductsResponse` with `isSuccess` flag and `result` list/object
 - **Two implementations available**:

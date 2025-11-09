@@ -10,7 +10,7 @@ kotlin {
 }
 
 dependencies {
-    implementation(project(":common-models"))
+    implementation(project(":simple-food-common-models"))
 
     // Exposed ORM for PostgreSQL repository
     implementation(libs.exposed.core)

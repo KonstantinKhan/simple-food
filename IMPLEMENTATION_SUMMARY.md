@@ -1,7 +1,7 @@
 # Отчет о реализации Simple Food Product API
 
 ## Задача
-Модифицировать Ktor приложение для работы с продуктами питания согласно спецификации OpenAPI `spec-simple-food-api-products.yaml` с использованием модулей `transport-models`, `common-models` и `transport-mappers`.
+Модифицировать Ktor приложение для работы с продуктами питания согласно спецификации OpenAPI `spec-simple-food-api-products.yaml` с использованием модулей `transport-models`, `simple-food-common-models` и `transport-mappers`.
 
 ## Выполненные работы
 
@@ -64,7 +64,7 @@ simple-food-product-app/
 - Использованы сгенерированные из OpenAPI модели: `Product`, `ProductSearchRequest`, `Error`
 - Настроена Jackson сериализация
 
-#### ✅ common-models
+#### ✅ simple-food-common-models
 - Использованы бизнес-модели: `BeProduct`, `BeAuthor`, `BeWeight`, `BeMeasure`, `BeId`
 - Интегрированы value classes: `BeCategories`, `BeCategory`, `BeCalories`, `BeProteins`, `BeFats`, `BeCarbohydrates`
 

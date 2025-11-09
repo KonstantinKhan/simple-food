@@ -35,7 +35,7 @@ simple-food-product-app/
 ## Зависимости
 
 Приложение использует следующие модули проекта:
-- **common-models** - бизнес-модели (BeProduct, BeAuthor, BeWeight и т.д.)
+- **simple-food-common-models** - бизнес-модели (BeProduct, BeAuthor, BeWeight и т.д.)
 - **transport-models** - модели транспортного уровня (сгенерированы из OpenAPI спецификации)
 - **transport-mappers** - мапперы для преобразования между бизнес и транспортными моделями
 

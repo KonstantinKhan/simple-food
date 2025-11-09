@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":common-models"))
+    implementation(project(":simple-food-common-models"))
     implementation(project(":transport-models"))
     implementation(project(":measures"))
     testImplementation(libs.kotest.runner.junit5)

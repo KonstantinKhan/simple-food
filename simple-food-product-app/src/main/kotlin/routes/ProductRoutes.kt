@@ -5,9 +5,9 @@ import com.khan366kos.common.model.BeProduct
 import com.khan366kos.common.repository.DbProductFilterRequest
 import com.khan366kos.common.repository.DbProductIdRequest
 import com.khan366kos.common.repository.DbProductRequest
+import com.khan366kos.common.repository.IRepoProduct
 import com.khan366kos.mapper.toContext.toContext
 import com.khan366kos.mapper.toTransport.toTransport
-import com.khan366kos.repository.ProductRepository
 import com.khan366kos.transport.model.Error
 import com.khan366kos.transport.model.Product
 import com.khan366kos.transport.model.ProductSearchRequest
@@ -17,7 +17,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.util.*
 
-fun Route.productRoutes(repository: ProductRepository) {
+fun Route.productRoutes(repository: IRepoProduct) {
 
     route("/products") {
         get {

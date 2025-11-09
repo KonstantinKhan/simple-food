@@ -14,6 +14,8 @@ import com.khan366kos.transport.model.NutritionalValue as TransportNutritionalVa
 import com.khan366kos.transport.model.Weight as TransportWeight
 
 fun BeMeasure.toTransport(): TransportMeasure = TransportMeasure(
+    id = id.asUUID(),
+    code = code,
     measureName = measureName,
     measureShortName = measureShortName
 )

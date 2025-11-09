@@ -17,9 +17,12 @@ import java.util.UUID
 class BaseTypesMapperTest :
     ShouldSpec({
         should("Measure mapping roundtrip") {
-            val expected = TransportMeasure(measureName = "milliliter", measureShortName = "ml")
+            val testId = UUID.randomUUID()
+            val expected = TransportMeasure(id = testId, code = "MILLILITER", measureName = "milliliter", measureShortName = "ml")
             val actual: BeMeasure = expected.toContext()
             with(actual) {
+                id.asUUID() shouldBe testId
+                code shouldBe "MILLILITER"
                 measureName shouldBe "milliliter"
                 measureShortName shouldBe "ml"
                 toTransport() shouldBe expected
@@ -27,7 +30,8 @@ class BaseTypesMapperTest :
         }
 
         should("Weight mapping roundtrip preserves value and measure") {
-            val measure = TransportMeasure(measureName = "gram", measureShortName = "g")
+            val testId = UUID.randomUUID()
+            val measure = TransportMeasure(id = testId, code = "GRAM", measureName = "gram", measureShortName = "g")
             val expected = TransportWeight(weightValue = 123.4f, measure = measure)
             val actual: BeWeight = expected.toContext()
             with(actual) {

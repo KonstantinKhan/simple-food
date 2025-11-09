@@ -8,6 +8,8 @@ tags:
     description: Product resources
   - name: Dishes
     description: Dish resources
+  - name: Measures
+    description: Measurement unit resources
 servers: []
 paths:
   /products:
@@ -22,6 +24,12 @@ paths:
     $ref: 'spec-simple-food-api-dishes.yaml#/paths/~1dishes~1{id}'
   /dishes/search:
     $ref: 'spec-simple-food-api-dishes.yaml#/paths/~1dishes~1search'
+  /measures:
+    $ref: 'spec-simple-food-api-measures.yaml#/paths/~1measures'
+  /measures/{id}:
+    $ref: 'spec-simple-food-api-measures.yaml#/paths/~1measures~1{id}'
+  /measures/by-code/{code}:
+    $ref: 'spec-simple-food-api-measures.yaml#/paths/~1measures~1by-code~1{code}'
 components:
   schemas:
     Product:

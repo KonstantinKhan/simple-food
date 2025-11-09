@@ -12,6 +12,7 @@ repositories {
 dependencies {
     implementation(project(":common-models"))
     implementation(project(":transport-models"))
+    implementation(project(":measures"))
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.kotest.assertions.core)
 }

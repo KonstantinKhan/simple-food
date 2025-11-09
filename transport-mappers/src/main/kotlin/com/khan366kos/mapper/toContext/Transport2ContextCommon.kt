@@ -50,6 +50,8 @@ fun TransportNutritionalValue.toContextCarbohydrates(): BeCarbohydrates = BeCarb
 )
 
 fun TransportMeasure.toContext(): BeMeasure = BeMeasure(
+    id = BeId(id),
+    code = code,
     measureName = measureName,
     measureShortName = measureShortName
 )

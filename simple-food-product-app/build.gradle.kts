@@ -19,6 +19,8 @@ dependencies {
     implementation(project(":transport-models"))
     implementation(project(":transport-mappers"))
     implementation(project(":repo-in-memory"))
+    implementation(project(":repo-postgresql"))
+    implementation(project(":measures"))
 
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.serialization.jackson)

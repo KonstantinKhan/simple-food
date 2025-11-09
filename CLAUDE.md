@@ -47,7 +47,7 @@ Simple Food is a Kotlin/Ktor multi-module food product and dish management API. 
 
 ## Module Architecture
 
-The project uses a 4-module architecture:
+The project uses a 6-module architecture:
 
 ### 1. `common-models`
 - **Purpose**: Business/domain models (Be* prefix)
@@ -72,18 +72,35 @@ The project uses a 4-module architecture:
   - Same pattern for Dish and common types (Author, Weight, etc.)
 - **Tests**: Kotest-based, ensure bidirectional mapping correctness
 
-### 4. `simple-food-product-app`
+### 4. `repo-in-memory`
+- **Purpose**: In-memory repository implementation using `ConcurrentHashMap`
+- **Dependencies**: `common-models`
+- **Implementation**: `ProductRepository` class
+- **Storage**: Thread-safe in-memory storage (data lost on restart)
+- **Test data**: Pre-loads 3 sample products on initialization
+- **Use case**: Development, testing, and quick prototyping
+
+### 5. `repo-postgresql`
+- **Purpose**: PostgreSQL repository implementation using Exposed ORM (DSL API)
+- **Dependencies**: `common-models`, Exposed, PostgreSQL driver, Flyway, HikariCP
+- **Implementation**: `ProductRepositoryPostgres` class
+- **Storage**: Persistent PostgreSQL database with connection pooling
+- **Migrations**: Flyway-managed schema migrations in `src/main/resources/db/migration/`
+- **Tables**: `products` (40+ columns), `product_categories` (junction table)
+- **Use case**: Production deployments requiring persistent storage
+
+### 6. `simple-food-product-app`
 - **Purpose**: Ktor REST API application
 - **Main class**: `com.khan366kos.Application`
 - **Entry point**: `io.ktor.server.netty.EngineMain`
 - **Structure**:
-  - `Application.kt` - module configuration
+  - `Application.kt` - module configuration and database initialization
+  - `Database.kt` - database connection setup based on repository type
   - `HTTP.kt` - CORS, ContentNegotiation (Jackson)
-  - `Routing.kt` - route registration
+  - `Routing.kt` - route registration and repository selection
   - `plugins/StatusPages.kt` - global error handling
   - `routes/ProductRoutes.kt` - REST endpoints
-  - `repository/ProductRepository.kt` - in-memory ConcurrentHashMap storage
-  - `repository/TestData.kt` - seed data
+- **Repository Selection**: Configured via `application.conf` (defaults to in-memory)
 
 ## Key Architectural Patterns
 
@@ -113,8 +130,11 @@ HTTP Response (JSON)
 ### Repository Pattern
 - All repositories implement `IRepo*` interfaces from common-models
 - Request/Response wrappers: `DbProductRequest`, `DbProductResponse`, etc.
-- Thread-safe in-memory storage using `ConcurrentHashMap`
 - Returns `DbProductsResponse` with `isSuccess` flag and `result` list/object
+- **Two implementations available**:
+  - `repo-in-memory`: Thread-safe ConcurrentHashMap (default)
+  - `repo-postgresql`: Persistent PostgreSQL with Exposed ORM
+- Repository selection via `repository.type` config (`memory` or `postgres`)
 
 ## OpenAPI Specifications
 
@@ -150,11 +170,121 @@ When modifying specs:
 - API endpoints tested via curl or `TEST_COMMANDS.sh` script
 - Repository tests ensure thread-safety
 
+## PostgreSQL Database Setup
+
+### Configuration
+
+The application supports two repository modes configured in `application.conf`:
+
+```hocon
+repository {
+    type = "memory"  # Options: "memory" (default) or "postgres"
+}
+
+postgres {
+    jdbcUrl = "jdbc:postgresql://localhost:5432/simplefood"
+    driver = "org.postgresql.Driver"
+    user = "postgres"
+    password = "postgres"
+    maxPoolSize = 10
+}
+```
+
+**Environment Variable Overrides:**
+- `REPOSITORY_TYPE` - Override repository type
+- `DB_URL` - Override JDBC URL
+- `DB_USER` - Override database user
+- `DB_PASSWORD` - Override database password
+- `DB_MAX_POOL_SIZE` - Override connection pool size
+
+### Local Development with Docker
+
+Quick start with Docker Compose:
+
+```bash
+# Create docker-compose.yml
+cat > docker-compose.yml << 'EOF'
+version: '3.8'
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: simplefood
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+EOF
+
+# Start PostgreSQL
+docker-compose up -d
+
+# Run application with PostgreSQL
+REPOSITORY_TYPE=postgres ./gradlew :simple-food-product-app:run
+```
+
+### Database Migrations
+
+Migrations are automatically run on application startup via Flyway:
+
+- **V1__create_products_table.sql** - Creates schema (products, product_categories tables)
+- **V2__insert_test_data.sql** - Seeds database with 3 sample products
+
+**Migration location:** `repo-postgresql/src/main/resources/db/migration/`
+
+**Schema details:**
+- `products` table: 40+ columns (flattened BeProduct structure with nutritional data)
+- `product_categories` table: Junction table for product-category relationships
+- Indexes on `name` and foreign keys for performance
+
+### Switching Repository Implementations
+
+**In-memory (default):**
+```bash
+./gradlew :simple-food-product-app:run
+```
+
+**PostgreSQL:**
+```bash
+REPOSITORY_TYPE=postgres ./gradlew :simple-food-product-app:run
+```
+
+Or update `application.conf`:
+```hocon
+repository {
+    type = "postgres"
+}
+```
+
+### Database Access
+
+Connect to PostgreSQL:
+```bash
+# Using psql
+psql -h localhost -U postgres -d simplefood
+
+# View products
+SELECT id, name FROM products;
+
+# View categories
+SELECT p.name, pc.category
+FROM products p
+JOIN product_categories pc ON p.id = pc.product_id;
+```
+
 ## Important Notes
 
 - **Java 21** is required (specified in jvmToolchain)
 - **Port 8080** is default, override with `PORT` environment variable
 - **CORS enabled** for all origins (development configuration)
-- **In-memory storage** - data is lost on restart
+- **Storage options**:
+  - In-memory (default): Data is lost on restart, fast development/testing
+  - PostgreSQL: Persistent storage with Flyway migrations
 - **Jackson serialization** - not kotlinx.serialization
-- Test data includes 3 products: Chicken breast, White rice, Olive oil (see `TestData.kt`)
+- Test data includes 3 products: Chicken breast, White rice, Olive oil
+  - Automatically loaded in both in-memory and PostgreSQL modes

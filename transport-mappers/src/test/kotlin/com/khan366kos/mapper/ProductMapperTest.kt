@@ -15,7 +15,7 @@ import com.khan366kos.mapper.toTransport.*
 class ProductMapperTest : ShouldSpec({
 
     fun sampleTransportProduct(): TransportProduct {
-        val measureGram = TransportMeasure(measureName = "gram", measureShortName = "g")
+        val measureGram = TransportMeasure(id = UUID.randomUUID(), code = "GRAM", measureName = "gram", measureShortName = "g")
         fun nv(t: String, s: String, v: Float = 0f) = TransportNutritionalValue(title = t, shortTitle = s, nutritionalValue = v, measure = measureGram)
         return TransportProduct(
             productId = UUID.randomUUID(),

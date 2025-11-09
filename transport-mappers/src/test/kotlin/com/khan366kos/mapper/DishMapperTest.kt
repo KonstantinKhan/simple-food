@@ -16,7 +16,7 @@ import com.khan366kos.common.model.BeDish as CommonDish
 class DishMapperTest : ShouldSpec({
 
     fun sampleDish(): TransportDish {
-        val measureGram = TransportMeasure(measureName = "gram", measureShortName = "g")
+        val measureGram = TransportMeasure(id = UUID.randomUUID(), code = "GRAM", measureName = "gram", measureShortName = "g")
         fun nv(t: String, s: String, v: Float = 0f) = TransportNutritionalValue(title = t, shortTitle = s, nutritionalValue = v, measure = measureGram)
         return TransportDish(
             id = UUID.randomUUID(),

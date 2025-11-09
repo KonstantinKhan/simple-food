@@ -8,15 +8,55 @@ components:
   schemas:
     Measure:
       type: object
-      description: Measurement unit for weights/amounts
+      description: Measurement unit for weights/amounts (single translation)
       properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the measure
+        code:
+          type: string
+          description: Unique code for the measure (e.g., GRAM, KILOGRAM)
         measureName:
           type: string
-          description: Full name of the measurement unit
+          description: Full name of the measurement unit (in requested locale)
         measureShortName:
           type: string
-          description: Short abbreviation of the measurement unit
-      required: [measureName, measureShortName]
+          description: Short abbreviation of the measurement unit (in requested locale)
+      required: [id, code, measureName, measureShortName]
+
+    MeasureTranslation:
+      type: object
+      description: Translation of a measure in a specific locale
+      properties:
+        locale:
+          type: string
+          description: Locale code (e.g., en, ru, fr)
+        measureName:
+          type: string
+          description: Full name in this locale
+        measureShortName:
+          type: string
+          description: Short abbreviation in this locale
+      required: [locale, measureName, measureShortName]
+
+    MeasureDetail:
+      type: object
+      description: Complete measure with all translations
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the measure
+        code:
+          type: string
+          description: Unique code for the measure (e.g., GRAM, KILOGRAM)
+        translations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasureTranslation'
+          description: All available translations
+      required: [id, code, translations]
 
     Weight:
       type: object

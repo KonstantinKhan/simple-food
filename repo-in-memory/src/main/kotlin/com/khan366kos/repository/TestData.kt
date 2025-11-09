@@ -10,7 +10,13 @@ import java.util.UUID
 object TestData {
 
     fun createSampleProducts(): List<BeProduct> {
-        val measure100g = BeMeasure(measureName = "грамм", measureShortName = "г")
+        // GRAM measure (matches V4 migration: 00000000-0000-0000-0000-000000000001)
+        val measure100g = BeMeasure(
+            id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+            code = "GRAM",
+            measureName = "грамм",
+            measureShortName = "г"
+        )
 
         val product1 = BeProduct(
             productId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440001")),

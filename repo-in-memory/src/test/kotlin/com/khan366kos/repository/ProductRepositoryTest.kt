@@ -92,27 +92,27 @@ class ProductRepositoryTest : FunSpec({
                     title = "Калории",
                     shortTitle = "ккал",
                     value = 200.0,
-                    measure = BeMeasure("грамм", "г")
+                    measure = BeMeasure(id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")), code = "GRAM", measureName = "грамм", measureShortName = "г")
                 ),
                 productProteins = BeProteins(
                     title = "Белки",
                     shortTitle = "Б",
                     value = 15.0,
-                    measure = BeMeasure("грамм", "г")
+                    measure = BeMeasure(id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")), code = "GRAM", measureName = "грамм", measureShortName = "г")
                 ),
                 productFats = BeFats(
                     title = "Жиры",
                     shortTitle = "Ж",
                     value = 5.0,
-                    measure = BeMeasure("грамм", "г")
+                    measure = BeMeasure(id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")), code = "GRAM", measureName = "грамм", measureShortName = "г")
                 ),
                 productCarbohydrates = BeCarbohydrates(
                     title = "Углеводы",
                     shortTitle = "У",
                     value = 20.0,
-                    measure = BeMeasure("грамм", "г")
+                    measure = BeMeasure(id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")), code = "GRAM", measureName = "грамм", measureShortName = "г")
                 ),
-                weight = BeWeight(value = 100.0, measure = BeMeasure("грамм", "г")),
+                weight = BeWeight(value = 100.0, measure = BeMeasure(id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")), code = "GRAM", measureName = "грамм", measureShortName = "г")),
                 author = BeAuthor(
                     authorId = BeId(UUID.randomUUID()),
                     name = "Test Author",
@@ -303,6 +303,13 @@ class ProductRepositoryTest : FunSpec({
 }) {
     companion object {
         fun createTestProduct(name: String = "Test Product"): BeProduct {
+            val gramMeasure = BeMeasure(
+                id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+                code = "GRAM",
+                measureName = "грамм",
+                measureShortName = "г"
+            )
+
             return BeProduct(
                 productId = BeId(UUID.randomUUID()),
                 productName = name,
@@ -310,27 +317,27 @@ class ProductRepositoryTest : FunSpec({
                     title = "Калории",
                     shortTitle = "ккал",
                     value = 100.0,
-                    measure = BeMeasure("грамм", "г")
+                    measure = gramMeasure
                 ),
                 productProteins = BeProteins(
                     title = "Белки",
                     shortTitle = "Б",
                     value = 10.0,
-                    measure = BeMeasure("грамм", "г")
+                    measure = gramMeasure
                 ),
                 productFats = BeFats(
                     title = "Жиры",
                     shortTitle = "Ж",
                     value = 5.0,
-                    measure = BeMeasure("грамм", "г")
+                    measure = gramMeasure
                 ),
                 productCarbohydrates = BeCarbohydrates(
                     title = "Углеводы",
                     shortTitle = "У",
                     value = 10.0,
-                    measure = BeMeasure("грамм", "г")
+                    measure = gramMeasure
                 ),
-                weight = BeWeight(value = 100.0, measure = BeMeasure("грамм", "г")),
+                weight = BeWeight(value = 100.0, measure = gramMeasure),
                 author = BeAuthor(
                     authorId = BeId(UUID.randomUUID()),
                     name = "Test Author",

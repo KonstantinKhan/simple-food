@@ -53,6 +53,15 @@ VALUES
     ('00000000-0000-0000-0000-000000000006', 'ru', 'порция', 'порц'),
     ('00000000-0000-0000-0000-000000000006', 'en', 'serving', 'serv');
 
+-- KILOCALORIE measure (for energy/calories)
+INSERT INTO measures (id, code, created_at)
+VALUES ('00000000-0000-0000-0000-000000000007', 'KILOCALORIE', CURRENT_TIMESTAMP);
+
+INSERT INTO measure_translations (measure_id, locale, measure_name, measure_short_name)
+VALUES
+    ('00000000-0000-0000-0000-000000000007', 'ru', 'килокалория', 'ккал'),
+    ('00000000-0000-0000-0000-000000000007', 'en', 'kilocalorie', 'kcal');
+
 -- Add measure_id columns to products table
 ALTER TABLE products ADD COLUMN calories_measure_id UUID REFERENCES measures(id);
 ALTER TABLE products ADD COLUMN proteins_measure_id UUID REFERENCES measures(id);
@@ -60,13 +69,14 @@ ALTER TABLE products ADD COLUMN fats_measure_id UUID REFERENCES measures(id);
 ALTER TABLE products ADD COLUMN carbohydrates_measure_id UUID REFERENCES measures(id);
 ALTER TABLE products ADD COLUMN weight_measure_id UUID REFERENCES measures(id);
 
--- Migrate existing data: Set all measure_ids to GRAM (since all existing test data uses "грамм"/"г")
+-- Migrate existing data:
+-- Calories use KILOCALORIE, nutrients (proteins/fats/carbs) and weight use GRAM
 UPDATE products SET
-    calories_measure_id = '00000000-0000-0000-0000-000000000001',
-    proteins_measure_id = '00000000-0000-0000-0000-000000000001',
-    fats_measure_id = '00000000-0000-0000-0000-000000000001',
-    carbohydrates_measure_id = '00000000-0000-0000-0000-000000000001',
-    weight_measure_id = '00000000-0000-0000-0000-000000000001';
+    calories_measure_id = '00000000-0000-0000-0000-000000000007',      -- KILOCALORIE
+    proteins_measure_id = '00000000-0000-0000-0000-000000000001',      -- GRAM
+    fats_measure_id = '00000000-0000-0000-0000-000000000001',          -- GRAM
+    carbohydrates_measure_id = '00000000-0000-0000-0000-000000000001', -- GRAM
+    weight_measure_id = '00000000-0000-0000-0000-000000000001';        -- GRAM
 
 -- Drop old denormalized measure columns
 ALTER TABLE products DROP COLUMN calories_measure_name;

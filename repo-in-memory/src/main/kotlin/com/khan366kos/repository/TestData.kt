@@ -11,41 +11,49 @@ object TestData {
 
     fun createSampleProducts(): List<BeProduct> {
         // GRAM measure (matches V4 migration: 00000000-0000-0000-0000-000000000001)
-        val measure100g = BeMeasure(
+        val measureGram = BeMeasure(
             id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
             code = "GRAM",
             measureName = "грамм",
             measureShortName = "г"
         )
 
+        // KILOCALORIE measure (matches V4 migration: 00000000-0000-0000-0000-000000000007)
+        val measureKcal = BeMeasure(
+            id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000007")),
+            code = "KILOCALORIE",
+            measureName = "килокалория",
+            measureShortName = "ккал"
+        )
+
         val product1 = BeProduct(
             productId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440001")),
             productName = "Куриная грудка",
             productCalories = BeCalories(
-                title = "Калории",
-                shortTitle = "ккал",
+                title = "Калорийность",
+                shortTitle = "К",
                 value = 165.0,
-                measure = measure100g
+                measure = measureKcal
             ),
             productProteins = BeProteins(
                 title = "Белки",
                 shortTitle = "Б",
                 value = 31.0,
-                measure = measure100g
+                measure = measureGram
             ),
             productFats = BeFats(
                 title = "Жиры",
                 shortTitle = "Ж",
                 value = 3.6,
-                measure = measure100g
+                measure = measureGram
             ),
             productCarbohydrates = BeCarbohydrates(
                 title = "Углеводы",
                 shortTitle = "У",
                 value = 0.0,
-                measure = measure100g
+                measure = measureGram
             ),
-            weight = BeWeight(value = 100.0, measure = measure100g),
+            weight = BeWeight(value = 100.0, measure = measureGram),
             author = BeAuthor(
                 authorId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440099")),
                 name = "Admin",
@@ -64,30 +72,30 @@ object TestData {
             productId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440002")),
             productName = "Рис белый",
             productCalories = BeCalories(
-                title = "Калории",
-                shortTitle = "ккал",
+                title = "Калорийность",
+                shortTitle = "К",
                 value = 365.0,
-                measure = measure100g
+                measure = measureKcal
             ),
             productProteins = BeProteins(
                 title = "Белки",
                 shortTitle = "Б",
                 value = 7.5,
-                measure = measure100g
+                measure = measureGram
             ),
             productFats = BeFats(
                 title = "Жиры",
                 shortTitle = "Ж",
                 value = 0.6,
-                measure = measure100g
+                measure = measureGram
             ),
             productCarbohydrates = BeCarbohydrates(
                 title = "Углеводы",
                 shortTitle = "У",
                 value = 79.0,
-                measure = measure100g
+                measure = measureGram
             ),
-            weight = BeWeight(value = 100.0, measure = measure100g),
+            weight = BeWeight(value = 100.0, measure = measureGram),
             author = BeAuthor(
                 authorId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440099")),
                 name = "Admin",
@@ -106,30 +114,30 @@ object TestData {
             productId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440003")),
             productName = "Оливковое масло",
             productCalories = BeCalories(
-                title = "Калории",
-                shortTitle = "ккал",
+                title = "Калорийность",
+                shortTitle = "К",
                 value = 884.0,
-                measure = measure100g
+                measure = measureKcal
             ),
             productProteins = BeProteins(
                 title = "Белки",
                 shortTitle = "Б",
                 value = 0.0,
-                measure = measure100g
+                measure = measureGram
             ),
             productFats = BeFats(
                 title = "Жиры",
                 shortTitle = "Ж",
                 value = 100.0,
-                measure = measure100g
+                measure = measureGram
             ),
             productCarbohydrates = BeCarbohydrates(
                 title = "Углеводы",
                 shortTitle = "У",
                 value = 0.0,
-                measure = measure100g
+                measure = measureGram
             ),
-            weight = BeWeight(value = 100.0, measure = measure100g),
+            weight = BeWeight(value = 100.0, measure = measureGram),
             author = BeAuthor(
                 authorId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440099")),
                 name = "Admin",

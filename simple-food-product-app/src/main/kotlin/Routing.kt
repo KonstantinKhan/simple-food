@@ -182,6 +182,28 @@ private fun seedDefaultMeasures(repository: IRepoMeasure) {
                     measureShortName = "serv"
                 )
             )
+        ),
+        // KILOCALORIE
+        DbMeasureRequest(
+            measure = BeMeasure(
+                id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000007")),
+                code = "KILOCALORIE",
+                createdAt = Instant.now()
+            ),
+            translations = listOf(
+                BeMeasureTranslation(
+                    measureId = BeId(UUID.fromString("00000000-0000-0000-0000-000000000007")),
+                    locale = "ru",
+                    measureName = "килокалория",
+                    measureShortName = "ккал"
+                ),
+                BeMeasureTranslation(
+                    measureId = BeId(UUID.fromString("00000000-0000-0000-0000-000000000007")),
+                    locale = "en",
+                    measureName = "kilocalorie",
+                    measureShortName = "kcal"
+                )
+            )
         )
     )
 

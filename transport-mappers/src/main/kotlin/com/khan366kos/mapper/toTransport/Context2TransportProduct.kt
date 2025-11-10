@@ -3,14 +3,14 @@ package com.khan366kos.mapper.toTransport
 import com.khan366kos.common.model.BeProduct
 import com.khan366kos.transport.model.Product as TransportProduct
 
-fun BeProduct.toTransport(): TransportProduct = TransportProduct(
+fun BeProduct.toMeasureTranslation(): TransportProduct = TransportProduct(
     productId = productId.asUUID(),
     productName = productName,
-    productCalories = productCalories.toTransport(),
-    productProteins = productProteins.toTransport(),
-    productFats = productFats.toTransport(),
-    productCarbohydrates = productCarbohydrates.toTransport(),
-    weight = weight.toTransport(),
-    author = author.toTransport(),
-    categories = categories.toTransport()
+    productCalories = productCalories.toMeasureTranslation(),
+    productProteins = productProteins.toMeasureTranslation(),
+    productFats = productFats.toMeasureTranslation(),
+    productCarbohydrates = productCarbohydrates.toMeasureTranslation(),
+    weight = weight.toMeasureTranslation(),
+    author = author.toMeasureTranslation(),
+    categories = categories.toMeasureTranslation()
 )

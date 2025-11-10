@@ -1,18 +1,18 @@
 package com.khan366kos.mapper.toTransport
 
-import com.khan366kos.measures.model.BeMeasureWithTranslations
-import com.khan366kos.measures.model.BeMeasureTranslation
+import com.khan366kos.common.model.measure.BeMeasureTranslation
+import com.khan366kos.common.model.measure.BeMeasureWithTranslations
 import com.khan366kos.transport.model.MeasureDetail
 import com.khan366kos.transport.model.MeasureTranslation
 
-fun BeMeasureWithTranslations.toTransport(): MeasureDetail = MeasureDetail(
+fun BeMeasureWithTranslations.toMeasureTranslation(): MeasureDetail = MeasureDetail(
     id = measure.id.asUUID(),
     code = measure.code,
-    translations = translations.map { it.toTransport() }
+    translations = translations.map { it.toMeasureTranslation() }
 )
 
-fun BeMeasureTranslation.toTransport(): MeasureTranslation = MeasureTranslation(
+fun BeMeasureTranslation.toMeasureTranslation(): MeasureTranslation = MeasureTranslation(
     locale = locale,
-    measureName = measureName,
-    measureShortName = measureShortName
+    measureName = name,
+    measureShortName = shortName
 )

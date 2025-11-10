@@ -1,7 +1,7 @@
 package com.khan366kos.mapper
 
 import com.khan366kos.common.model.BeId
-import com.khan366kos.common.model.BeMeasure
+import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.BeWeight
 import com.khan366kos.mapper.toContext.*
 import com.khan366kos.mapper.toTransport.*
@@ -19,12 +19,12 @@ class BaseTypesMapperTest :
         should("Measure mapping roundtrip") {
             val testId = UUID.randomUUID()
             val expected = TransportMeasure(id = testId, code = "MILLILITER", measureName = "milliliter", measureShortName = "ml")
-            val actual: BeMeasure = expected.toContext()
+            val actual: BeMeasureTranslation = expected.toContext()
             with(actual) {
                 id.asUUID() shouldBe testId
                 code shouldBe "MILLILITER"
-                measureName shouldBe "milliliter"
-                measureShortName shouldBe "ml"
+                name shouldBe "milliliter"
+                shortName shouldBe "ml"
                 toTransport() shouldBe expected
             }
         }
@@ -37,7 +37,7 @@ class BaseTypesMapperTest :
             with(actual) {
                 value shouldBe (123.4 plusOrMinus 1e-4)
                 this.measure shouldBe measure.toContext()
-                val back = toTransport()
+                val back = toMeasureTranslation()
                 back shouldBe expected
             }
         }
@@ -55,7 +55,7 @@ class BaseTypesMapperTest :
                 name shouldBe ""
                 email shouldBe ""
             }
-            val back = actual.toTransport()
+            val back = actual.toMeasureTranslation()
             with(back) {
                 id shouldBe UUID.fromString(actual.authorId.value)
                 name.shouldNotBeNull()

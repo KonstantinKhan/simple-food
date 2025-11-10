@@ -1,4 +1,4 @@
-package com.khan366kos.measures.model
+package com.khan366kos.common.model.measure
 
 import com.khan366kos.common.model.BeId
 import java.time.Instant

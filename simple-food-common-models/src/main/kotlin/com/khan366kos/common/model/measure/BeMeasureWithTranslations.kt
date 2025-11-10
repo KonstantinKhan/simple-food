@@ -1,6 +1,4 @@
-package com.khan366kos.measures.model
-
-import com.khan366kos.common.model.BeId
+package com.khan366kos.common.model.measure
 
 /**
  * Measure with all its translations.

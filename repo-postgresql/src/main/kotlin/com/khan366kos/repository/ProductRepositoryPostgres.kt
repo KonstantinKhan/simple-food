@@ -1,6 +1,7 @@
 package com.khan366kos.repository
 
 import com.khan366kos.common.model.*
+import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.simple.*
 import com.khan366kos.common.repository.DbProductFilterRequest
 import com.khan366kos.common.repository.DbProductIdRequest
@@ -14,8 +15,6 @@ import com.khan366kos.repository.tables.ProductCategoriesTable
 import com.khan366kos.repository.tables.ProductsTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
 
@@ -244,10 +243,10 @@ class ProductRepositoryPostgres : IRepoProduct {
     /**
      * Load measure from database by ID with translation
      */
-    private fun loadMeasure(measureId: UUID, locale: String = "ru"): BeMeasure {
+    private fun loadMeasure(measureId: UUID, locale: String = "ru"): BeMeasureTranslation {
         val measureRow = MeasuresTable.selectAll()
             .where { MeasuresTable.id eq measureId }
-            .singleOrNull() ?: return BeMeasure.NONE
+            .singleOrNull() ?: return BeMeasureTranslation.NONE
 
         val translationRow = MeasureTranslationsTable.selectAll()
             .where {
@@ -262,18 +261,18 @@ class ProductRepositoryPostgres : IRepoProduct {
             .firstOrNull()
 
         return if (translation != null) {
-            BeMeasure(
+            BeMeasureTranslation(
                 id = BeId(measureRow[MeasuresTable.id]),
                 code = measureRow[MeasuresTable.code],
-                measureName = translation[MeasureTranslationsTable.measureName],
-                measureShortName = translation[MeasureTranslationsTable.measureShortName]
+                name = translation[MeasureTranslationsTable.measureName],
+                shortName = translation[MeasureTranslationsTable.measureShortName]
             )
         } else {
-            BeMeasure(
+            BeMeasureTranslation(
                 id = BeId(measureRow[MeasuresTable.id]),
                 code = measureRow[MeasuresTable.code],
-                measureName = "",
-                measureShortName = ""
+                name = "",
+                shortName = ""
             )
         }
     }

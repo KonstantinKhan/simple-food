@@ -1,6 +1,7 @@
 package com.khan366kos.repository
 
 import com.khan366kos.common.model.*
+import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.simple.*
 import java.util.UUID
 
@@ -11,19 +12,19 @@ object TestData {
 
     fun createSampleProducts(): List<BeProduct> {
         // GRAM measure (matches V4 migration: 00000000-0000-0000-0000-000000000001)
-        val measureGram = BeMeasure(
+        val measureGram = BeMeasureTranslation(
             id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
             code = "GRAM",
-            measureName = "грамм",
-            measureShortName = "г"
+            name = "грамм",
+            shortName = "г"
         )
 
         // KILOCALORIE measure (matches V4 migration: 00000000-0000-0000-0000-000000000007)
-        val measureKcal = BeMeasure(
+        val measureKcal = BeMeasureTranslation(
             id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000007")),
             code = "KILOCALORIE",
-            measureName = "килокалория",
-            measureShortName = "ккал"
+            name = "килокалория",
+            shortName = "ккал"
         )
 
         val product1 = BeProduct(

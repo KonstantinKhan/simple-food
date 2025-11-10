@@ -1,7 +1,7 @@
 package com.khan366kos.mapper.toTransport
 
 import com.khan366kos.common.model.BeAuthor
-import com.khan366kos.common.model.BeMeasure
+import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.BeWeight
 import com.khan366kos.common.model.simple.BeCalories
 import com.khan366kos.common.model.simple.BeCarbohydrates
@@ -13,48 +13,48 @@ import com.khan366kos.transport.model.Measure as TransportMeasure
 import com.khan366kos.transport.model.NutritionalValue as TransportNutritionalValue
 import com.khan366kos.transport.model.Weight as TransportWeight
 
-fun BeMeasure.toTransport(): TransportMeasure = TransportMeasure(
+fun BeMeasureTranslation.toTransport(): TransportMeasure = TransportMeasure(
     id = id.asUUID(),
     code = code,
-    measureName = measureName,
-    measureShortName = measureShortName
+    measureName = name,
+    measureShortName = shortName
 )
 
-fun BeWeight.toTransport(): TransportWeight = TransportWeight(
+fun BeWeight.toMeasureTranslation(): TransportWeight = TransportWeight(
     weightValue = value.toFloat(),
     measure = measure.toTransport()
 )
 
-fun BeCategories.toTransport(): List<String> = value.map { it.value }
+fun BeCategories.toMeasureTranslation(): List<String> = value.map { it.value }
 
-fun BeAuthor.toTransport(): TransportAuthor = TransportAuthor(
+fun BeAuthor.toMeasureTranslation(): TransportAuthor = TransportAuthor(
     id = authorId.asUUID(),
     name = name,
     email = email
 )
 
-fun BeCalories.toTransport(): TransportNutritionalValue = TransportNutritionalValue(
+fun BeCalories.toMeasureTranslation(): TransportNutritionalValue = TransportNutritionalValue(
     title = title,
     shortTitle = shortTitle,
     nutritionalValue = value.toFloat(),
     measure = measure.toTransport()
 )
 
-fun BeProteins.toTransport(): TransportNutritionalValue = TransportNutritionalValue(
+fun BeProteins.toMeasureTranslation(): TransportNutritionalValue = TransportNutritionalValue(
     title = title,
     shortTitle = shortTitle,
     nutritionalValue = value.toFloat(),
     measure = measure.toTransport()
 )
 
-fun BeFats.toTransport(): TransportNutritionalValue = TransportNutritionalValue(
+fun BeFats.toMeasureTranslation(): TransportNutritionalValue = TransportNutritionalValue(
     title = title,
     shortTitle = shortTitle,
     nutritionalValue = value.toFloat(),
     measure = measure.toTransport()
 )
 
-fun BeCarbohydrates.toTransport(): TransportNutritionalValue = TransportNutritionalValue(
+fun BeCarbohydrates.toMeasureTranslation(): TransportNutritionalValue = TransportNutritionalValue(
     title = title,
     shortTitle = shortTitle,
     nutritionalValue = value.toFloat(),

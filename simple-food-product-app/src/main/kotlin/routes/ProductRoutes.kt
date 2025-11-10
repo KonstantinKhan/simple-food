@@ -7,7 +7,7 @@ import com.khan366kos.common.repository.DbProductIdRequest
 import com.khan366kos.common.repository.DbProductRequest
 import com.khan366kos.common.repository.IRepoProduct
 import com.khan366kos.mapper.toContext.toContext
-import com.khan366kos.mapper.toTransport.toTransport
+import com.khan366kos.mapper.toTransport.toMeasureTranslation
 import com.khan366kos.transport.model.Error
 import com.khan366kos.transport.model.Product
 import com.khan366kos.transport.model.ProductSearchRequest
@@ -22,7 +22,7 @@ fun Route.productRoutes(repository: IRepoProduct) {
     route("/products") {
         get {
             val response = repository.products()
-            call.respond(response.result.map { it.toTransport() })
+            call.respond(response.result.map { it.toMeasureTranslation() })
         }
 
         post {
@@ -31,7 +31,7 @@ fun Route.productRoutes(repository: IRepoProduct) {
                 val beProduct = transportProduct.toContext()
                 val response = repository.newProduct(DbProductRequest(beProduct))
                 if (response.isSuccess) {
-                    call.respond(HttpStatusCode.Created, response.result.toTransport())
+                    call.respond(HttpStatusCode.Created, response.result.toMeasureTranslation())
                 } else {
                     call.respond(
                             HttpStatusCode.BadRequest,
@@ -50,7 +50,7 @@ fun Route.productRoutes(repository: IRepoProduct) {
             try {
                 val searchRequest = call.receive<ProductSearchRequest>()
                 val response = repository.foundProducts(DbProductFilterRequest(searchRequest.query))
-                call.respond(response.result.map { it.toTransport() })
+                call.respond(response.result.map { it.toMeasureTranslation() })
             } catch (e: Exception) {
                 call.respond(
                         HttpStatusCode.BadRequest,
@@ -82,7 +82,7 @@ fun Route.productRoutes(repository: IRepoProduct) {
                 val response = repository.product(DbProductIdRequest(productId))
 
                 if (response.isSuccess && response.result != BeProduct.NONE) {
-                    call.respond(response.result.toTransport())
+                    call.respond(response.result.toMeasureTranslation())
                 } else {
                     call.respond(
                             HttpStatusCode.NotFound,
@@ -124,7 +124,7 @@ fun Route.productRoutes(repository: IRepoProduct) {
                 val response = repository.updatedProduct(DbProductRequest(beProduct))
 
                 if (response.isSuccess && response.result != BeProduct.NONE) {
-                    call.respond(response.result.toTransport())
+                    call.respond(response.result.toMeasureTranslation())
                 } else {
                     call.respond(
                             HttpStatusCode.NotFound,

@@ -1,9 +1,9 @@
 package com.khan366kos.measures.repository
 
 import com.khan366kos.common.model.BeId
-import com.khan366kos.measures.model.BeMeasure
-import com.khan366kos.measures.model.BeMeasureTranslation
-import com.khan366kos.measures.model.BeMeasureWithTranslations
+import com.khan366kos.common.model.measure.BeMeasure
+import com.khan366kos.common.model.measure.BeMeasureTranslation
+import com.khan366kos.common.model.measure.BeMeasureWithTranslations
 import java.util.concurrent.ConcurrentHashMap
 
 class MeasureRepositoryInMemory : IRepoMeasure {
@@ -37,8 +37,8 @@ class MeasureRepositoryInMemory : IRepoMeasure {
                 val lower = searchText.lowercase()
                 measureWithTranslations.measure.code.lowercase().contains(lower) ||
                 measureWithTranslations.translations.any { translation ->
-                    translation.measureName.lowercase().contains(lower) ||
-                    translation.measureShortName.lowercase().contains(lower)
+                    translation.name.lowercase().contains(lower) ||
+                    translation.shortName.lowercase().contains(lower)
                 }
             } ?: true
 

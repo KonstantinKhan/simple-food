@@ -63,7 +63,7 @@ class DishMapperTest : ShouldSpec({
     should("Common -> Transport roundtrip preserves semantic values") {
         val expected = sampleDish()
         val context: CommonDish = expected.toContext()
-        val actual: TransportDish = context.toTransport()
+        val actual: TransportDish = context.toMeasureTranslation()
 
         actual shouldBe expected
         actual.author?.id shouldBe expected.author?.id

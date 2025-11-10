@@ -2,7 +2,7 @@ package com.khan366kos.routes
 
 import com.khan366kos.common.model.BeId
 import com.khan366kos.mapper.toContext.toContext
-import com.khan366kos.mapper.toTransport.toTransport
+import com.khan366kos.mapper.toTransport.toMeasureTranslation
 import com.khan366kos.measures.repository.DbMeasureCodeRequest
 import com.khan366kos.measures.repository.DbMeasureFilterRequest
 import com.khan366kos.measures.repository.DbMeasureIdRequest
@@ -29,7 +29,7 @@ fun Route.measureRoutes(repository: IRepoMeasure) {
                 repository.measures()
             }
 
-            call.respond(response.result.map { it.toTransport() })
+            call.respond(response.result.map { it.toMeasureTranslation() })
         }
 
         post {
@@ -43,7 +43,7 @@ fun Route.measureRoutes(repository: IRepoMeasure) {
                     )
                 )
                 if (response.isSuccess) {
-                    call.respond(HttpStatusCode.Created, response.result.toTransport())
+                    call.respond(HttpStatusCode.Created, response.result.toMeasureTranslation())
                 } else {
                     call.respond(
                         HttpStatusCode.BadRequest,
@@ -72,7 +72,7 @@ fun Route.measureRoutes(repository: IRepoMeasure) {
                 val uuid = UUID.fromString(idParam)
                 val response = repository.measure(DbMeasureIdRequest(BeId(uuid)))
                 if (response.isSuccess) {
-                    call.respond(response.result.toTransport())
+                    call.respond(response.result.toMeasureTranslation())
                 } else {
                     call.respond(
                         HttpStatusCode.NotFound,
@@ -118,7 +118,7 @@ fun Route.measureRoutes(repository: IRepoMeasure) {
                     )
                 )
                 if (response.isSuccess) {
-                    call.respond(response.result.toTransport())
+                    call.respond(response.result.toMeasureTranslation())
                 } else {
                     call.respond(
                         HttpStatusCode.NotFound,
@@ -179,7 +179,7 @@ fun Route.measureRoutes(repository: IRepoMeasure) {
 
             val response = repository.measureByCode(DbMeasureCodeRequest(code))
             if (response.isSuccess) {
-                call.respond(response.result.toTransport())
+                call.respond(response.result.toMeasureTranslation())
             } else {
                 call.respond(
                     HttpStatusCode.NotFound,

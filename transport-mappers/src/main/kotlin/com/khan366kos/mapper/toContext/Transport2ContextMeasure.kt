@@ -1,9 +1,9 @@
 package com.khan366kos.mapper.toContext
 
 import com.khan366kos.common.model.BeId
-import com.khan366kos.measures.model.BeMeasure
-import com.khan366kos.measures.model.BeMeasureWithTranslations
-import com.khan366kos.measures.model.BeMeasureTranslation
+import com.khan366kos.common.model.measure.BeMeasure
+import com.khan366kos.common.model.measure.BeMeasureTranslation
+import com.khan366kos.common.model.measure.BeMeasureWithTranslations
 import com.khan366kos.transport.model.MeasureDetail
 import com.khan366kos.transport.model.MeasureTranslation
 import java.time.Instant
@@ -18,8 +18,8 @@ fun MeasureDetail.toContext(): BeMeasureWithTranslations = BeMeasureWithTranslat
 )
 
 fun MeasureTranslation.toContext(measureId: BeId): BeMeasureTranslation = BeMeasureTranslation(
-    measureId = measureId,
+    id = measureId,
     locale = locale,
-    measureName = measureName,
-    measureShortName = measureShortName
+    name = measureName,
+    shortName = measureShortName
 )

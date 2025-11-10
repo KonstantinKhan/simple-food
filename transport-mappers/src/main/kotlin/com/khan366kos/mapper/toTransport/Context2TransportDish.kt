@@ -5,23 +5,23 @@ import com.khan366kos.common.model.BeProductPortion
 import com.khan366kos.transport.model.Dish as TransportDish
 import com.khan366kos.transport.model.ProductPortion as TransportProductPortion
 
-fun BeProductPortion.toTransport(): TransportProductPortion = TransportProductPortion(
+fun BeProductPortion.toMeasureTranslation(): TransportProductPortion = TransportProductPortion(
 	productId = productId.asUUID(),
-	weight = weight.toTransport()
+	weight = weight.toMeasureTranslation()
 )
 
-fun BeDish.toTransport(): TransportDish = TransportDish(
+fun BeDish.toMeasureTranslation(): TransportDish = TransportDish(
 	id = id.asUUID(),
 	title = title,
-	calories = calories.toTransport(),
-	proteins = proteins.toTransport(),
-	fats = fats.toTransport(),
-	carbohydrates = carbohydrates.toTransport(),
-	weight = weight.toTransport(),
-	author = author.toTransport(),
-	categories = categories.toTransport(),
+	calories = calories.toMeasureTranslation(),
+	proteins = proteins.toMeasureTranslation(),
+	fats = fats.toMeasureTranslation(),
+	carbohydrates = carbohydrates.toMeasureTranslation(),
+	weight = weight.toMeasureTranslation(),
+	author = author.toMeasureTranslation(),
+	categories = categories.toMeasureTranslation(),
 	recipes = recipes,
-	products = products.map { it.toTransport() }
+	products = products.map { it.toMeasureTranslation() }
 )
 
 

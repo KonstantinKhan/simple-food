@@ -1,6 +1,7 @@
 package com.khan366kos.repository
 
 import com.khan366kos.common.model.*
+import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.repository.*
 import com.khan366kos.common.model.simple.*
 import io.kotest.core.spec.style.FunSpec
@@ -92,27 +93,53 @@ class ProductRepositoryTest : FunSpec({
                     title = "Калории",
                     shortTitle = "ккал",
                     value = 200.0,
-                    measure = BeMeasure(id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")), code = "GRAM", measureName = "грамм", measureShortName = "г")
+                    measure = BeMeasureTranslation(
+                        id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+                        code = "GRAM",
+                        name = "грамм",
+                        shortName = "г"
+                    )
                 ),
                 productProteins = BeProteins(
                     title = "Белки",
                     shortTitle = "Б",
                     value = 15.0,
-                    measure = BeMeasure(id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")), code = "GRAM", measureName = "грамм", measureShortName = "г")
+                    measure = BeMeasureTranslation(
+                        id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+                        code = "GRAM",
+                        name = "грамм",
+                        shortName = "г"
+                    )
                 ),
                 productFats = BeFats(
                     title = "Жиры",
                     shortTitle = "Ж",
                     value = 5.0,
-                    measure = BeMeasure(id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")), code = "GRAM", measureName = "грамм", measureShortName = "г")
+                    measure = BeMeasureTranslation(
+                        id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+                        code = "GRAM",
+                        name = "грамм",
+                        shortName = "г"
+                    )
                 ),
                 productCarbohydrates = BeCarbohydrates(
                     title = "Углеводы",
                     shortTitle = "У",
                     value = 20.0,
-                    measure = BeMeasure(id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")), code = "GRAM", measureName = "грамм", measureShortName = "г")
+                    measure = BeMeasureTranslation(
+                        id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+                        code = "GRAM",
+                        name = "грамм",
+                        shortName = "г"
+                    )
                 ),
-                weight = BeWeight(value = 100.0, measure = BeMeasure(id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")), code = "GRAM", measureName = "грамм", measureShortName = "г")),
+                weight = BeWeight(value = 100.0, measure = BeMeasureTranslation(
+                    id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+                    code = "GRAM",
+                    name = "грамм",
+                    shortName = "г"
+                )
+                ),
                 author = BeAuthor(
                     authorId = BeId(UUID.randomUUID()),
                     name = "Test Author",
@@ -303,11 +330,11 @@ class ProductRepositoryTest : FunSpec({
 }) {
     companion object {
         fun createTestProduct(name: String = "Test Product"): BeProduct {
-            val gramMeasure = BeMeasure(
+            val gramMeasure = BeMeasureTranslation(
                 id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
                 code = "GRAM",
-                measureName = "грамм",
-                measureShortName = "г"
+                name = "грамм",
+                shortName = "г"
             )
 
             return BeProduct(

@@ -51,7 +51,7 @@ class ProductMapperTest : ShouldSpec({
     should("Common -> Transport roundtrip preserves semantic values") {
         val expected = sampleTransportProduct()
         val context: CommonProduct = expected.toContext()
-        val actual: TransportProduct = context.toTransport()
+        val actual: TransportProduct = context.toMeasureTranslation()
 
         actual shouldBe expected
         actual.author?.id shouldBe expected.author?.id

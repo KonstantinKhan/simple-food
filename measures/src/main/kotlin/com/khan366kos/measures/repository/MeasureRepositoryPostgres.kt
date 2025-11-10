@@ -1,14 +1,12 @@
 package com.khan366kos.measures.repository
 
 import com.khan366kos.common.model.BeId
-import com.khan366kos.measures.model.BeMeasure
-import com.khan366kos.measures.model.BeMeasureTranslation
-import com.khan366kos.measures.model.BeMeasureWithTranslations
+import com.khan366kos.common.model.measure.BeMeasure
+import com.khan366kos.common.model.measure.BeMeasureTranslation
+import com.khan366kos.common.model.measure.BeMeasureWithTranslations
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.time.Instant
 import java.util.UUID
 
 /**
@@ -42,10 +40,10 @@ class MeasureRepositoryPostgres : IRepoMeasure {
                     val searchMatch = request.searchText?.let { searchText ->
                         val lower = searchText.lowercase()
                         measureWithTranslations.measure.code.lowercase().contains(lower) ||
-                        measureWithTranslations.translations.any { translation ->
-                            translation.measureName.lowercase().contains(lower) ||
-                            translation.measureShortName.lowercase().contains(lower)
-                        }
+                                measureWithTranslations.translations.any { translation ->
+                                    translation.name.lowercase().contains(lower) ||
+                                            translation.shortName.lowercase().contains(lower)
+                                }
                     } ?: true
 
                     localeMatch && searchMatch
@@ -125,8 +123,8 @@ class MeasureRepositoryPostgres : IRepoMeasure {
                     MeasureTranslationsTable.insert {
                         it[measureId] = measureUuid
                         it[locale] = translation.locale
-                        it[measureName] = translation.measureName
-                        it[measureShortName] = translation.measureShortName
+                        it[measureName] = translation.name
+                        it[measureShortName] = translation.shortName
                     }
                 }
 
@@ -164,8 +162,8 @@ class MeasureRepositoryPostgres : IRepoMeasure {
                     MeasureTranslationsTable.insert {
                         it[measureId] = measureUuid
                         it[locale] = translation.locale
-                        it[measureName] = translation.measureName
-                        it[measureShortName] = translation.measureShortName
+                        it[measureName] = translation.name
+                        it[measureShortName] = translation.shortName
                     }
                 }
 
@@ -232,8 +230,8 @@ class MeasureRepositoryPostgres : IRepoMeasure {
                         MeasureTranslationsTable.insert {
                             it[measureId] = measureUuid
                             it[locale] = translation.locale
-                            it[measureName] = translation.measureName
-                            it[measureShortName] = translation.measureShortName
+                            it[measureName] = translation.name
+                            it[measureShortName] = translation.shortName
                         }
                     }
 
@@ -274,10 +272,10 @@ class MeasureRepositoryPostgres : IRepoMeasure {
 
     private fun rowToBeMeasureTranslation(row: ResultRow, measureId: BeId): BeMeasureTranslation {
         return BeMeasureTranslation(
-            measureId = measureId,
+            id = measureId,
             locale = row[MeasureTranslationsTable.locale],
-            measureName = row[MeasureTranslationsTable.measureName],
-            measureShortName = row[MeasureTranslationsTable.measureShortName]
+            name = row[MeasureTranslationsTable.measureName],
+            shortName = row[MeasureTranslationsTable.measureShortName]
         )
     }
 }

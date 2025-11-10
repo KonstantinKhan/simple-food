@@ -2,7 +2,7 @@ package com.khan366kos.mapper.toContext
 
 import com.khan366kos.common.model.BeAuthor
 import com.khan366kos.common.model.BeId
-import com.khan366kos.common.model.BeMeasure
+import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.BeWeight
 import com.khan366kos.common.model.simple.BeCategories
 import com.khan366kos.common.model.simple.BeCategory
@@ -49,11 +49,11 @@ fun TransportNutritionalValue.toContextCarbohydrates(): BeCarbohydrates = BeCarb
     measure = measure.toContext()
 )
 
-fun TransportMeasure.toContext(): BeMeasure = BeMeasure(
+fun TransportMeasure.toContext(): BeMeasureTranslation = BeMeasureTranslation(
     id = BeId(id),
     code = code,
-    measureName = measureName,
-    measureShortName = measureShortName
+    name = measureName,
+    shortName = measureShortName
 )
 
 fun TransportWeight.toContext(): BeWeight = BeWeight(

@@ -33,7 +33,7 @@ Architecture Summary
 - measures - Units of measurement with i18n
 - transport-models - OpenAPI-generated DTOs
 - transport-mappers - Business ↔ Transport model conversion
-- repo-in-memory - ConcurrentHashMap storage
+- simple-food-repo-in-memory - ConcurrentHashMap storage
 - repo-postgresql - PostgreSQL with Exposed ORM
 - simple-food-product-app - Ktor REST API
 

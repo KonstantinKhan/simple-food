@@ -17,7 +17,7 @@ application {
 dependencies {
     implementation(project(":simple-food-common-models"))
     implementation(project(":transport-models"))
-    implementation(project(":transport-mappers"))
+    implementation(project(":simple-food-transport-mappers"))
     implementation(project(":simple-food-repo-in-memory"))
     implementation(project(":simple-food-repo-postgresql"))
     implementation(project(":simple-food-measures"))

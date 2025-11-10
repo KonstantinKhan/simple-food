@@ -9,7 +9,7 @@ dependencyResolutionManagement {
 include(":simple-food-product-app")
 include(":transport-models")
 include(":simple-food-common-models")
-include(":transport-mappers")
+include(":simple-food-transport-mappers")
 include(":simple-food-repo-in-memory")
 include(":simple-food-repo-postgresql")
 include(":simple-food-measures")

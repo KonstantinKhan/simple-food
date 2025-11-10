@@ -10,6 +10,7 @@ import com.khan366kos.mapper.toContext.toContext
 import com.khan366kos.mapper.toTransport.toMeasureTranslation
 import com.khan366kos.transport.model.Error
 import com.khan366kos.transport.model.Product
+import com.khan366kos.transport.model.ProductCreateRequest
 import com.khan366kos.transport.model.ProductSearchRequest
 import io.ktor.http.*
 import io.ktor.server.request.*
@@ -27,7 +28,7 @@ fun Route.productRoutes(repository: IRepoProduct) {
 
         post {
             try {
-                val transportProduct = call.receive<Product>()
+                val transportProduct = call.receive<ProductCreateRequest>()
                 val beProduct = transportProduct.toContext()
                 val response = repository.newProduct(DbProductRequest(beProduct))
                 if (response.isSuccess) {

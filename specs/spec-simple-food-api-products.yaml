@@ -28,7 +28,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '#/components/schemas/ProductCreateRequest'
       responses:
         '201':
           description: Created
@@ -161,6 +161,29 @@ components:
           type: array
           items:
             type: string
-      required: [productId, productName, productCalories, productProteins, productFats, productCarbohydrates, weight]
+      required: [productName, productCalories, productProteins, productFats, productCarbohydrates, weight]
 
+    ProductCreateRequest:
+      type: object
+      description: Product nutritional unit to create
+      properties:
+        productName:
+          type: string
+        productCalories:
+          $ref: './spec-simple-food-common.yaml#/components/schemas/NutritionalValue'
+        productProteins:
+          $ref: './spec-simple-food-common.yaml#/components/schemas/NutritionalValue'
+        productFats:
+          $ref: './spec-simple-food-common.yaml#/components/schemas/NutritionalValue'
+        productCarbohydrates:
+          $ref: './spec-simple-food-common.yaml#/components/schemas/NutritionalValue'
+        weight:
+          $ref: './spec-simple-food-common.yaml#/components/schemas/Weight'
+        author:
+          $ref: './spec-simple-food-common.yaml#/components/schemas/Author'
+        categories:
+          type: array
+          items:
+            type: string
+      required: [productName, productCalories, productProteins, productFats, productCarbohydrates, weight]
 

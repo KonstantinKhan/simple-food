@@ -87,7 +87,7 @@ class ProductRepositoryTest : FunSpec({
     context("Create new product") {
         test("should add new product successfully") {
             val newProduct = BeProduct(
-                productId = BeId(UUID.randomUUID()),
+                productId = BeId.NONE,
                 productName = "Тестовый продукт",
                 productCalories = BeCalories(
                     title = "Калории",
@@ -152,10 +152,12 @@ class ProductRepositoryTest : FunSpec({
             val response = repository.newProduct(request)
 
             response.isSuccess shouldBe true
-            response.result.productId shouldBe newProduct.productId
+            response.result.productId shouldNotBe BeId.NONE
+            // Verify it's a valid UUID
+            UUID.fromString(response.result.productId.value)
 
-            // Verify product is stored
-            val getResponse = repository.product(DbProductIdRequest(id = newProduct.productId))
+            // Verify product is stored with the generated ID
+            val getResponse = repository.product(DbProductIdRequest(id = response.result.productId))
             getResponse.isSuccess shouldBe true
             getResponse.result.productName shouldBe "Тестовый продукт"
         }
@@ -168,6 +170,30 @@ class ProductRepositoryTest : FunSpec({
 
             val finalCount = repository.products().result.size
             finalCount shouldBe initialCount + 1
+        }
+
+        test("should auto-generate UUID when creating product") {
+            val newProduct = createTestProduct("Auto-generated ID Test")
+
+            // Verify input has no ID
+            newProduct.productId shouldBe BeId.NONE
+
+            val response = repository.newProduct(DbProductRequest(product = newProduct))
+
+            response.isSuccess shouldBe true
+            // Verify returned product has a generated ID
+            response.result.productId shouldNotBe BeId.NONE
+            response.result.productId.value shouldNotBe ""
+
+            // Verify it's a valid UUID format
+            val generatedUuid = UUID.fromString(response.result.productId.value)
+            generatedUuid shouldNotBe null
+
+            // Verify product can be retrieved by generated ID
+            val getResponse = repository.product(DbProductIdRequest(id = response.result.productId))
+            getResponse.isSuccess shouldBe true
+            getResponse.result.productName shouldBe "Auto-generated ID Test"
+            getResponse.result.productId shouldBe response.result.productId
         }
     }
 
@@ -313,10 +339,14 @@ class ProductRepositoryTest : FunSpec({
         }
 
         test("should handle concurrent writes safely") {
+            val responses = mutableListOf<DbProductResponse>()
             val threads = (1..5).map { index ->
                 Thread {
                     val newProduct = createTestProduct("Product $index")
-                    repository.newProduct(DbProductRequest(product = newProduct))
+                    val response = repository.newProduct(DbProductRequest(product = newProduct))
+                    synchronized(responses) {
+                        responses.add(response)
+                    }
                 }
             }
             threads.forEach { it.start() }
@@ -324,6 +354,16 @@ class ProductRepositoryTest : FunSpec({
 
             val finalCount = repository.products().result.size
             finalCount shouldBe 8  // 3 initial + 5 new
+
+            // Verify all products have generated IDs
+            responses.forEach { response ->
+                response.result.productId shouldNotBe BeId.NONE
+                response.result.productId.value shouldNotBe ""
+            }
+
+            // Verify all generated IDs are unique
+            val generatedIds = responses.map { it.result.productId }.toSet()
+            generatedIds shouldHaveSize 5
         }
     }
 
@@ -338,7 +378,7 @@ class ProductRepositoryTest : FunSpec({
             )
 
             return BeProduct(
-                productId = BeId(UUID.randomUUID()),
+                productId = BeId.NONE,
                 productName = name,
                 productCalories = BeCalories(
                     title = "Калории",

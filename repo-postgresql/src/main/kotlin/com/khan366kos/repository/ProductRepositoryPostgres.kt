@@ -56,11 +56,9 @@ class ProductRepositoryPostgres : IRepoProduct {
         return transaction {
             try {
                 val product = request.product
-                val productUuid = UUID.fromString(product.productId.value)
 
                 // Insert product
-                ProductsTable.insert {
-                    it[id] = productUuid
+                val insertedId = ProductsTable.insert {
                     it[name] = product.productName
 
                     // Calories
@@ -95,17 +93,17 @@ class ProductRepositoryPostgres : IRepoProduct {
                     it[authorId] = UUID.fromString(product.author.authorId.value)
                     it[authorName] = product.author.name
                     it[authorEmail] = product.author.email
-                }
+                } get ProductsTable.id
 
                 // Insert categories
                 product.categories.value.forEach { category ->
                     ProductCategoriesTable.insert {
-                        it[productId] = productUuid
+                        it[productId] = insertedId
                         it[ProductCategoriesTable.category] = category.value
                     }
                 }
 
-                DbProductResponse(result = product, isSuccess = true)
+                DbProductResponse(result = product.copy(productId = BeId(insertedId)), isSuccess = true)
             } catch (e: Exception) {
                 DbProductResponse(result = BeProduct.NONE, isSuccess = false)
             }
@@ -251,7 +249,7 @@ class ProductRepositoryPostgres : IRepoProduct {
         val translationRow = MeasureTranslationsTable.selectAll()
             .where {
                 (MeasureTranslationsTable.measureId eq measureId) and
-                (MeasureTranslationsTable.locale eq locale)
+                        (MeasureTranslationsTable.locale eq locale)
             }
             .singleOrNull()
 

@@ -3,6 +3,7 @@ package com.khan366kos.repository
 import com.khan366kos.common.model.BeId
 import com.khan366kos.common.model.BeProduct
 import com.khan366kos.common.repository.*
+import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
 class ProductRepository : IRepoProduct {
@@ -27,8 +28,10 @@ class ProductRepository : IRepoProduct {
     }
 
     override fun newProduct(request: DbProductRequest): DbProductResponse {
-        products[request.product.productId] = request.product
-        return DbProductResponse(isSuccess = true, result = request.product)
+        val generatedId = BeId(UUID.randomUUID())
+        val productWithId = request.product.copy(productId = generatedId)
+        products[generatedId] = productWithId
+        return DbProductResponse(isSuccess = true, result = productWithId)
     }
 
     override fun updatedProduct(request: DbProductRequest): DbProductResponse {

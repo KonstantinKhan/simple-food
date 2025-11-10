@@ -4,11 +4,13 @@ import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
 import java.util.UUID
 import com.khan366kos.transport.model.Product as TransportProduct
+import com.khan366kos.transport.model.ProductCreateRequest
 import com.khan366kos.transport.model.Measure as TransportMeasure
 import com.khan366kos.transport.model.Weight as TransportWeight
 import com.khan366kos.transport.model.Author as TransportAuthor
 import com.khan366kos.transport.model.NutritionalValue as TransportNutritionalValue
 import com.khan366kos.common.model.BeProduct as CommonProduct
+import com.khan366kos.common.model.BeId
 import com.khan366kos.mapper.toContext.*
 import com.khan366kos.mapper.toTransport.*
 
@@ -56,6 +58,37 @@ class ProductMapperTest : ShouldSpec({
         actual shouldBe expected
         actual.author?.id shouldBe expected.author?.id
         actual.categories shouldBe expected.categories
+    }
+
+    fun sampleProductCreateRequest(): ProductCreateRequest {
+        val measureGram = TransportMeasure(id = UUID.randomUUID(), code = "GRAM", measureName = "gram", measureShortName = "g")
+        fun nv(t: String, s: String, v: Float = 0f) = TransportNutritionalValue(title = t, shortTitle = s, nutritionalValue = v, measure = measureGram)
+        return ProductCreateRequest(
+            productName = "Chicken breast",
+            productCalories = nv("Calories", "kcal", 165f),
+            productProteins = nv("Proteins", "g", 31f),
+            productFats = nv("Fats", "g", 3.6f),
+            productCarbohydrates = nv("Carbohydrates", "g", 0f),
+            weight = TransportWeight(weightValue = 100f, measure = measureGram),
+            author = TransportAuthor(id = UUID.randomUUID(), name = "John", email = "john@example.com"),
+            categories = listOf("protein", "diet")
+        )
+    }
+
+    should("ProductCreateRequest -> Common mapping assigns BeId.NONE and maps all fields") {
+        val createRequest = sampleProductCreateRequest()
+        val actual = createRequest.toContext()
+
+        actual.productId shouldBe BeId.NONE
+        actual.productName shouldBe createRequest.productName
+        actual.productCalories.title shouldBe createRequest.productCalories.title
+        actual.productCalories.shortTitle shouldBe createRequest.productCalories.shortTitle
+        actual.productProteins.title shouldBe createRequest.productProteins.title
+        actual.productFats.title shouldBe createRequest.productFats.title
+        actual.productCarbohydrates.title shouldBe createRequest.productCarbohydrates.title
+        actual.weight.value shouldBe createRequest.weight.weightValue.toDouble()
+        actual.author.authorId.value shouldBe createRequest.author?.id.toString()
+        actual.categories.value.map { it.value } shouldBe createRequest.categories
     }
 })
 

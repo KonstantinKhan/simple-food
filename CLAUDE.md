@@ -1,92 +1,159 @@
 # CLAUDE.md
 
-Project guidance for Kotlin/Ktor multi-module food management API with OpenAPI specs and clean architecture.
+Guide for Claude AI to work with Simple Food project - Kotlin/Ktor API for food product management.
 
 ## Quick Commands
 
-### build
+```bash
+# Build
+./gradlew build
 
-`./gradlew build`
+# Run (in-memory)
+./gradlew :simple-food-product-app:run
 
-### run
+# Run (PostgreSQL)
+REPOSITORY_TYPE=postgres ./gradlew :simple-food-product-app:run
 
-`./gradlew :simple-food-product-app:run`
+# Tests
+./gradlew test
 
-## Testing
+# Generate OpenAPI models
+./gradlew :simple-food-transport-models:openApiGenerate
+```
 
-### all tests
+## Project Structure
 
-`./gradlew test`
+**7 modules:**
 
-### concrete test
+| Module | Description |
+|--------|-------------|
+| `simple-food-common-models` | Business models (Be* prefix) |
+| `simple-food-measures` | Units of measurement with i18n (ru/en) |
+| `simple-food-transport-models` | OpenAPI-generated DTOs |
+| `simple-food-transport-mappers` | Business ↔ Transport mapping |
+| `simple-food-repo-in-memory` | ConcurrentHashMap repository |
+| `simple-food-repo-postgresql` | PostgreSQL + Exposed + Flyway |
+| `simple-food-product-app` | Ktor REST API (port 8080) |
 
-`./gradlew :transport-mappers:test --tests "com.khan366kos.mapper.ProductMapperTest"`
+## Data Flow
 
-## OpenAPI Model Generation
-
-`./gradlew :simple-food-transport-models:openApiGenerate`
-
-Architecture Summary
-7 Modules:
-
-- simple-food-common-models - Business models (Be* prefix)
-- measures - Units of measurement with i18n
-- simple-food-transport-models - OpenAPI-generated DTOs
-- transport-mappers - Business ↔ Transport model conversion
-- simple-food-repo-in-memory - ConcurrentHashMap storage
-- simple-food-repo-postgresql - PostgreSQL with Exposed ORM
-- simple-food-product-app - Ktor REST API
+```text
+HTTP → Transport DTO → Business Model → Repository
+       (toContext())                   (IRepoProduct)
+                                            ↓
+Repository → Business Model → Transport DTO → HTTP
+             (toTransport())
+```
 
 ## Key Patterns
 
-### Model Flow
+### Working with Models
 
-```text
-HTTP Request → Transport Model → Business Model → Repository → Response
-    (Jackson)      (toContext())                 (toTransport())
+```kotlin
+// Transport → Business
+val beProduct = transportProduct.toContext()
+
+// Business → Transport
+val transportProduct = beProduct.toTransport()
 ```
 
-## Repository Pattern
+### Repositories
 
-- Interfaces: IRepoProduct, IRepoMeasure in common-models
-- Implementations:
-    - memory (default) - ConcurrentHashMap, volatile
-    - postgres - PostgreSQL with Flyway migrations
-- Config: repository.type in application.conf or REPOSITORY_TYPE env
+**Interfaces:** `IRepoProduct`, `IRepoMeasure` in `simple-food-common-models`
 
-## Development Guide
+**Implementations:**
+- `memory` (default) - ConcurrentHashMap, volatile
+- `postgres` - PostgreSQL, Exposed ORM, Flyway migrations
 
-### Adding Features
+**Configuration:**
+```hocon
+repository.type = "memory"  # or "postgres"
+```
 
-1. Update OpenAPI spec in specs/
-2. Regenerate: ./gradlew :simple-food-transport-models:openApiGenerate
-3. Update mappers in transport-mappers with tests
-4. Implement routes using .toContext() and .toTransport()
+Environment variable: `REPOSITORY_TYPE`
 
-## Database Setup
+### OpenAPI Workflow
+
+1. Update spec in `specs/spec-simple-food-api-*.yaml`
+2. Regenerate: `./gradlew :simple-food-transport-models:openApiGenerate`
+3. Update mapping in `simple-food-transport-mappers` + tests
+4. Implement routes using `.toContext()` and `.toTransport()`
+
+## Database
+
+### Quick Start PostgreSQL (Docker)
 
 ```bash
-# Quick PostgreSQL with Docker
-docker run -d -p 5432:5432 -e POSTGRES_DB=simplefood -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres postgres:16
-
-# Run with PostgreSQL
-REPOSITORY_TYPE=postgres ./gradlew :simple-food-product-app:run
+docker run -d -p 5432:5432 \
+  -e POSTGRES_DB=simplefood \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=postgres \
+  postgres:16
 ```
 
-## Important Notes
+### Environment Variables
 
-- Java 21 required
-- Port 8080 default, override with PORT env
-- Test data: 3 sample products + 7 measures with ru/en translations
-- Error format: Standardized Error(code, message, details) from OpenAPI
-- Always use mappers - never manual model conversions
+```bash
+REPOSITORY_TYPE=postgres
+DB_URL=jdbc:postgresql://localhost:5432/simplefood
+DB_USER=postgres
+DB_PASSWORD=postgres
+```
+
+## Important Details
+
+- **Java:** 21+
+- **Port:** 8080 (override: `PORT` env var)
+- **Test data:** 3 products + 7 units of measurement (ru/en)
+- **Error format:** OpenAPI `Error(code, message, details)`
+- **CORS:** configured for development
+- **Mapping:** always use mappers, never manually
+
+## Documentation
+
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - architecture details
+- [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) - developer guide
+- [docs/API_REFERENCE.md](docs/API_REFERENCE.md) - API endpoints reference
+- [simple-food-product-app/README.md](simple-food-product-app/README.md) - app README
+- [simple-food-product-app/API_EXAMPLES.md](simple-food-product-app/API_EXAMPLES.md) - API request examples
+- [IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md) - implementation report
+
+## Technologies
+
+- Kotlin 2.2.20
+- Ktor 3.3.1
+- Jackson (JSON)
+- OpenAPI Generator
+- PostgreSQL 16 + Exposed ORM
+- Flyway (migrations)
+- Gradle 8.5+
 
 ## Configuration
 
+`simple-food-product-app/src/main/resources/application.conf`:
+
 ```hocon
-# application.conf
-repository.type = "memory"  # or "postgres"
-postgres.jdbcUrl = "jdbc:postgresql://localhost:5432/simplefood"
+ktor {
+    deployment {
+        port = 8080
+        port = ${?PORT}
+    }
+}
+
+repository {
+    type = "memory"
+    type = ${?REPOSITORY_TYPE}
+}
+
+postgres {
+    jdbcUrl = "jdbc:postgresql://localhost:5432/simplefood"
+    jdbcUrl = ${?DB_URL}
+    username = ${?DB_USER}
+    password = ${?DB_PASSWORD}
+}
 ```
 
-Environment variables: REPOSITORY_TYPE, DB_URL, DB_USER, DB_PASSWORD
+---
+
+**Version:** 1.1  
+**Updated:** November 10, 2025

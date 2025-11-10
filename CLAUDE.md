@@ -24,14 +24,14 @@ Project guidance for Kotlin/Ktor multi-module food management API with OpenAPI s
 
 ## OpenAPI Model Generation
 
-`./gradlew :transport-models:openApiGenerate`
+`./gradlew :simple-food-transport-models:openApiGenerate`
 
 Architecture Summary
 7 Modules:
 
 - simple-food-common-models - Business models (Be* prefix)
 - measures - Units of measurement with i18n
-- transport-models - OpenAPI-generated DTOs
+- simple-food-transport-models - OpenAPI-generated DTOs
 - transport-mappers - Business ↔ Transport model conversion
 - simple-food-repo-in-memory - ConcurrentHashMap storage
 - simple-food-repo-postgresql - PostgreSQL with Exposed ORM
@@ -59,7 +59,7 @@ HTTP Request → Transport Model → Business Model → Repository → Response
 ### Adding Features
 
 1. Update OpenAPI spec in specs/
-2. Regenerate: ./gradlew :transport-models:openApiGenerate
+2. Regenerate: ./gradlew :simple-food-transport-models:openApiGenerate
 3. Update mappers in transport-mappers with tests
 4. Implement routes using .toContext() and .toTransport()
 

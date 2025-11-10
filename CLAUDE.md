@@ -34,7 +34,7 @@ Architecture Summary
 - transport-models - OpenAPI-generated DTOs
 - transport-mappers - Business ↔ Transport model conversion
 - simple-food-repo-in-memory - ConcurrentHashMap storage
-- repo-postgresql - PostgreSQL with Exposed ORM
+- simple-food-repo-postgresql - PostgreSQL with Exposed ORM
 - simple-food-product-app - Ktor REST API
 
 ## Key Patterns

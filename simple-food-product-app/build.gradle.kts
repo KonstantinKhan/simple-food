@@ -19,7 +19,7 @@ dependencies {
     implementation(project(":transport-models"))
     implementation(project(":transport-mappers"))
     implementation(project(":simple-food-repo-in-memory"))
-    implementation(project(":repo-postgresql"))
+    implementation(project(":simple-food-repo-postgresql"))
     implementation(project(":simple-food-measures"))
 
     implementation(libs.ktor.server.core)

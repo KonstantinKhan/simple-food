@@ -114,9 +114,6 @@ DB_PASSWORD=postgres
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - architecture details
 - [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) - developer guide
 - [docs/API_REFERENCE.md](docs/API_REFERENCE.md) - API endpoints reference
-- [simple-food-product-app/README.md](simple-food-product-app/README.md) - app README
-- [simple-food-product-app/API_EXAMPLES.md](simple-food-product-app/API_EXAMPLES.md) - API request examples
-- [IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md) - implementation report
 
 ## Technologies
 

@@ -13,57 +13,19 @@ http://localhost:8080
 Get list of all products
 
 **Response:** `200 OK`
-```json
-[
-  {
-    "id": "550e8400-e29b-41d4-a716-446655440001",
-    "name": "Chicken Breast",
-    "categories": ["Meat", "Poultry", "Protein Foods"],
-    "weight": {
-      "value": 100.0,
-      "measure": {
-        "id": "gram-id",
-        "name": "Gram"
-      }
-    },
-    "calories": 165.0,
-    "proteins": 31.0,
-    "fats": 3.6,
-    "carbohydrates": 0.0
-  }
-]
-```
+
+See example response: [examples/responses/get-products-200.json](examples/responses/get-products-200.json)
 
 #### POST /products
 Create new product
 
 **Request Body:**
-```json
-{
-  "name": "Buckwheat",
-  "categories": ["Grains", "Side Dish"],
-  "weight": {
-    "value": 100.0,
-    "measure": {
-      "id": "gram-id",
-      "name": "Gram"
-    }
-  },
-  "calories": 343.0,
-  "proteins": 13.3,
-  "fats": 3.4,
-  "carbohydrates": 62.1
-}
-```
+
+See example request: [examples/requests/post-products.json](examples/requests/post-products.json)
 
 **Response:** `201 Created`
-```json
-{
-  "id": "550e8400-e29b-41d4-a716-446655440004",
-  "name": "Buckwheat",
-  ...
-}
-```
+
+See example response: [examples/responses/post-products-201.json](examples/responses/post-products-201.json)
 
 **Errors:**
 - `400 Bad Request` - invalid data
@@ -75,13 +37,8 @@ Get product by ID
 - `id` (path, UUID) - product ID
 
 **Response:** `200 OK`
-```json
-{
-  "id": "550e8400-e29b-41d4-a716-446655440001",
-  "name": "Chicken Breast",
-  ...
-}
-```
+
+See example response: [examples/responses/get-products-id-200.json](examples/responses/get-products-id-200.json)
 
 **Errors:**
 - `400 Bad Request` - invalid UUID
@@ -94,22 +51,12 @@ Update product
 - `id` (path, UUID) - product ID
 
 **Request Body:**
-```json
-{
-  "name": "Chicken Breast (updated)",
-  "categories": ["Meat", "Poultry"],
-  ...
-}
-```
+
+See example request: [examples/requests/put-products-id.json](examples/requests/put-products-id.json)
 
 **Response:** `200 OK`
-```json
-{
-  "id": "550e8400-e29b-41d4-a716-446655440001",
-  "name": "Chicken Breast (updated)",
-  ...
-}
-```
+
+See example response: [examples/responses/put-products-id-200.json](examples/responses/put-products-id-200.json)
 
 **Errors:**
 - `400 Bad Request` - invalid data
@@ -130,40 +77,23 @@ Delete product
 Search products
 
 **Request Body:**
-```json
-{
-  "query": "chick",
-  "categories": ["Meat"]
-}
-```
+
+See example request: [examples/requests/post-products-search.json](examples/requests/post-products-search.json)
 
 **Response:** `200 OK`
-```json
-[
-  {
-    "id": "550e8400-e29b-41d4-a716-446655440001",
-    "name": "Chicken Breast",
-    ...
-  }
-]
-```
+
+See example response: [examples/responses/post-products-search-200.json](examples/responses/post-products-search-200.json)
 
 **Features:**
-- Case-insensitive search by name
-- Filter by categories (optional)
+- Case-insensitive search by name and categories
+- Free-text query over title and categories
 - Empty `query` returns all products
 
 ## Error Format
 
 All errors are returned in unified format:
 
-```json
-{
-  "code": "NOT_FOUND",
-  "message": "Product with id 550e8400-e29b-41d4-a716-446655440999 not found",
-  "details": []
-}
-```
+See example error format: [examples/responses/error-format.json](examples/responses/error-format.json)
 
 ### Error Codes
 
@@ -177,51 +107,6 @@ All errors are returned in unified format:
 
 ### curl
 
-```bash
-# Get all products
-curl http://localhost:8080/products
-
-# Get product by ID
-curl http://localhost:8080/products/550e8400-e29b-41d4-a716-446655440001
-
-# Create product
-curl -X POST http://localhost:8080/products \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Buckwheat",
-    "categories": ["Grains"],
-    "weight": {"value": 100.0, "measure": {"id": "gram", "name": "Gram"}},
-    "calories": 343.0,
-    "proteins": 13.3,
-    "fats": 3.4,
-    "carbohydrates": 62.1
-  }'
-
-# Search products
-curl -X POST http://localhost:8080/products/search \
-  -H "Content-Type: application/json" \
-  -d '{"query": "chick"}'
-
-# Update product
-curl -X PUT http://localhost:8080/products/550e8400-e29b-41d4-a716-446655440001 \
-  -H "Content-Type: application/json" \
-  -d '{...}'
-
-# Delete product
-curl -X DELETE http://localhost:8080/products/550e8400-e29b-41d4-a716-446655440001
-```
-
-### httpie
-
-```bash
-# Get all products
-http GET :8080/products
-
-# Search
-http POST :8080/products/search query="chick"
-
-# Create
-http POST :8080/products name="Buckwheat" categories:='["Grains"]' ...
-```
+See curl examples: [examples/curl-examples.md](examples/curl-examples.md)
 
 More details: [simple-food-product-app/API_EXAMPLES.md](../simple-food-product-app/API_EXAMPLES.md)

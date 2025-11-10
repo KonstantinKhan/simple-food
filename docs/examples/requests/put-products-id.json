@@ -1,0 +1,64 @@
+{
+  "productId": "550e8400-e29b-41d4-a716-446655440001",
+  "productName": "Chicken Breast (updated)",
+  "categories": ["Meat", "Poultry"],
+  "weight": {
+    "weightValue": 100.0,
+    "measure": {
+      "id": "550e8400-e29b-41d4-a716-446655440010",
+      "code": "GRAM",
+      "measureName": "Gram",
+      "measureShortName": "g"
+    }
+  },
+  "productCalories": {
+    "title": "Calories",
+    "shortTitle": "kcal",
+    "nutritionalValue": 165.0,
+    "measure": {
+      "id": "550e8400-e29b-41d4-a716-446655440010",
+      "code": "GRAM",
+      "measureName": "Gram",
+      "measureShortName": "g"
+    }
+  },
+  "productProteins": {
+    "title": "Proteins",
+    "shortTitle": "g",
+    "nutritionalValue": 31.0,
+    "measure": {
+      "id": "550e8400-e29b-41d4-a716-446655440010",
+      "code": "GRAM",
+      "measureName": "Gram",
+      "measureShortName": "g"
+    }
+  },
+  "productFats": {
+    "title": "Fats",
+    "shortTitle": "g",
+    "nutritionalValue": 3.6,
+    "measure": {
+      "id": "550e8400-e29b-41d4-a716-446655440010",
+      "code": "GRAM",
+      "measureName": "Gram",
+      "measureShortName": "g"
+    }
+  },
+  "productCarbohydrates": {
+    "title": "Carbohydrates",
+    "shortTitle": "g",
+    "nutritionalValue": 0.0,
+    "measure": {
+      "id": "550e8400-e29b-41d4-a716-446655440010",
+      "code": "GRAM",
+      "measureName": "Gram",
+      "measureShortName": "g"
+    }
+  },
+  "author": {
+    "id": "550e8400-e29b-41d4-a716-446655440020",
+    "name": "John Doe",
+    "email": "john@example.com"
+  }
+}
+

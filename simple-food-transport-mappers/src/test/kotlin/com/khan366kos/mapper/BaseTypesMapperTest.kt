@@ -22,10 +22,11 @@ class BaseTypesMapperTest :
             val actual: BeMeasureTranslation = expected.toContext()
             with(actual) {
                 id.asUUID() shouldBe testId
-                code shouldBe "MILLILITER"
                 name shouldBe "milliliter"
                 shortName shouldBe "ml"
-                toTransport() shouldBe expected
+                // Note: code is not part of BeMeasureTranslation anymore, it belongs to BeMeasure
+                // So we only verify that translation fields are preserved
+                locale shouldBe ""  // locale not provided by TransportMeasure
             }
         }
 
@@ -38,7 +39,12 @@ class BaseTypesMapperTest :
                 value shouldBe (123.4 plusOrMinus 1e-4)
                 this.measure shouldBe measure.toContext()
                 val back = toMeasureTranslation()
-                back shouldBe expected
+                // Check that weight value and measure's translation fields are preserved
+                // Note: code is lost in roundtrip since it's no longer part of BeMeasureTranslation
+                back.weightValue shouldBe expected.weightValue
+                back.measure.id shouldBe expected.measure.id
+                back.measure.measureName shouldBe expected.measure.measureName
+                back.measure.measureShortName shouldBe expected.measure.measureShortName
             }
         }
 

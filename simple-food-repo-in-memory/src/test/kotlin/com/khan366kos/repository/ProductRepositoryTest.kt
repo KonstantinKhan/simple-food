@@ -95,7 +95,7 @@ class ProductRepositoryTest : FunSpec({
                     value = 200.0,
                     measure = BeMeasureTranslation(
                         id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                        code = "GRAM",
+                        locale = "ru",
                         name = "грамм",
                         shortName = "г"
                     )
@@ -106,7 +106,7 @@ class ProductRepositoryTest : FunSpec({
                     value = 15.0,
                     measure = BeMeasureTranslation(
                         id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                        code = "GRAM",
+                        locale = "ru",
                         name = "грамм",
                         shortName = "г"
                     )
@@ -117,7 +117,7 @@ class ProductRepositoryTest : FunSpec({
                     value = 5.0,
                     measure = BeMeasureTranslation(
                         id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                        code = "GRAM",
+                        locale = "ru",
                         name = "грамм",
                         shortName = "г"
                     )
@@ -128,14 +128,14 @@ class ProductRepositoryTest : FunSpec({
                     value = 20.0,
                     measure = BeMeasureTranslation(
                         id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                        code = "GRAM",
+                        locale = "ru",
                         name = "грамм",
                         shortName = "г"
                     )
                 ),
                 weight = BeWeight(value = 100.0, measure = BeMeasureTranslation(
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                    code = "GRAM",
+                    locale = "ru",
                     name = "грамм",
                     shortName = "г"
                 )
@@ -372,7 +372,7 @@ class ProductRepositoryTest : FunSpec({
         fun createTestProduct(name: String = "Test Product"): BeProduct {
             val gramMeasure = BeMeasureTranslation(
                 id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                code = "GRAM",
+                locale = "ru",
                 name = "грамм",
                 shortName = "г"
             )

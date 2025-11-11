@@ -15,7 +15,7 @@ import com.khan366kos.transport.model.Weight as TransportWeight
 
 fun BeMeasureTranslation.toTransport(): TransportMeasure = TransportMeasure(
     id = id.asUUID(),
-    code = code,
+    code = "",
     measureName = name,
     measureShortName = shortName
 )

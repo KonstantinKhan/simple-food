@@ -13,7 +13,6 @@ import com.khan366kos.common.model.BeId
 data class BeMeasureTranslation(
     val id: BeId = BeId.NONE,
     val locale: String = "",
-    val code: String = "",
     val name: String = "",
     val shortName: String = ""
 ) {

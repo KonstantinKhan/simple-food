@@ -14,7 +14,7 @@ object TestData {
         // GRAM measure (matches V4 migration: 00000000-0000-0000-0000-000000000001)
         val measureGram = BeMeasureTranslation(
             id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-            code = "GRAM",
+            locale = "ru",
             name = "грамм",
             shortName = "г"
         )
@@ -22,7 +22,7 @@ object TestData {
         // KILOCALORIE measure (matches V4 migration: 00000000-0000-0000-0000-000000000007)
         val measureKcal = BeMeasureTranslation(
             id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000007")),
-            code = "KILOCALORIE",
+            locale = "ru",
             name = "килокалория",
             shortName = "ккал"
         )

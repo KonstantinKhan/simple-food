@@ -114,6 +114,7 @@ DB_PASSWORD=postgres
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - architecture details
 - [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) - developer guide
 - [docs/API_REFERENCE.md](docs/API_REFERENCE.md) - API endpoints reference
+- [docs/TESTING.md](docs/TESTING.md)
 
 ## Technologies
 

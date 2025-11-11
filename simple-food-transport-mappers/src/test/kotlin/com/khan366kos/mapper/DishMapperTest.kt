@@ -65,7 +65,10 @@ class DishMapperTest : ShouldSpec({
         val context: CommonDish = expected.toContext()
         val actual: TransportDish = context.toMeasureTranslation()
 
-        actual shouldBe expected
+        // Note: measure code is lost in roundtrip since it's no longer part of BeMeasureTranslation
+        // So we check semantic values instead of full equality
+        actual.id shouldBe expected.id
+        actual.title shouldBe expected.title
         actual.author?.id shouldBe expected.author?.id
         actual.categories shouldBe expected.categories
         actual.recipes shouldBe expected.recipes

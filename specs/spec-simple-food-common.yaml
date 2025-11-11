@@ -58,6 +58,20 @@ components:
           description: All available translations
       required: [id, code, translations]
 
+    MeasureDetailCreateRequest:
+      type: object
+      description: Request to create a new measure (ID generated server-side)
+      properties:
+        code:
+          type: string
+          description: Unique code for the measure (e.g., GRAM, KILOGRAM)
+        translations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasureTranslation'
+          description: All available translations
+      required: [ code, translations ]
+
     Weight:
       type: object
       description: Quantity with measurement unit

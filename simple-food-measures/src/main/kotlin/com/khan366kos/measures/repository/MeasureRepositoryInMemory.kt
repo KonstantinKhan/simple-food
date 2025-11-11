@@ -4,6 +4,7 @@ import com.khan366kos.common.model.BeId
 import com.khan366kos.common.model.measure.BeMeasure
 import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.measure.BeMeasureWithTranslations
+import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
 class MeasureRepositoryInMemory : IRepoMeasure {
@@ -36,10 +37,10 @@ class MeasureRepositoryInMemory : IRepoMeasure {
             val searchMatch = request.searchText?.let { searchText ->
                 val lower = searchText.lowercase()
                 measureWithTranslations.measure.code.lowercase().contains(lower) ||
-                measureWithTranslations.translations.any { translation ->
-                    translation.name.lowercase().contains(lower) ||
-                    translation.shortName.lowercase().contains(lower)
-                }
+                        measureWithTranslations.translations.any { translation ->
+                            translation.name.lowercase().contains(lower) ||
+                                    translation.shortName.lowercase().contains(lower)
+                        }
             } ?: true
 
             localeMatch && searchMatch
@@ -76,20 +77,22 @@ class MeasureRepositoryInMemory : IRepoMeasure {
 
     override fun newMeasure(request: DbMeasureRequest): DbMeasureResponse {
         val measure = request.measure
+        val generatedId = BeId(UUID.randomUUID())
+        val measureWithId = measure.copy(id = generatedId)
 
         // Check if code already exists
         if (measures.values.any { it.code == measure.code }) {
             return DbMeasureResponse(isSuccess = false, result = BeMeasureWithTranslations.NONE)
         }
 
-        measures[measure.id] = measure
+        measures[generatedId] = measureWithId
         if (request.translations.isNotEmpty()) {
-            translations[measure.id] = request.translations.toMutableList()
+            translations[generatedId] = request.translations.map { it.copy(id = generatedId) }.toMutableList()
         }
 
         return DbMeasureResponse(
             isSuccess = true,
-            result = BeMeasureWithTranslations(measure, request.translations)
+            result = BeMeasureWithTranslations(measureWithId, request.translations)
         )
     }
 

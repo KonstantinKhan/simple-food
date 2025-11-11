@@ -10,6 +10,7 @@ import com.khan366kos.measures.repository.DbMeasureRequest
 import com.khan366kos.measures.repository.IRepoMeasure
 import com.khan366kos.transport.model.Error
 import com.khan366kos.transport.model.MeasureDetail
+import com.khan366kos.transport.model.MeasureDetailCreateRequest
 import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
@@ -34,8 +35,8 @@ fun Route.measureRoutes(repository: IRepoMeasure) {
 
         post {
             try {
-                val transportMeasure = call.receive<MeasureDetail>()
-                val beMeasure = transportMeasure.toContext()
+                val createRequest = call.receive<MeasureDetailCreateRequest>()
+                val beMeasure = createRequest.toContext()
                 val response = repository.newMeasure(
                     DbMeasureRequest(
                         measure = beMeasure.measure,
@@ -47,7 +48,7 @@ fun Route.measureRoutes(repository: IRepoMeasure) {
                 } else {
                     call.respond(
                         HttpStatusCode.BadRequest,
-                        Error(code = "BAD_REQUEST", message = "Failed to create measure")
+                        Error(code = "BAD_REQUEST", message = "Failed to create measure (code may already exist)")
                     )
                 }
             } catch (e: Exception) {

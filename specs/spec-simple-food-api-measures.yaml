@@ -42,7 +42,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './spec-simple-food-common.yaml#/components/schemas/MeasureDetail'
+              $ref: './spec-simple-food-common.yaml#/components/schemas/MeasureDetailCreateRequest'
       responses:
         '201':
           description: Created

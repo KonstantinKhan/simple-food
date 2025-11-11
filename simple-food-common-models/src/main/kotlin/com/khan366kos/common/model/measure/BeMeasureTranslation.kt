@@ -11,7 +11,7 @@ import com.khan366kos.common.model.BeId
  * @property shortName Short abbreviation in this locale
  */
 data class BeMeasureTranslation(
-    val id: BeId = BeId.Companion.NONE,
+    val id: BeId = BeId.NONE,
     val locale: String = "",
     val code: String = "",
     val name: String = "",

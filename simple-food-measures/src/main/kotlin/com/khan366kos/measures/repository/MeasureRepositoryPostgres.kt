@@ -103,7 +103,6 @@ class MeasureRepositoryPostgres : IRepoMeasure {
         return transaction {
             try {
                 val measure = request.measure
-                val measureUuid = UUID.fromString(measure.id.value)
 
                 // Check if code already exists
                 val existingCode = MeasuresTable.selectAll().where { MeasuresTable.code eq measure.code }.count()
@@ -111,27 +110,25 @@ class MeasureRepositoryPostgres : IRepoMeasure {
                     return@transaction DbMeasureResponse(result = BeMeasureWithTranslations.NONE, isSuccess = false)
                 }
 
-                // Insert measure
-                MeasuresTable.insert {
-                    it[id] = measureUuid
+                // Insert measure - let database generate ID and createdAt
+                val insertedId = MeasuresTable.insert {
                     it[code] = measure.code
-                    it[createdAt] = measure.createdAt
-                }
+                    // id and createdAt use database defaults
+                } get MeasuresTable.id
 
-                // Insert translations
+                // Insert translations with generated ID
                 request.translations.forEach { translation ->
                     MeasureTranslationsTable.insert {
-                        it[measureId] = measureUuid
+                        it[measureId] = insertedId
                         it[locale] = translation.locale
                         it[measureName] = translation.name
                         it[measureShortName] = translation.shortName
                     }
                 }
 
-                DbMeasureResponse(
-                    result = BeMeasureWithTranslations(measure, request.translations),
-                    isSuccess = true
-                )
+                // Fetch and return the created measure with database-generated values
+                val createdMeasure = measure(DbMeasureIdRequest(id = BeId(insertedId)))
+                createdMeasure
             } catch (e: Exception) {
                 DbMeasureResponse(result = BeMeasureWithTranslations.NONE, isSuccess = false)
             }

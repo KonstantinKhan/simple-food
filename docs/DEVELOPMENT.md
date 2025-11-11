@@ -24,19 +24,7 @@
 REPOSITORY_TYPE=postgres ./gradlew :simple-food-product-app:run
 ```
 
-Application available at `http://localhost:8080`
-
-### Testing
-```bash
-# All tests
-./gradlew test
-
-# Specific test
-./gradlew :simple-food-transport-mappers:test --tests "com.khan366kos.mapper.ProductMapperTest"
-
-# Module tests
-./gradlew :simple-food-repo-in-memory:test
-```
+Application available at `http://localhost:8080
 
 ## Working with OpenAPI
 

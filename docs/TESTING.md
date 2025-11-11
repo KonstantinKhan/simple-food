@@ -1,3 +1,20 @@
 # Testing guide
 
-Use kotest-test-writer to write tests.
+Use kotest-test-writer to write and run tests.
+
+## Testing
+
+### All tests
+
+`./gradlew test`
+
+### Specific test
+
+`./gradlew :simple-food-transport-mappers:test --tests "com.khan366kos.mapper.ProductMapperTest"`
+
+### Module tests
+
+`./gradlew :simple-food-repo-in-memory:test`
+
+### Postgresql
+- Use TestContainer

@@ -260,14 +260,14 @@ class ProductRepositoryPostgres : IRepoProduct {
 
         return if (translation != null) {
             BeMeasureTranslation(
-                id = BeId(measureRow[MeasuresTable.id]),
+                id = BeId(measureRow[MeasuresTable.id].value),
                 locale = translation[MeasureTranslationsTable.locale],
                 name = translation[MeasureTranslationsTable.measureName],
                 shortName = translation[MeasureTranslationsTable.measureShortName]
             )
         } else {
             BeMeasureTranslation(
-                id = BeId(measureRow[MeasuresTable.id]),
+                id = BeId(measureRow[MeasuresTable.id].value),
                 locale = locale,
                 name = "",
                 shortName = ""

@@ -14,9 +14,6 @@ Guide for Claude AI to work with Simple Food project - Kotlin/Ktor API for food 
 # Run (PostgreSQL)
 REPOSITORY_TYPE=postgres ./gradlew :simple-food-product-app:run
 
-# Tests
-./gradlew test
-
 # Generate OpenAPI models
 ./gradlew :simple-food-transport-models:openApiGenerate
 ```

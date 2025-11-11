@@ -5,6 +5,8 @@
 - **Java:** 21+
 - **Gradle:** 8.5+
 - **PostgreSQL:** 16+ (optional)
+- **Exposed**
+  - For tables with automatic uuid generation at the postgresql level, implementation from UUIDTable.
 
 ## Quick Start
 

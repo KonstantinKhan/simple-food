@@ -8,6 +8,7 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
+import java.time.Instant
 
 /**
  * PostgreSQL implementation of measure repository using Exposed DSL
@@ -109,17 +110,16 @@ class MeasureRepositoryPostgres : IRepoMeasure {
                 if (existingCode > 0) {
                     return@transaction DbMeasureResponse(result = BeMeasureWithTranslations.NONE, isSuccess = false)
                 }
-
                 // Insert measure - let database generate ID and createdAt
-                val insertedId = MeasuresTable.insert {
+                val insertedId = MeasuresTable.insertAndGetId {
                     it[code] = measure.code
                     // id and createdAt use database defaults
-                } get MeasuresTable.id
+                }
 
                 // Insert translations with generated ID
                 request.translations.forEach { translation ->
                     MeasureTranslationsTable.insert {
-                        it[measureId] = insertedId
+                        it[measureId] = insertedId.value
                         it[locale] = translation.locale
                         it[measureName] = translation.name
                         it[measureShortName] = translation.shortName
@@ -127,7 +127,7 @@ class MeasureRepositoryPostgres : IRepoMeasure {
                 }
 
                 // Fetch and return the created measure with database-generated values
-                val createdMeasure = measure(DbMeasureIdRequest(id = BeId(insertedId)))
+                val createdMeasure = measure(DbMeasureIdRequest(id = BeId(insertedId.value)))
                 createdMeasure
             } catch (e: Exception) {
                 DbMeasureResponse(result = BeMeasureWithTranslations.NONE, isSuccess = false)

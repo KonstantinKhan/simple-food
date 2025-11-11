@@ -57,8 +57,8 @@ class ProductRepositoryPostgres : IRepoProduct {
             try {
                 val product = request.product
 
-                // Insert product
-                val insertedId = ProductsTable.insert {
+                // Insert product and get the generated UUID
+                val insertedEntityId = ProductsTable.insertAndGetId {
                     it[name] = product.productName
 
                     // Calories
@@ -93,7 +93,9 @@ class ProductRepositoryPostgres : IRepoProduct {
                     it[authorId] = UUID.fromString(product.author.authorId.value)
                     it[authorName] = product.author.name
                     it[authorEmail] = product.author.email
-                } get ProductsTable.id
+                }
+
+                val insertedId = insertedEntityId.value
 
                 // Insert categories
                 product.categories.value.forEach { category ->
@@ -208,7 +210,7 @@ class ProductRepositoryPostgres : IRepoProduct {
                 val productIds = ProductsTable
                     .selectAll()
                     .where { ProductsTable.name.lowerCase() like "%$searchStr%" }
-                    .map { it[ProductsTable.id] }
+                    .map { it[ProductsTable.id].value }
                     .toSet()
 
                 // Search in categories
@@ -279,7 +281,7 @@ class ProductRepositoryPostgres : IRepoProduct {
      * Convert database row to BeProduct
      */
     private fun rowToBeProduct(row: ResultRow): BeProduct {
-        val productId = row[ProductsTable.id]
+        val productId = row[ProductsTable.id].value
 
         // Get categories for this product
         val categories = ProductCategoriesTable

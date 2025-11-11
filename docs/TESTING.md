@@ -1,6 +1,6 @@
 # Testing guide
 
-Use kotest-test-writer to write and run tests.
+Use code-tester to write and run tests.
 
 ## Testing
 

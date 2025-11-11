@@ -1,13 +1,12 @@
 package com.khan366kos.repository.tables
 
 import com.khan366kos.measures.repository.MeasuresTable
-import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.dao.id.UUIDTable
 
 /**
  * Exposed table definition for products
  */
-object ProductsTable : Table("products") {
-    val id = uuid("id")
+object ProductsTable : UUIDTable("products") {
     val name = varchar("name", 255)
 
     // Calories
@@ -42,6 +41,4 @@ object ProductsTable : Table("products") {
     val authorId = uuid("author_id")
     val authorName = varchar("author_name", 255)
     val authorEmail = varchar("author_email", 255)
-
-    override val primaryKey = PrimaryKey(id)
 }

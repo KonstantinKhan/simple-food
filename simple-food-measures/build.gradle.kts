@@ -29,6 +29,10 @@ dependencies {
     // Testing
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.testcontainers.postgresql)
+    testImplementation(libs.flyway.core)
+    testImplementation(libs.flyway.database.postgresql)
+    testRuntimeOnly(project(":simple-food-repo-postgresql")) // For accessing migration files
 }
 
 tasks.test {

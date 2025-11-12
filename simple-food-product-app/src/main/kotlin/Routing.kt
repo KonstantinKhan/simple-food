@@ -1,7 +1,7 @@
 package com.khan366kos
 
 import com.khan366kos.common.model.common.BeId
-import com.khan366kos.common.interfaces.IRepoProduct
+import com.khan366kos.common.model.product.repository.IRepoProduct
 import com.khan366kos.common.model.measure.BeMeasure
 import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.measures.repository.DbMeasureRequest

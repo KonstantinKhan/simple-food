@@ -1,6 +1,6 @@
 package com.khan366kos.repository
 
-import com.khan366kos.common.interfaces.IRepoProduct
+import com.khan366kos.common.model.product.repository.IRepoProduct
 import com.khan366kos.common.model.common.BeId
 import com.khan366kos.common.model.product.BeProduct
 import com.khan366kos.common.model.product.repository.DbProductFilterRequest

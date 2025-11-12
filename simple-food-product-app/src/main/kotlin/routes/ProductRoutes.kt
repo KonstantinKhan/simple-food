@@ -5,7 +5,7 @@ import com.khan366kos.common.model.product.BeProduct
 import com.khan366kos.common.model.product.repository.DbProductFilterRequest
 import com.khan366kos.common.model.product.repository.DbProductIdRequest
 import com.khan366kos.common.model.product.repository.DbProductRequest
-import com.khan366kos.common.interfaces.IRepoProduct
+import com.khan366kos.common.model.product.repository.IRepoProduct
 import com.khan366kos.mapper.toContext.toContext
 import com.khan366kos.mapper.toTransport.toMeasureTranslation
 import com.khan366kos.transport.model.Error

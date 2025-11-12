@@ -1,36 +1,41 @@
 # CLAUDE.md
 
-Guide for Claude AI to work with Simple Food project - Kotlin/Ktor API for food product management.
-
-## Quick Commands
-
-```bash
-# Build
-./gradlew build
-
-# Run (in-memory)
-./gradlew :simple-food-product-app:run
-
-# Run (PostgreSQL)
-REPOSITORY_TYPE=postgres ./gradlew :simple-food-product-app:run
-
-# Generate OpenAPI models
-./gradlew :simple-food-transport-models:openApiGenerate
-```
+Guide for Claude AI to work with Simple Food project - Kotlin/Ktor server app for food management.
 
 ## Project Structure
 
-**7 modules:**
+The project implements a multi-module architecture ([docs/achitecture.md](docs/architecture.md))
 
-| Module | Description |
-|--------|-------------|
-| `simple-food-common-models` | Business models (Be* prefix) |
-| `simple-food-measures` | Units of measurement with i18n (ru/en) |
-| `simple-food-transport-models` | OpenAPI-generated DTOs |
-| `simple-food-transport-mappers` | Business ↔ Transport mapping |
-| `simple-food-repo-in-memory` | ConcurrentHashMap repository |
-| `simple-food-repo-postgresql` | PostgreSQL + Exposed + Flyway |
-| `simple-food-product-app` | Ktor REST API (port 8080) |
+### Modules
+- **simple-food-common-models** - Common business logic models ([docs/modules/simple-food-common-models.md](docs/modules/simple-food-common-models.md))
+
+| Module                                                         | Description                            |
+| -------------------------------------------------------------- | -------------------------------------- |
+| [simple-food-measures](simple-food-measures)                   | Units of measurement with i18n (ru/en) |
+| [simple-food-transport-models](simple-food-transport-models)   | OpenAPI-generated DTOs                 |
+| [simple-food-transport-mappers](simple-food-transport-mappers) | Business ↔ Transport mapping           |
+| [simple-food-repo-in-memory](simple-food-repo-in-memory)       | ConcurrentHashMap repository           |
+| [simple-food-repo-postgresql](simple-food-repo-postgresql)     | PostgreSQL + Exposed + Flyway          |
+| [simple-food-product-app](simple-food-product-app)             | Ktor REST API (port 8080)              |
+| [specs](specs)                                                 | OpenAPI specification                  |
+
+## Quick Commands
+
+### Build
+
+`./gradlew build`
+
+### Run (in-memory)
+
+`./gradlew :simple-food-product-app:run`
+
+### Run (PostgreSQL)
+
+`REPOSITORY_TYPE=postgres ./gradlew :simple-food-product-app:run`
+
+### Generate OpenAPI models
+
+`./gradlew :simple-food-transport-models:openApiGenerate`
 
 ## Data Flow
 
@@ -59,10 +64,12 @@ val transportProduct = beProduct.toTransport()
 **Interfaces:** `IRepoProduct`, `IRepoMeasure` in `simple-food-common-models`
 
 **Implementations:**
+
 - `memory` (default) - ConcurrentHashMap, volatile
 - `postgres` - PostgreSQL, Exposed ORM, Flyway migrations
 
 **Configuration:**
+
 ```hocon
 repository.type = "memory"  # or "postgres"
 ```
@@ -108,7 +115,7 @@ DB_PASSWORD=postgres
 
 ## Documentation
 
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - architecture details
+- [docs/achitecture.md](docs/architecture.md) - architecture details
 - [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) - developer guide
 - [docs/API_REFERENCE.md](docs/API_REFERENCE.md) - API endpoints reference
 - [docs/TESTING.md](docs/TESTING.md)
@@ -129,22 +136,22 @@ DB_PASSWORD=postgres
 
 ```hocon
 ktor {
-    deployment {
-        port = 8080
-        port = ${?PORT}
-    }
+  deployment {
+    port = 8080
+    port = ${?PORT}
+  }
 }
 
 repository {
-    type = "memory"
-    type = ${?REPOSITORY_TYPE}
+  type = "memory"
+  type = ${?REPOSITORY_TYPE}
 }
 
 postgres {
-    jdbcUrl = "jdbc:postgresql://localhost:5432/simplefood"
-    jdbcUrl = ${?DB_URL}
-    username = ${?DB_USER}
-    password = ${?DB_PASSWORD}
+  jdbcUrl = "jdbc:postgresql://localhost:5432/simplefood"
+  jdbcUrl = ${?DB_URL}
+  username = ${?DB_USER}
+  password = ${?DB_PASSWORD}
 }
 ```
 

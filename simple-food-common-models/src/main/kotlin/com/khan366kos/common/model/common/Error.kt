@@ -1,4 +1,4 @@
-package com.khan366kos.common.model
+package com.khan366kos.common.model.common
 
 data class Error(
     val code: String,
@@ -13,5 +13,3 @@ data class Error(
         )
     }
 }
-
-

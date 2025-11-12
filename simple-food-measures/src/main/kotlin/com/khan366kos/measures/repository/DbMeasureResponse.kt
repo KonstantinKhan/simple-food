@@ -1,6 +1,6 @@
 package com.khan366kos.measures.repository
 
-import com.khan366kos.common.repository.IDbResponse
+import com.khan366kos.common.interfaces.IDbResponse
 import com.khan366kos.common.model.measure.BeMeasureWithTranslations
 
 data class DbMeasureResponse(

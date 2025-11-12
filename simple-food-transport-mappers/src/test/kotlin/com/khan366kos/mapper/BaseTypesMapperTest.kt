@@ -1,8 +1,8 @@
 package com.khan366kos.mapper
 
-import com.khan366kos.common.model.BeId
+import com.khan366kos.common.model.common.BeId
 import com.khan366kos.common.model.measure.BeMeasureTranslation
-import com.khan366kos.common.model.BeWeight
+import com.khan366kos.common.model.common.BeWeight
 import com.khan366kos.mapper.toContext.*
 import com.khan366kos.mapper.toTransport.*
 import com.khan366kos.transport.model.Author as TransportAuthor

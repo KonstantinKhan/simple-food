@@ -1,11 +1,11 @@
 package com.khan366kos.mapper.toContext
 
-import com.khan366kos.common.model.BeAuthor
+import com.khan366kos.common.model.user.BeAuthor
 import com.khan366kos.transport.model.Product as TransportProduct
-import com.khan366kos.common.model.BeId
-import com.khan366kos.common.model.BeProduct
-import com.khan366kos.common.model.simple.BeCategories
-import com.khan366kos.common.model.simple.BeCategory
+import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.product.BeProduct
+import com.khan366kos.common.model.common.BeCategories
+import com.khan366kos.common.model.common.BeCategory
 import com.khan366kos.transport.model.ProductCreateRequest
 
 fun TransportProduct.toContext(): BeProduct = BeProduct(

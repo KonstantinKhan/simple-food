@@ -1,6 +1,6 @@
 package com.khan366kos.routes
 
-import com.khan366kos.common.model.BeId
+import com.khan366kos.common.model.common.BeId
 import com.khan366kos.mapper.toContext.toContext
 import com.khan366kos.mapper.toTransport.toMeasureTranslation
 import com.khan366kos.measures.repository.DbMeasureCodeRequest

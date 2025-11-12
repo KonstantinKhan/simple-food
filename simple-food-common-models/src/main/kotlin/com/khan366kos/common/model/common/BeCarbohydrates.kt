@@ -1,21 +1,19 @@
-package com.khan366kos.common.model.simple
+package com.khan366kos.common.model.common
 
 import com.khan366kos.common.model.measure.BeMeasureTranslation
 
-data class BeProteins(
+data class BeCarbohydrates(
     val title: String,
     val shortTitle: String,
     val value: Double,
     val measure: BeMeasureTranslation
 ) {
     companion object {
-        val NONE = BeProteins(
+        val NONE = BeCarbohydrates(
             title = "",
             shortTitle = "",
             value = 0.0,
-            measure = BeMeasureTranslation.NONE
+            measure = BeMeasureTranslation.Companion.NONE
         )
     }
 }
-
-

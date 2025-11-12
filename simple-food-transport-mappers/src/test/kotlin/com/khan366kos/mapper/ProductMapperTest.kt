@@ -9,8 +9,8 @@ import com.khan366kos.transport.model.Measure as TransportMeasure
 import com.khan366kos.transport.model.Weight as TransportWeight
 import com.khan366kos.transport.model.Author as TransportAuthor
 import com.khan366kos.transport.model.NutritionalValue as TransportNutritionalValue
-import com.khan366kos.common.model.BeProduct as CommonProduct
-import com.khan366kos.common.model.BeId
+import com.khan366kos.common.model.product.BeProduct as CommonProduct
+import com.khan366kos.common.model.common.BeId
 import com.khan366kos.mapper.toContext.*
 import com.khan366kos.mapper.toTransport.*
 

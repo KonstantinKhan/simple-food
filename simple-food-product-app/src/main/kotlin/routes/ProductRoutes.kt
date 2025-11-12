@@ -1,11 +1,11 @@
 package com.khan366kos.routes
 
-import com.khan366kos.common.model.BeId
-import com.khan366kos.common.model.BeProduct
-import com.khan366kos.common.repository.DbProductFilterRequest
-import com.khan366kos.common.repository.DbProductIdRequest
-import com.khan366kos.common.repository.DbProductRequest
-import com.khan366kos.common.repository.IRepoProduct
+import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.product.BeProduct
+import com.khan366kos.common.model.product.repository.DbProductFilterRequest
+import com.khan366kos.common.model.product.repository.DbProductIdRequest
+import com.khan366kos.common.model.product.repository.DbProductRequest
+import com.khan366kos.common.interfaces.IRepoProduct
 import com.khan366kos.mapper.toContext.toContext
 import com.khan366kos.mapper.toTransport.toMeasureTranslation
 import com.khan366kos.transport.model.Error

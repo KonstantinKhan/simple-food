@@ -1,4 +1,4 @@
-package com.khan366kos.common.repository
+package com.khan366kos.common.model.product.repository
 
 data class DbProductFilterRequest(
     val searchStr: String

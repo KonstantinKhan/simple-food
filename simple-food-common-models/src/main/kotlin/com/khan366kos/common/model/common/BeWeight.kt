@@ -1,4 +1,4 @@
-package com.khan366kos.common.model
+package com.khan366kos.common.model.common
 
 import com.khan366kos.common.model.measure.BeMeasureTranslation
 
@@ -9,9 +9,7 @@ data class BeWeight(
     companion object {
         val NONE = BeWeight(
             value = 0.0,
-            measure = BeMeasureTranslation.NONE
+            measure = BeMeasureTranslation.Companion.NONE
         )
     }
 }
-
-

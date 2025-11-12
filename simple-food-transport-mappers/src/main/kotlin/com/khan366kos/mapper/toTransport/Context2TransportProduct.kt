@@ -1,6 +1,6 @@
 package com.khan366kos.mapper.toTransport
 
-import com.khan366kos.common.model.BeProduct
+import com.khan366kos.common.model.product.BeProduct
 import com.khan366kos.transport.model.Product as TransportProduct
 
 fun BeProduct.toMeasureTranslation(): TransportProduct = TransportProduct(

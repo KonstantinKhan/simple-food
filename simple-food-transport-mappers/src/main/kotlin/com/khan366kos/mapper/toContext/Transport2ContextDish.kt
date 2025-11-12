@@ -1,9 +1,9 @@
 package com.khan366kos.mapper.toContext
 
-import com.khan366kos.common.model.BeAuthor
-import com.khan366kos.common.model.BeDish
-import com.khan366kos.common.model.BeId
-import com.khan366kos.common.model.BeProductPortion
+import com.khan366kos.common.model.user.BeAuthor
+import com.khan366kos.common.model.dish.BeDish
+import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.dish.BeProductPortion
 import com.khan366kos.transport.model.Dish as TransportDish
 import com.khan366kos.transport.model.ProductPortion as TransportProductPortion
 

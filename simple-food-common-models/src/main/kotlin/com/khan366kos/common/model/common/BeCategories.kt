@@ -1,4 +1,6 @@
-package com.khan366kos.common.model.simple
+package com.khan366kos.common.model.common
+
+import com.khan366kos.common.model.common.BeCategory
 
 @JvmInline
 value class BeCategories(val value: List<BeCategory>) {
@@ -6,5 +8,3 @@ value class BeCategories(val value: List<BeCategory>) {
         val NONE = BeCategories(emptyList())
     }
 }
-
-

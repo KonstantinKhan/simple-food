@@ -1,15 +1,15 @@
 package com.khan366kos.mapper.toContext
 
-import com.khan366kos.common.model.BeAuthor
-import com.khan366kos.common.model.BeId
+import com.khan366kos.common.model.user.BeAuthor
+import com.khan366kos.common.model.common.BeId
 import com.khan366kos.common.model.measure.BeMeasureTranslation
-import com.khan366kos.common.model.BeWeight
-import com.khan366kos.common.model.simple.BeCategories
-import com.khan366kos.common.model.simple.BeCategory
-import com.khan366kos.common.model.simple.BeCalories
-import com.khan366kos.common.model.simple.BeCarbohydrates
-import com.khan366kos.common.model.simple.BeFats
-import com.khan366kos.common.model.simple.BeProteins
+import com.khan366kos.common.model.common.BeWeight
+import com.khan366kos.common.model.common.BeCategories
+import com.khan366kos.common.model.common.BeCategory
+import com.khan366kos.common.model.common.BeCalories
+import com.khan366kos.common.model.common.BeCarbohydrates
+import com.khan366kos.common.model.common.BeFats
+import com.khan366kos.common.model.common.BeProteins
 import com.khan366kos.transport.model.Measure as TransportMeasure
 import com.khan366kos.transport.model.NutritionalValue as TransportNutritionalValue
 import com.khan366kos.transport.model.Weight as TransportWeight

@@ -1,6 +1,6 @@
 package com.khan366kos.common.model.measure
 
-import com.khan366kos.common.model.BeId
+import com.khan366kos.common.model.common.BeId
 import java.time.Instant
 
 /**

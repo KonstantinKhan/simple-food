@@ -1,7 +1,7 @@
 package com.khan366kos.mapper.toTransport
 
-import com.khan366kos.common.model.BeDish
-import com.khan366kos.common.model.BeProductPortion
+import com.khan366kos.common.model.dish.BeDish
+import com.khan366kos.common.model.dish.BeProductPortion
 import com.khan366kos.transport.model.Dish as TransportDish
 import com.khan366kos.transport.model.ProductPortion as TransportProductPortion
 

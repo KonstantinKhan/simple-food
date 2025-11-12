@@ -1,4 +1,4 @@
-package com.khan366kos.common.model.simple
+package com.khan366kos.common.model.common
 
 @JvmInline
 value class BeRecipeStep(val value: String) {
@@ -6,5 +6,3 @@ value class BeRecipeStep(val value: String) {
         val NONE = BeRecipeStep("")
     }
 }
-
-

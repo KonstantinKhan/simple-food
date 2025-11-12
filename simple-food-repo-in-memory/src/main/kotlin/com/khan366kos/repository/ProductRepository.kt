@@ -1,8 +1,13 @@
 package com.khan366kos.repository
 
-import com.khan366kos.common.model.BeId
-import com.khan366kos.common.model.BeProduct
-import com.khan366kos.common.repository.*
+import com.khan366kos.common.interfaces.IRepoProduct
+import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.product.BeProduct
+import com.khan366kos.common.model.product.repository.DbProductFilterRequest
+import com.khan366kos.common.model.product.repository.DbProductIdRequest
+import com.khan366kos.common.model.product.repository.DbProductRequest
+import com.khan366kos.common.model.product.repository.DbProductResponse
+import com.khan366kos.common.model.product.repository.DbProductsResponse
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 

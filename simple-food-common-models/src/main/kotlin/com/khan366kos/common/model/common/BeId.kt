@@ -1,4 +1,4 @@
-package com.khan366kos.common.model
+package com.khan366kos.common.model.common
 
 import java.util.UUID
 
@@ -13,5 +13,3 @@ value class BeId(val value: String) {
 
     fun asUUID(): UUID = UUID.fromString(value)
 }
-
-

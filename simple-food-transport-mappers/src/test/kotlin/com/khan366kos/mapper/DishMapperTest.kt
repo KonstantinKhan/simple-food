@@ -11,7 +11,7 @@ import com.khan366kos.transport.model.Measure as TransportMeasure
 import com.khan366kos.transport.model.Weight as TransportWeight
 import com.khan366kos.transport.model.Author as TransportAuthor
 import com.khan366kos.transport.model.NutritionalValue as TransportNutritionalValue
-import com.khan366kos.common.model.BeDish as CommonDish
+import com.khan366kos.common.model.dish.BeDish as CommonDish
 
 class DishMapperTest : ShouldSpec({
 

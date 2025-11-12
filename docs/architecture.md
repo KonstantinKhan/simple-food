@@ -2,16 +2,16 @@
 
 ## Module Structure
 
-```
-simple-food/
-├── simple-food-common-models/      # Business models (Be* prefix)
-├── simple-food-measures/           # Units of measurement with i18n
-├── simple-food-transport-models/   # OpenAPI-generated DTOs
-├── simple-food-transport-mappers/  # Business ↔ Transport mapping
-├── simple-food-repo-in-memory/     # In-memory repository
-├── simple-food-repo-postgresql/    # PostgreSQL repository
-└── simple-food-product-app/        # Ktor REST API application
-```
+| Module                                                         | Description                            |
+| -------------------------------------------------------------- | -------------------------------------- |
+| [simple-food-common-models](simple-food-common-models)         | Business models (Be\* prefix)          |
+| [simple-food-measures](simple-food-measures)                   | Units of measurement with i18n (ru/en) |
+| [simple-food-transport-models](simple-food-transport-models)   | OpenAPI-generated DTOs                 |
+| [simple-food-transport-mappers](simple-food-transport-mappers) | Business ↔ Transport mapping           |
+| [simple-food-repo-in-memory](simple-food-repo-in-memory)       | ConcurrentHashMap repository           |
+| [simple-food-repo-postgresql](simple-food-repo-postgresql)     | PostgreSQL + Exposed + Flyway          |
+| [simple-food-product-app](simple-food-product-app)             | Ktor REST API (port 8080)              |
+| [specs](specs)                                                 | OpenAPI specification                  |
 
 ## Data Flow
 

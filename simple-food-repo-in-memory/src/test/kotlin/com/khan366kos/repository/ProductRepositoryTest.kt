@@ -1,9 +1,20 @@
 package com.khan366kos.repository
 
-import com.khan366kos.common.model.*
+import com.khan366kos.common.model.common.BeCalories
+import com.khan366kos.common.model.common.BeCarbohydrates
+import com.khan366kos.common.model.common.BeCategories
+import com.khan366kos.common.model.common.BeCategory
+import com.khan366kos.common.model.common.BeFats
+import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.common.BeProteins
+import com.khan366kos.common.model.common.BeWeight
+import com.khan366kos.common.model.user.BeAuthor
 import com.khan366kos.common.model.measure.BeMeasureTranslation
-import com.khan366kos.common.repository.*
-import com.khan366kos.common.model.simple.*
+import com.khan366kos.common.model.product.BeProduct
+import com.khan366kos.common.model.product.repository.DbProductFilterRequest
+import com.khan366kos.common.model.product.repository.DbProductIdRequest
+import com.khan366kos.common.model.product.repository.DbProductRequest
+import com.khan366kos.common.model.product.repository.DbProductResponse
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -133,12 +144,13 @@ class ProductRepositoryTest : FunSpec({
                         shortName = "г"
                     )
                 ),
-                weight = BeWeight(value = 100.0, measure = BeMeasureTranslation(
-                    id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                    locale = "ru",
-                    name = "грамм",
-                    shortName = "г"
-                )
+                weight = BeWeight(
+                    value = 100.0, measure = BeMeasureTranslation(
+                        id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+                        locale = "ru",
+                        name = "грамм",
+                        shortName = "г"
+                    )
                 ),
                 author = BeAuthor(
                     authorId = BeId(UUID.randomUUID()),

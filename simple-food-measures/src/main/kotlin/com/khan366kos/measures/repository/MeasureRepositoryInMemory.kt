@@ -1,6 +1,6 @@
 package com.khan366kos.measures.repository
 
-import com.khan366kos.common.model.BeId
+import com.khan366kos.common.model.common.BeId
 import com.khan366kos.common.model.measure.BeMeasure
 import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.measure.BeMeasureWithTranslations

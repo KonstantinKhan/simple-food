@@ -1,18 +1,18 @@
 # Simple Food Project Architecture
 
-## Module Structure
+## Module Structure Overview
 
-| Module                                                                 | Description                               |
-|------------------------------------------------------------------------|-------------------------------------------|
-| [simple-food-common-models](simple-food-common-models)                 | Business models and repository interfaces |
-| [simple-food-transport-models](simple-food-transport-models)           | OpenAPI-generated DTOs                    |
-| [simple-food-transport-mappers](simple-food-transport-mappers)         | Business ↔ Transport mapping              |
-| [simple-food-product-repo-memory](simple-food-product-repo-memory)                     | In-memory product repository              |
-| [simple-food-product-repo-postgresql](simple-food-product-repo-postgresql)             | PostgreSQL product repository             |
-| [simple-food-repo-measure-memory](simple-food-repo-measure-memory)     | In-memory measure repository              |
-| [simple-food-repo-measure-postgres](simple-food-repo-measure-postgres) | PostgreSQL measure repository             |
-| [simple-food-product-app](simple-food-product-app)                     | Ktor REST API (port 8080)                 |
-| [specs](specs)                                                         | OpenAPI specification                     |
+| Module                                                                        | Description                               |
+|-------------------------------------------------------------------------------|-------------------------------------------|
+| [simple-food-transport-models](../simple-food-transport-models)               | OpenAPI-generated DTOs                    |
+| [simple-food-common-models](../simple-food-common-models)                     | Business models and repository interfaces |
+| [simple-food-transport-mappers](../simple-food-transport-mappers)             | Business ↔ Transport mapping              |
+| [simple-food-product-repo-memory](../simple-food-product-repo-memory)         | In-memory product repository              |
+| [simple-food-product-repo-postgresql](../simple-food-product-repo-postgresql) | PostgreSQL product repository             |
+| [simple-food-repo-measure-memory](../simple-food-repo-measure-memory)         | In-memory measure repository              |
+| [simple-food-repo-measure-postgres](../simple-food-repo-measure-postgres)     | PostgreSQL measure repository             |
+| [simple-food-product-app](../simple-food-product-app)                         | Ktor REST API (port 8080)                 |
+| [specs](../specs)                                                             | OpenAPI specification                     |
 
 ## Data Flow
 
@@ -27,6 +27,7 @@ Repository → Business Model → Transport Model → HTTP Response
 ## Modules
 
 ### 1. simple-food-common-models
+
 **Business models with Be* prefix and repository interfaces**
 
 - `BeProduct` - food product
@@ -39,15 +40,18 @@ Repository → Business Model → Transport Model → HTTP Response
 - Repository DTOs: `DbMeasureRequest`, `DbMeasureResponse`, `DbMeasureFilterRequest`, etc.
 
 ### 2. simple-food-transport-models
+
 **OpenAPI-generated models**
 
 Generated from specifications:
+
 - `specs/spec-simple-food-api-products.yaml`
 - `specs/spec-simple-food-api-measures.yaml`
 - `specs/spec-simple-food-api-dishes.yaml`
 - `specs/spec-simple-food-common.yaml`
 
 ### 3. simple-food-transport-mappers
+
 **Model transformation**
 
 - `Product.toContext()` → `BeProduct`
@@ -55,6 +59,7 @@ Generated from specifications:
 - Tests: `ProductMapperTest`, `MeasureMapperTest`
 
 ### 4. simple-food-product-repo-memory
+
 **In-memory product repository**
 
 - `RepoProductInMemory` - ConcurrentHashMap
@@ -63,6 +68,7 @@ Generated from specifications:
 - 3 test products on initialization
 
 ### 5. simple-food-product-repo-postgresql
+
 **PostgreSQL storage**
 
 - Exposed ORM
@@ -71,6 +77,7 @@ Generated from specifications:
 - Test data initialization: `V2__Insert_measures.sql`, `V3__Insert_test_products.sql`
 
 ### 6. simple-food-repo-measure-memory
+
 **In-memory measure repository**
 
 - `MeasureRepositoryInMemory` - ConcurrentHashMap-based storage
@@ -80,6 +87,7 @@ Generated from specifications:
 - Supports filtering by locale and search text
 
 ### 7. simple-food-repo-measure-postgres
+
 **PostgreSQL measure repository**
 
 - `MeasureRepositoryPostgres` - Exposed ORM implementation
@@ -90,9 +98,11 @@ Generated from specifications:
 - Database-generated UUIDs and timestamps for new measures
 
 ### 8. simple-food-product-app
+
 **Ktor REST API**
 
 Structure:
+
 ```
 src/main/kotlin/
 ├── Application.kt        # Entry point
@@ -106,37 +116,43 @@ src/main/kotlin/
 ## Repository Pattern
 
 ### Interfaces
+
 - `IRepoProduct` - CRUD operations for products
 - `IRepoMeasure` - Work with units of measurement
 
 ### Implementations
 
 **Product Repositories:**
+
 - **memory** (default) - `ProductRepository` (in-memory)
 - **postgres** - `ProductRepositoryPostgres`
 
 **Measure Repositories:**
+
 - **memory** (default) - `MeasureRepositoryInMemory` (with seeding)
 - **postgres** - `MeasureRepositoryPostgres` (uses Flyway migrations)
 
 ### Configuration
+
 ```hocon
 # application.conf
 repository.type = "memory"  # or "postgres"
 postgres {
-    jdbcUrl = "jdbc:postgresql://localhost:5432/simplefood"
-    username = "postgres"
-    password = "postgres"
+  jdbcUrl = "jdbc:postgresql://localhost:5432/simplefood"
+  username = "postgres"
+  password = "postgres"
 }
 ```
 
 Environment variables:
+
 - `REPOSITORY_TYPE` - repository type
 - `DB_URL`, `DB_USER`, `DB_PASSWORD` - database parameters
 
 ## Error Handling
 
 Standard format (from OpenAPI):
+
 ```json
 {
   "code": "NOT_FOUND",
@@ -146,6 +162,7 @@ Standard format (from OpenAPI):
 ```
 
 Error codes:
+
 - `BAD_REQUEST` (400)
 - `NOT_FOUND` (404)
 - `INTERNAL_SERVER_ERROR` (500)

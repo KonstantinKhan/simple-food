@@ -8,12 +8,12 @@ The project implements a multi-module architecture ([docs/achitecture.md](docs/a
 
 ### Modules
 
-- **simple-food-common-models** - Common business logic models and repository
-  interfaces ([docs/modules/simple-food-common-models.md](docs/modules/simple-food-common-models.md))
+- **simple-food-transport-models** - Transport models ([docs/modules/simple-food-transpsort-models](docs/modules/simple-food-transport-models.md)) 
+- **simple-food-common-models** - Common domain models and repository
+  interfaces and DTOs ([docs/modules/simple-food-common-models.md](docs/modules/simple-food-common-models.md))
 
 | Module                                                                     | Description                                   |
 |----------------------------------------------------------------------------|-----------------------------------------------|
-| [simple-food-transport-models](simple-food-transport-models)               | OpenAPI-generated DTOs                        |
 | [simple-food-transport-mappers](simple-food-transport-mappers)             | Business ↔ Transport mapping                  |
 | [simple-food-product-repo-memory](simple-food-product-repo-memory)         | In-memory product repository                  |
 | [simple-food-product-repo-postgresql](simple-food-product-repo-postgresql) | PostgreSQL product repository                 |

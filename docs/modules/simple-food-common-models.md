@@ -14,7 +14,7 @@ related:
 Defines the **domain model layer** of the project.  
 Provides:
 
-- immutable **business entities (`Be*`)** and **repository entities (`Db*`)**,
+- immutable **business entities (`Be*`)** and **repository DTOs (`Db*`)**,
 - type-safe **value objects** for core nutrition metrics,
 - and **repository contracts (`IRepo*`)** for data abstraction.
 
@@ -83,8 +83,10 @@ Models for repository interaction layer:
 
 ## 🔗 Related Modules
 
-- [simple-food-product-repo-memory](../../docs/modules/simple-food-product-repo-memory.md) — in-memory repository (data source)
-- [simple-food-product-repo-postgresql](../../docs/modules/simple-food-product-repo-postgresql.md) — PostgreSQL repository (persistent
+- [simple-food-product-repo-memory](../../docs/modules/simple-food-product-repo-memory.md) — in-memory repository (data
+  source)
+- [simple-food-product-repo-postgresql](../../docs/modules/simple-food-product-repo-postgresql.md) — PostgreSQL
+  repository (persistent
   layer)
 
 > 💬 **LLM Navigation Tip:**  

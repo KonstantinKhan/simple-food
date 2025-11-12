@@ -1,6 +1,6 @@
 package com.khan366kos.repository.tables
 
-import com.khan366kos.measures.repository.MeasuresTable
+import com.khan366kos.measures.repository.postgres.MeasuresTable
 import org.jetbrains.exposed.dao.id.UUIDTable
 
 /**

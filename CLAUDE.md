@@ -7,17 +7,20 @@ Guide for Claude AI to work with Simple Food project - Kotlin/Ktor server app fo
 The project implements a multi-module architecture ([docs/achitecture.md](docs/architecture.md))
 
 ### Modules
-- **simple-food-common-models** - Common business logic models ([docs/modules/simple-food-common-models.md](docs/modules/simple-food-common-models.md))
 
-| Module                                                         | Description                            |
-| -------------------------------------------------------------- | -------------------------------------- |
-| [simple-food-measures](simple-food-measures)                   | Units of measurement with i18n (ru/en) |
-| [simple-food-transport-models](simple-food-transport-models)   | OpenAPI-generated DTOs                 |
-| [simple-food-transport-mappers](simple-food-transport-mappers) | Business ↔ Transport mapping           |
-| [simple-food-repo-in-memory](simple-food-repo-in-memory)       | ConcurrentHashMap repository           |
-| [simple-food-repo-postgresql](simple-food-repo-postgresql)     | PostgreSQL + Exposed + Flyway          |
-| [simple-food-product-app](simple-food-product-app)             | Ktor REST API (port 8080)              |
-| [specs](specs)                                                 | OpenAPI specification                  |
+- **simple-food-common-models** - Common business logic models and repository
+  interfaces ([docs/modules/simple-food-common-models.md](docs/modules/simple-food-common-models.md))
+
+| Module                                                                 | Description                                   |
+|------------------------------------------------------------------------|-----------------------------------------------|
+| [simple-food-transport-models](simple-food-transport-models)           | OpenAPI-generated DTOs                        |
+| [simple-food-transport-mappers](simple-food-transport-mappers)         | Business ↔ Transport mapping                  |
+| [simple-food-repo-in-memory](simple-food-repo-in-memory)               | In-memory product repository                  |
+| [simple-food-repo-postgresql](simple-food-repo-postgresql)             | PostgreSQL product repository                 |
+| [simple-food-repo-measure-memory](simple-food-repo-measure-memory)     | In-memory measure repository (7 units, ru/en) |
+| [simple-food-repo-measure-postgres](simple-food-repo-measure-postgres) | PostgreSQL measure repository                 |
+| [simple-food-product-app](simple-food-product-app)                     | Ktor REST API (port 8080)                     |
+| [specs](specs)                                                         | OpenAPI specification                         |
 
 ## Quick Commands
 
@@ -157,5 +160,5 @@ postgres {
 
 ---
 
-**Version:** 1.1  
-**Updated:** November 10, 2025
+**Version:** 1.2
+**Updated:** November 12, 2025

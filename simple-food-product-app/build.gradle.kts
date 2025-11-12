@@ -20,7 +20,8 @@ dependencies {
     implementation(project(":simple-food-transport-mappers"))
     implementation(project(":simple-food-repo-in-memory"))
     implementation(project(":simple-food-repo-postgresql"))
-    implementation(project(":simple-food-measures"))
+    implementation(project(":simple-food-repo-measure-memory"))
+    implementation(project(":simple-food-repo-measure-postgres"))
 
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.serialization.jackson)

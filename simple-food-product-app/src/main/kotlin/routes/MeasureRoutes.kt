@@ -3,11 +3,11 @@ package com.khan366kos.routes
 import com.khan366kos.common.model.common.BeId
 import com.khan366kos.mapper.toContext.toContext
 import com.khan366kos.mapper.toTransport.toMeasureTranslation
-import com.khan366kos.measures.repository.DbMeasureCodeRequest
-import com.khan366kos.measures.repository.DbMeasureFilterRequest
-import com.khan366kos.measures.repository.DbMeasureIdRequest
-import com.khan366kos.measures.repository.DbMeasureRequest
-import com.khan366kos.measures.repository.IRepoMeasure
+import com.khan366kos.common.model.measure.repository.DbMeasureCodeRequest
+import com.khan366kos.common.model.measure.repository.DbMeasureFilterRequest
+import com.khan366kos.common.model.measure.repository.DbMeasureIdRequest
+import com.khan366kos.common.model.measure.repository.DbMeasureRequest
+import com.khan366kos.common.model.measure.repository.IRepoMeasure
 import com.khan366kos.transport.model.Error
 import com.khan366kos.transport.model.MeasureDetail
 import com.khan366kos.transport.model.MeasureDetailCreateRequest

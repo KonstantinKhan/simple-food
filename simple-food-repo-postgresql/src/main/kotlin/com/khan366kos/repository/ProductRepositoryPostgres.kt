@@ -17,8 +17,8 @@ import com.khan366kos.common.model.product.repository.DbProductRequest
 import com.khan366kos.common.model.product.repository.DbProductResponse
 import com.khan366kos.common.model.product.repository.DbProductsResponse
 import com.khan366kos.common.model.product.repository.IRepoProduct
-import com.khan366kos.measures.repository.MeasuresTable
-import com.khan366kos.measures.repository.MeasureTranslationsTable
+import com.khan366kos.measures.repository.postgres.MeasuresTable
+import com.khan366kos.measures.repository.postgres.MeasureTranslationsTable
 import com.khan366kos.repository.tables.ProductCategoriesTable
 import com.khan366kos.repository.tables.ProductsTable
 import org.jetbrains.exposed.sql.*

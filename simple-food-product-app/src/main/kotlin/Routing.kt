@@ -4,10 +4,10 @@ import com.khan366kos.common.model.common.BeId
 import com.khan366kos.common.model.product.repository.IRepoProduct
 import com.khan366kos.common.model.measure.BeMeasure
 import com.khan366kos.common.model.measure.BeMeasureTranslation
-import com.khan366kos.measures.repository.DbMeasureRequest
-import com.khan366kos.measures.repository.IRepoMeasure
-import com.khan366kos.measures.repository.MeasureRepositoryInMemory
-import com.khan366kos.measures.repository.MeasureRepositoryPostgres
+import com.khan366kos.common.model.measure.repository.DbMeasureRequest
+import com.khan366kos.common.model.measure.repository.IRepoMeasure
+import com.khan366kos.measures.repository.memory.MeasureRepositoryInMemory
+import com.khan366kos.measures.repository.postgres.MeasureRepositoryPostgres
 import com.khan366kos.repository.ProductRepository
 import com.khan366kos.repository.ProductRepositoryPostgres
 import com.khan366kos.routes.measureRoutes

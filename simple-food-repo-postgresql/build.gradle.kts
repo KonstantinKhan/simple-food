@@ -11,7 +11,7 @@ kotlin {
 
 dependencies {
     implementation(project(":simple-food-common-models"))
-    implementation(project(":simple-food-measures"))
+    implementation(project(":simple-food-repo-measure-postgres"))
 
     // Exposed ORM
     implementation(libs.exposed.core)

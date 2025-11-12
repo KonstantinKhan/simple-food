@@ -13,7 +13,7 @@ import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.product.BeProduct
 import com.khan366kos.common.model.product.repository.DbProductIdRequest
 import com.khan366kos.common.model.product.repository.DbProductRequest
-import com.khan366kos.measures.repository.MeasuresTable
+import com.khan366kos.measures.repository.postgres.MeasuresTable
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue

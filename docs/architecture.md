@@ -7,8 +7,8 @@
 | [simple-food-common-models](simple-food-common-models)                 | Business models and repository interfaces |
 | [simple-food-transport-models](simple-food-transport-models)           | OpenAPI-generated DTOs                    |
 | [simple-food-transport-mappers](simple-food-transport-mappers)         | Business ↔ Transport mapping              |
-| [simple-food-repo-memory](simple-food-repo-memory)                     | In-memory product repository              |
-| [simple-food-repo-postgresql](simple-food-repo-postgresql)             | PostgreSQL product repository             |
+| [simple-food-product-repo-memory](simple-food-product-repo-memory)                     | In-memory product repository              |
+| [simple-food-product-repo-postgresql](simple-food-product-repo-postgresql)             | PostgreSQL product repository             |
 | [simple-food-repo-measure-memory](simple-food-repo-measure-memory)     | In-memory measure repository              |
 | [simple-food-repo-measure-postgres](simple-food-repo-measure-postgres) | PostgreSQL measure repository             |
 | [simple-food-product-app](simple-food-product-app)                     | Ktor REST API (port 8080)                 |
@@ -54,7 +54,7 @@ Generated from specifications:
 - `BeProduct.toTransport()` → `Product`
 - Tests: `ProductMapperTest`, `MeasureMapperTest`
 
-### 4. simple-food-repo-memory
+### 4. simple-food-product-repo-memory
 **In-memory product repository**
 
 - `RepoProductInMemory` - ConcurrentHashMap
@@ -62,7 +62,7 @@ Generated from specifications:
 - Volatile for updates
 - 3 test products on initialization
 
-### 5. simple-food-repo-postgresql
+### 5. simple-food-product-repo-postgresql
 **PostgreSQL storage**
 
 - Exposed ORM

@@ -11,16 +11,16 @@ The project implements a multi-module architecture ([docs/achitecture.md](docs/a
 - **simple-food-common-models** - Common business logic models and repository
   interfaces ([docs/modules/simple-food-common-models.md](docs/modules/simple-food-common-models.md))
 
-| Module                                                                 | Description                                   |
-|------------------------------------------------------------------------|-----------------------------------------------|
-| [simple-food-transport-models](simple-food-transport-models)           | OpenAPI-generated DTOs                        |
-| [simple-food-transport-mappers](simple-food-transport-mappers)         | Business ↔ Transport mapping                  |
-| [simple-food-repo-memory](simple-food-repo-memory)                     | In-memory product repository                  |
-| [simple-food-repo-postgresql](simple-food-repo-postgresql)             | PostgreSQL product repository                 |
-| [simple-food-repo-measure-memory](simple-food-repo-measure-memory)     | In-memory measure repository (7 units, ru/en) |
-| [simple-food-repo-measure-postgres](simple-food-repo-measure-postgres) | PostgreSQL measure repository                 |
-| [simple-food-product-app](simple-food-product-app)                     | Ktor REST API (port 8080)                     |
-| [specs](specs)                                                         | OpenAPI specification                         |
+| Module                                                                     | Description                                   |
+|----------------------------------------------------------------------------|-----------------------------------------------|
+| [simple-food-transport-models](simple-food-transport-models)               | OpenAPI-generated DTOs                        |
+| [simple-food-transport-mappers](simple-food-transport-mappers)             | Business ↔ Transport mapping                  |
+| [simple-food-product-repo-memory](simple-food-product-repo-memory)         | In-memory product repository                  |
+| [simple-food-product-repo-postgresql](simple-food-product-repo-postgresql) | PostgreSQL product repository                 |
+| [simple-food-repo-measure-memory](simple-food-repo-measure-memory)         | In-memory measure repository (7 units, ru/en) |
+| [simple-food-repo-measure-postgres](simple-food-repo-measure-postgres)     | PostgreSQL measure repository                 |
+| [simple-food-product-app](simple-food-product-app)                         | Ktor REST API (port 8080)                     |
+| [specs](specs)                                                             | OpenAPI specification                         |
 
 ## Quick Commands
 

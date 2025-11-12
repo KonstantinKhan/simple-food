@@ -57,7 +57,7 @@ Make measure creation consistent with products module - client sends no ID, data
 ## Files to Modify
 
 1. `specs/spec-simple-food-api-measures.yaml` - OpenAPI spec
-2. `simple-food-repo-postgresql/src/main/resources/db/migration/V5__add_uuid_generation_to_measures.sql` - new migration
+2. `simple-food-product-repo-postgresql/src/main/resources/db/migration/V5__add_uuid_generation_to_measures.sql` - new migration
 3. `simple-food-measures/src/.../repository/MeasuresTable.kt` - Exposed table
 4. `simple-food-measures/src/.../repository/MeasureRepositoryPostgres.kt` - PostgreSQL impl
 5. `simple-food-measures/src/.../repository/MeasureRepositoryInMemory.kt` - in-memory impl

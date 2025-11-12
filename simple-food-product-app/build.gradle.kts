@@ -18,8 +18,8 @@ dependencies {
     implementation(project(":simple-food-common-models"))
     implementation(project(":simple-food-transport-models"))
     implementation(project(":simple-food-transport-mappers"))
-    implementation(project(":simple-food-repo-memory"))
-    implementation(project(":simple-food-repo-postgresql"))
+    implementation(project(":simple-food-product-repo-memory"))
+    implementation(project(":simple-food-product-repo-postgresql"))
     implementation(project(":simple-food-repo-measure-memory"))
     implementation(project(":simple-food-repo-measure-postgres"))
 

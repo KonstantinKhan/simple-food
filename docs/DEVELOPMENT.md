@@ -138,7 +138,7 @@ docker run -d \
 
 Flyway migrations are located in:
 ```
-simple-food-repo-postgresql/src/main/resources/db/migration/
+simple-food-product-repo-postgresql/src/main/resources/db/migration/
 ├── V1__Init.sql                    # Create tables
 ├── V2__Insert_measures.sql         # Units of measurement
 └── V3__Insert_test_products.sql    # Test data

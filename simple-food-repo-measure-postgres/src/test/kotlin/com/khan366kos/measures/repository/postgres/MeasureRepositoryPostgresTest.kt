@@ -28,7 +28,7 @@ class MeasureRepositoryPostgresTest : ShouldSpec({
             .withPassword("test")
         container.start()
 
-        // Run Flyway migrations from simple-food-repo-postgresql module
+        // Run Flyway migrations from simple-food-product-repo-postgresql module
         val flyway = Flyway.configure()
             .dataSource(container.jdbcUrl, container.username, container.password)
             .locations("classpath:db/migration")

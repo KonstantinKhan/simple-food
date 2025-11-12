@@ -83,8 +83,8 @@ Models for repository interaction layer:
 
 ## 🔗 Related Modules
 
-- [simple-food-repo-memory](../../docs/modules/simple-food-repo-memory.md) — in-memory repository (data source)
-- [simple-food-repo-postgresql](../../docs/modules/simple-food-repo-postgresql.md) — PostgreSQL repository (persistent
+- [simple-food-product-repo-memory](../../docs/modules/simple-food-product-repo-memory.md) — in-memory repository (data source)
+- [simple-food-product-repo-postgresql](../../docs/modules/simple-food-product-repo-postgresql.md) — PostgreSQL repository (persistent
   layer)
 
 > 💬 **LLM Navigation Tip:**  

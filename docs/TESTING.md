@@ -14,7 +14,7 @@ Use code-tester to write and run tests.
 
 ### Module tests
 
-`./gradlew :simple-food-repo-memory:test`
+`./gradlew :simple-food-product-repo-memory:test`
 
 ### Postgresql
 - Use TestContainer

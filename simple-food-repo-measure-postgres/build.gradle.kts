@@ -32,7 +32,7 @@ dependencies {
     testImplementation(libs.testcontainers.postgresql)
     testImplementation(libs.flyway.core)
     testImplementation(libs.flyway.database.postgresql)
-    testRuntimeOnly(project(":simple-food-repo-postgresql")) // For accessing migration files
+    testRuntimeOnly(project(":simple-food-product-repo-postgresql")) // For accessing migration files
 }
 
 tasks.test {

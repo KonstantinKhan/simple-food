@@ -15,7 +15,7 @@ The project implements a multi-module architecture ([docs/achitecture.md](docs/a
 |------------------------------------------------------------------------|-----------------------------------------------|
 | [simple-food-transport-models](simple-food-transport-models)           | OpenAPI-generated DTOs                        |
 | [simple-food-transport-mappers](simple-food-transport-mappers)         | Business ↔ Transport mapping                  |
-| [simple-food-repo-in-memory](simple-food-repo-in-memory)               | In-memory product repository                  |
+| [simple-food-repo-memory](simple-food-repo-memory)                     | In-memory product repository                  |
 | [simple-food-repo-postgresql](simple-food-repo-postgresql)             | PostgreSQL product repository                 |
 | [simple-food-repo-measure-memory](simple-food-repo-measure-memory)     | In-memory measure repository (7 units, ru/en) |
 | [simple-food-repo-measure-postgres](simple-food-repo-measure-postgres) | PostgreSQL measure repository                 |

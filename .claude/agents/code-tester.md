@@ -28,7 +28,7 @@ You are an expert testing architect for the Simple Food Kotlin/Ktor project. You
 - Use test data builders for consistency
 
 ### Repository Tests
-- **In-Memory**: Test `simple-food-repo-in-memory` with concurrent access scenarios
+- **In-Memory**: Test `simple-food-repo-memory` with concurrent access scenarios
 - **PostgreSQL**: Test `simple-food-repo-postgresql` with:
   - Testcontainers
   - Transaction rollback between tests

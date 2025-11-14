@@ -22,11 +22,11 @@ class BaseTypesMapperTest :
             val actual: BeMeasureTranslation = expected.toContext()
             with(actual) {
                 id.asUUID() shouldBe testId
-                name shouldBe "milliliter"
-                shortName shouldBe "ml"
+                name.value shouldBe "milliliter"
+                shortName.value shouldBe "ml"
                 // Note: code is not part of BeMeasureTranslation anymore, it belongs to BeMeasure
                 // So we only verify that translation fields are preserved
-                locale shouldBe ""  // locale not provided by TransportMeasure
+                locale.value shouldBe ""  // locale not provided by TransportMeasure
             }
         }
 
@@ -36,7 +36,7 @@ class BaseTypesMapperTest :
             val expected = TransportWeight(weightValue = 123.4f, measure = measure)
             val actual: BeWeight = expected.toContext()
             with(actual) {
-                value shouldBe (123.4 plusOrMinus 1e-4)
+                value.value shouldBe (123.4 plusOrMinus 1e-4)
                 this.measure shouldBe measure.toContext()
                 val back = toMeasureTranslation()
                 // Check that weight value and measure's translation fields are preserved
@@ -58,8 +58,8 @@ class BaseTypesMapperTest :
             val expected = TransportAuthor(id = UUID.randomUUID(), name = null, email = null)
             val actual = expected.toContext()
             with(actual) {
-                name shouldBe ""
-                email shouldBe ""
+                name.value shouldBe ""
+                email.value shouldBe ""
             }
             val back = actual.toMeasureTranslation()
             with(back) {

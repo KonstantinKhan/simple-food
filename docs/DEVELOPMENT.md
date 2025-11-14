@@ -1,12 +1,8 @@
 # Developer Guide
 
-## Requirements
+## Rules
 
-- **Java:** 21+
-- **Gradle:** 8.5+
-- **PostgreSQL:** 16+ (optional)
-- **Exposed**
-  - For tables with automatic uuid generation at the postgresql level, implementation from UUIDTable.
+- All simple fields shuld be value classes.
 
 ## Quick Start
 
@@ -240,20 +236,3 @@ Configuration: `simple-food-product-app/src/main/resources/logback.xml`
 
 ### VS Code
 See [VSCODE_SETUP.md](../VSCODE_SETUP.md)
-
-## Useful Commands
-
-```bash
-# Clean build
-./gradlew clean
-
-# Full rebuild
-./gradlew clean build
-
-# Run with debug logs
-./gradlew :simple-food-product-app:run --debug
-
-# Fat JAR
-./gradlew :simple-food-product-app:shadowJar
-# Run: java -jar simple-food-product-app/build/libs/simple-food-product-app-all.jar
-```

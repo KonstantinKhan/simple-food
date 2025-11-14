@@ -6,11 +6,21 @@ import com.khan366kos.common.model.common.BeCategories
 import com.khan366kos.common.model.common.BeCategory
 import com.khan366kos.common.model.common.BeFats
 import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.common.BeLocale
+import com.khan366kos.common.model.common.BeNutrientShortTitle
+import com.khan366kos.common.model.common.BeNutrientTitle
+import com.khan366kos.common.model.common.BeNutrientValue
 import com.khan366kos.common.model.common.BeProteins
 import com.khan366kos.common.model.common.BeWeight
-import com.khan366kos.common.model.user.BeAuthor
+import com.khan366kos.common.model.common.BeWeightValue
+import com.khan366kos.common.model.measure.BeMeasureName
+import com.khan366kos.common.model.measure.BeMeasureShortName
 import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.product.BeProduct
+import com.khan366kos.common.model.product.BeProductName
+import com.khan366kos.common.model.user.BeAuthor
+import com.khan366kos.common.model.user.BeAuthorName
+import com.khan366kos.common.model.user.BeEmail
 import com.khan366kos.common.model.product.repository.DbProductIdRequest
 import com.khan366kos.common.model.product.repository.DbProductRequest
 import com.khan366kos.measures.repository.postgres.MeasuresTable
@@ -88,12 +98,12 @@ class ProductRepositoryPostgresTest : ShouldSpec({
 
             response.isSuccess.shouldBeTrue()
             response.result.productId shouldNotBe BeId.NONE
-            response.result.productName shouldBe "Test Product"
-            response.result.productCalories.value shouldBe 150.0
-            response.result.productProteins.value shouldBe 20.0
-            response.result.productFats.value shouldBe 5.0
-            response.result.productCarbohydrates.value shouldBe 10.0
-            response.result.weight.value shouldBe 100.0
+            response.result.productName shouldBe BeProductName("Test Product")
+            response.result.productCalories.value shouldBe BeNutrientValue(150.0)
+            response.result.productProteins.value shouldBe BeNutrientValue(20.0)
+            response.result.productFats.value shouldBe BeNutrientValue(5.0)
+            response.result.productCarbohydrates.value shouldBe BeNutrientValue(10.0)
+            response.result.weight.value shouldBe BeWeightValue(100.0)
         }
 
         should("generate valid UUID for new product") {
@@ -129,23 +139,23 @@ class ProductRepositoryPostgresTest : ShouldSpec({
             retrieveResponse.isSuccess.shouldBeTrue()
 
             val retrieved = retrieveResponse.result
-            retrieved.productCalories.value shouldBe 250.5
-            retrieved.productCalories.title shouldBe "Калории"
-            retrieved.productCalories.shortTitle shouldBe "ккал"
+            retrieved.productCalories.value shouldBe BeNutrientValue(250.5)
+            retrieved.productCalories.title shouldBe BeNutrientTitle("Калории")
+            retrieved.productCalories.shortTitle shouldBe BeNutrientShortTitle("ккал")
 
-            retrieved.productProteins.value shouldBe 30.2
-            retrieved.productProteins.title shouldBe "Белки"
-            retrieved.productProteins.shortTitle shouldBe "Б"
+            retrieved.productProteins.value shouldBe BeNutrientValue(30.2)
+            retrieved.productProteins.title shouldBe BeNutrientTitle("Белки")
+            retrieved.productProteins.shortTitle shouldBe BeNutrientShortTitle("Б")
 
-            retrieved.productFats.value shouldBe 10.8
-            retrieved.productFats.title shouldBe "Жиры"
-            retrieved.productFats.shortTitle shouldBe "Ж"
+            retrieved.productFats.value shouldBe BeNutrientValue(10.8)
+            retrieved.productFats.title shouldBe BeNutrientTitle("Жиры")
+            retrieved.productFats.shortTitle shouldBe BeNutrientShortTitle("Ж")
 
-            retrieved.productCarbohydrates.value shouldBe 25.3
-            retrieved.productCarbohydrates.title shouldBe "Углеводы"
-            retrieved.productCarbohydrates.shortTitle shouldBe "У"
+            retrieved.productCarbohydrates.value shouldBe BeNutrientValue(25.3)
+            retrieved.productCarbohydrates.title shouldBe BeNutrientTitle("Углеводы")
+            retrieved.productCarbohydrates.shortTitle shouldBe BeNutrientShortTitle("У")
 
-            retrieved.weight.value shouldBe 150.0
+            retrieved.weight.value shouldBe BeWeightValue(150.0)
         }
 
         should("persist product with author information") {
@@ -167,8 +177,8 @@ class ProductRepositoryPostgresTest : ShouldSpec({
 
             val retrieved = retrieveResponse.result
             retrieved.author.authorId.value shouldBe authorId.toString()
-            retrieved.author.name shouldBe "John Doe"
-            retrieved.author.email shouldBe "john.doe@example.com"
+            retrieved.author.name shouldBe BeAuthorName("John Doe")
+            retrieved.author.email shouldBe BeEmail("john.doe@example.com")
         }
 
         should("persist product with single category") {
@@ -244,7 +254,7 @@ class ProductRepositoryPostgresTest : ShouldSpec({
 
             retrieveResponse.isSuccess.shouldBeTrue()
             retrieveResponse.result.productId shouldBe createdId
-            retrieveResponse.result.productName shouldBe uniqueName
+            retrieveResponse.result.productName shouldBe BeProductName(uniqueName)
         }
 
         should("persist product with measure references") {
@@ -293,11 +303,11 @@ class ProductRepositoryPostgresTest : ShouldSpec({
             retrieveResponse.isSuccess.shouldBeTrue()
 
             val retrieved = retrieveResponse.result
-            retrieved.productCalories.value shouldBe 0.0
-            retrieved.productProteins.value shouldBe 0.0
-            retrieved.productFats.value shouldBe 0.0
-            retrieved.productCarbohydrates.value shouldBe 0.0
-            retrieved.weight.value shouldBe 0.0
+            retrieved.productCalories.value shouldBe BeNutrientValue(0.0)
+            retrieved.productProteins.value shouldBe BeNutrientValue(0.0)
+            retrieved.productFats.value shouldBe BeNutrientValue(0.0)
+            retrieved.productCarbohydrates.value shouldBe BeNutrientValue(0.0)
+            retrieved.weight.value shouldBe BeWeightValue(0.0)
         }
 
         should("handle product with large nutritional values") {
@@ -319,11 +329,11 @@ class ProductRepositoryPostgresTest : ShouldSpec({
             retrieveResponse.isSuccess.shouldBeTrue()
 
             val retrieved = retrieveResponse.result
-            retrieved.productCalories.value shouldBe 9999.99
-            retrieved.productProteins.value shouldBe 999.99
-            retrieved.productFats.value shouldBe 999.99
-            retrieved.productCarbohydrates.value shouldBe 999.99
-            retrieved.weight.value shouldBe 9999.99
+            retrieved.productCalories.value shouldBe BeNutrientValue(9999.99)
+            retrieved.productProteins.value shouldBe BeNutrientValue(999.99)
+            retrieved.productFats.value shouldBe BeNutrientValue(999.99)
+            retrieved.productCarbohydrates.value shouldBe BeNutrientValue(999.99)
+            retrieved.weight.value shouldBe BeWeightValue(9999.99)
         }
 
         should("create multiple products independently") {
@@ -355,7 +365,7 @@ class ProductRepositoryPostgresTest : ShouldSpec({
             // Retrieve and verify
             val retrieveResponse = repository.product(DbProductIdRequest(createResponse.result.productId))
             retrieveResponse.isSuccess.shouldBeTrue()
-            retrieveResponse.result.productName shouldBe "Куриная грудка без кожи"
+            retrieveResponse.result.productName shouldBe BeProductName("Куриная грудка без кожи")
         }
 
         should("handle product with special characters in name") {
@@ -368,7 +378,7 @@ class ProductRepositoryPostgresTest : ShouldSpec({
             // Retrieve and verify
             val retrieveResponse = repository.product(DbProductIdRequest(createResponse.result.productId))
             retrieveResponse.isSuccess.shouldBeTrue()
-            retrieveResponse.result.productName shouldBe "Product with (special) [chars] & symbols!"
+            retrieveResponse.result.productName shouldBe BeProductName("Product with (special) [chars] & symbols!")
         }
 
         should("return failure when measure ID does not exist") {
@@ -442,53 +452,53 @@ class ProductRepositoryPostgresTest : ShouldSpec({
             val kcalId = caloriesMeasureId ?: getKcalMeasureId()
             val gramMeasure = BeMeasureTranslation(
                 id = BeId(gramId),
-                locale = "ru",
-                name = "грамм",
-                shortName = "г"
+                locale = BeLocale("ru"),
+                name = BeMeasureName("грамм"),
+                shortName = BeMeasureShortName("г")
             )
 
             val kcalMeasure = BeMeasureTranslation(
                 id = BeId(kcalId),
-                locale = "ru",
-                name = "килокалория",
-                shortName = "ккал"
+                locale = BeLocale("ru"),
+                name = BeMeasureName("килокалория"),
+                shortName = BeMeasureShortName("ккал")
             )
 
             return BeProduct(
                 productId = BeId.NONE,
-                productName = name,
+                productName = BeProductName(name),
                 productCalories = BeCalories(
-                    title = "Калории",
-                    shortTitle = "ккал",
-                    value = caloriesValue,
+                    title = BeNutrientTitle("Калории"),
+                    shortTitle = BeNutrientShortTitle("ккал"),
+                    value = BeNutrientValue(caloriesValue),
                     measure = kcalMeasure
                 ),
                 productProteins = BeProteins(
-                    title = "Белки",
-                    shortTitle = "Б",
-                    value = proteinsValue,
+                    title = BeNutrientTitle("Белки"),
+                    shortTitle = BeNutrientShortTitle("Б"),
+                    value = BeNutrientValue(proteinsValue),
                     measure = gramMeasure
                 ),
                 productFats = BeFats(
-                    title = "Жиры",
-                    shortTitle = "Ж",
-                    value = fatsValue,
+                    title = BeNutrientTitle("Жиры"),
+                    shortTitle = BeNutrientShortTitle("Ж"),
+                    value = BeNutrientValue(fatsValue),
                     measure = gramMeasure
                 ),
                 productCarbohydrates = BeCarbohydrates(
-                    title = "Углеводы",
-                    shortTitle = "У",
-                    value = carbohydratesValue,
+                    title = BeNutrientTitle("Углеводы"),
+                    shortTitle = BeNutrientShortTitle("У"),
+                    value = BeNutrientValue(carbohydratesValue),
                     measure = gramMeasure
                 ),
                 weight = BeWeight(
-                    value = weightValue,
+                    value = BeWeightValue(weightValue),
                     measure = gramMeasure
                 ),
                 author = BeAuthor(
                     authorId = BeId(authorId),
-                    name = authorName,
-                    email = authorEmail
+                    name = BeAuthorName(authorName),
+                    email = BeEmail(authorEmail)
                 ),
                 categories = BeCategories(categories.map { BeCategory(it) })
             )

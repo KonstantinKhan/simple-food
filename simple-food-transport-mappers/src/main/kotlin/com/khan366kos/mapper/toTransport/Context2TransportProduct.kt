@@ -5,7 +5,7 @@ import com.khan366kos.transport.model.Product as TransportProduct
 
 fun BeProduct.toMeasureTranslation(): TransportProduct = TransportProduct(
     productId = productId.asUUID(),
-    productName = productName,
+    productName = productName.value,
     productCalories = productCalories.toMeasureTranslation(),
     productProteins = productProteins.toMeasureTranslation(),
     productFats = productFats.toMeasureTranslation(),

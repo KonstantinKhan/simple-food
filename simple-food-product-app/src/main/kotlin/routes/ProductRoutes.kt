@@ -1,6 +1,7 @@
 package com.khan366kos.routes
 
 import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.common.BeSearchString
 import com.khan366kos.common.model.product.BeProduct
 import com.khan366kos.common.model.product.repository.DbProductFilterRequest
 import com.khan366kos.common.model.product.repository.DbProductIdRequest
@@ -32,8 +33,10 @@ fun Route.productRoutes(repository: IRepoProduct) {
                 val beProduct = transportProduct.toContext()
                 val response = repository.newProduct(DbProductRequest(beProduct))
                 if (response.isSuccess) {
+                    println("response.isSuccess: ${response.isSuccess}")
                     call.respond(HttpStatusCode.Created, response.result.toMeasureTranslation())
                 } else {
+                    println("response.isSuccess: ${response.isSuccess}")
                     call.respond(
                             HttpStatusCode.BadRequest,
                             Error(code = "BAD_REQUEST", message = "Failed to create product")
@@ -50,7 +53,7 @@ fun Route.productRoutes(repository: IRepoProduct) {
         post("/search") {
             try {
                 val searchRequest = call.receive<ProductSearchRequest>()
-                val response = repository.foundProducts(DbProductFilterRequest(searchRequest.query))
+                val response = repository.foundProducts(DbProductFilterRequest(BeSearchString(searchRequest.query)))
                 call.respond(response.result.map { it.toMeasureTranslation() })
             } catch (e: Exception) {
                 call.respond(

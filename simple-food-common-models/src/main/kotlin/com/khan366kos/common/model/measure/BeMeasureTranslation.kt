@@ -1,6 +1,7 @@
 package com.khan366kos.common.model.measure
 
 import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.common.BeLocale
 
 /**
  * Translation for a measure in a specific locale.
@@ -12,9 +13,9 @@ import com.khan366kos.common.model.common.BeId
  */
 data class BeMeasureTranslation(
     val id: BeId = BeId.NONE,
-    val locale: String = "",
-    val name: String = "",
-    val shortName: String = ""
+    val locale: BeLocale = BeLocale.NONE,
+    val name: BeMeasureName = BeMeasureName.NONE,
+    val shortName: BeMeasureShortName = BeMeasureShortName.NONE
 ) {
     companion object {
         val NONE = BeMeasureTranslation()

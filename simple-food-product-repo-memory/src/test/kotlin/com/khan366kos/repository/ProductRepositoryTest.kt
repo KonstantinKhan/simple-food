@@ -6,11 +6,22 @@ import com.khan366kos.common.model.common.BeCategories
 import com.khan366kos.common.model.common.BeCategory
 import com.khan366kos.common.model.common.BeFats
 import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.common.BeLocale
+import com.khan366kos.common.model.common.BeNutrientShortTitle
+import com.khan366kos.common.model.common.BeNutrientTitle
+import com.khan366kos.common.model.common.BeNutrientValue
 import com.khan366kos.common.model.common.BeProteins
+import com.khan366kos.common.model.common.BeSearchString
 import com.khan366kos.common.model.common.BeWeight
-import com.khan366kos.common.model.user.BeAuthor
+import com.khan366kos.common.model.common.BeWeightValue
+import com.khan366kos.common.model.measure.BeMeasureName
+import com.khan366kos.common.model.measure.BeMeasureShortName
 import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.product.BeProduct
+import com.khan366kos.common.model.product.BeProductName
+import com.khan366kos.common.model.user.BeAuthor
+import com.khan366kos.common.model.user.BeAuthorName
+import com.khan366kos.common.model.user.BeEmail
 import com.khan366kos.common.model.product.repository.DbProductFilterRequest
 import com.khan366kos.common.model.product.repository.DbProductIdRequest
 import com.khan366kos.common.model.product.repository.DbProductRequest
@@ -41,7 +52,7 @@ class ProductRepositoryTest : FunSpec({
         test("should load sample products with expected names") {
             val response = repository.products()
             val products = response.result
-            val productNames = products.map { it.productName }
+            val productNames = products.map { it.productName.value }
 
             productNames.shouldContain("Куриная грудка")
             productNames.shouldContain("Рис белый")
@@ -99,63 +110,63 @@ class ProductRepositoryTest : FunSpec({
         test("should add new product successfully") {
             val newProduct = BeProduct(
                 productId = BeId.NONE,
-                productName = "Тестовый продукт",
+                productName = BeProductName("Тестовый продукт"),
                 productCalories = BeCalories(
-                    title = "Калории",
-                    shortTitle = "ккал",
-                    value = 200.0,
+                    title = BeNutrientTitle("Калории"),
+                    shortTitle = BeNutrientShortTitle("ккал"),
+                    value = BeNutrientValue(200.0),
                     measure = BeMeasureTranslation(
                         id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                        locale = "ru",
-                        name = "грамм",
-                        shortName = "г"
+                        locale = BeLocale("ru"),
+                        name = BeMeasureName("грамм"),
+                        shortName = BeMeasureShortName("г")
                     )
                 ),
                 productProteins = BeProteins(
-                    title = "Белки",
-                    shortTitle = "Б",
-                    value = 15.0,
+                    title = BeNutrientTitle("Белки"),
+                    shortTitle = BeNutrientShortTitle("Б"),
+                    value = BeNutrientValue(15.0),
                     measure = BeMeasureTranslation(
                         id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                        locale = "ru",
-                        name = "грамм",
-                        shortName = "г"
+                        locale = BeLocale("ru"),
+                        name = BeMeasureName("грамм"),
+                        shortName = BeMeasureShortName("г")
                     )
                 ),
                 productFats = BeFats(
-                    title = "Жиры",
-                    shortTitle = "Ж",
-                    value = 5.0,
+                    title = BeNutrientTitle("Жиры"),
+                    shortTitle = BeNutrientShortTitle("Ж"),
+                    value = BeNutrientValue(5.0),
                     measure = BeMeasureTranslation(
                         id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                        locale = "ru",
-                        name = "грамм",
-                        shortName = "г"
+                        locale = BeLocale("ru"),
+                        name = BeMeasureName("грамм"),
+                        shortName = BeMeasureShortName("г")
                     )
                 ),
                 productCarbohydrates = BeCarbohydrates(
-                    title = "Углеводы",
-                    shortTitle = "У",
-                    value = 20.0,
+                    title = BeNutrientTitle("Углеводы"),
+                    shortTitle = BeNutrientShortTitle("У"),
+                    value = BeNutrientValue(20.0),
                     measure = BeMeasureTranslation(
                         id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                        locale = "ru",
-                        name = "грамм",
-                        shortName = "г"
+                        locale = BeLocale("ru"),
+                        name = BeMeasureName("грамм"),
+                        shortName = BeMeasureShortName("г")
                     )
                 ),
                 weight = BeWeight(
-                    value = 100.0, measure = BeMeasureTranslation(
+                    value = BeWeightValue(100.0), measure = BeMeasureTranslation(
                         id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                        locale = "ru",
-                        name = "грамм",
-                        shortName = "г"
+                        locale = BeLocale("ru"),
+                        name = BeMeasureName("грамм"),
+                        shortName = BeMeasureShortName("г")
                     )
                 ),
                 author = BeAuthor(
                     authorId = BeId(UUID.randomUUID()),
-                    name = "Test Author",
-                    email = "test@example.com"
+                    name = BeAuthorName("Test Author"),
+                    email = BeEmail("test@example.com")
                 ),
                 categories = BeCategories(value = listOf(BeCategory("Тест")))
             )
@@ -171,7 +182,7 @@ class ProductRepositoryTest : FunSpec({
             // Verify product is stored with the generated ID
             val getResponse = repository.product(DbProductIdRequest(id = response.result.productId))
             getResponse.isSuccess shouldBe true
-            getResponse.result.productName shouldBe "Тестовый продукт"
+            getResponse.result.productName shouldBe BeProductName("Тестовый продукт")
         }
 
         test("should increase product count after adding new product") {
@@ -204,7 +215,7 @@ class ProductRepositoryTest : FunSpec({
             // Verify product can be retrieved by generated ID
             val getResponse = repository.product(DbProductIdRequest(id = response.result.productId))
             getResponse.isSuccess shouldBe true
-            getResponse.result.productName shouldBe "Auto-generated ID Test"
+            getResponse.result.productName shouldBe BeProductName("Auto-generated ID Test")
             getResponse.result.productId shouldBe response.result.productId
         }
     }
@@ -212,17 +223,17 @@ class ProductRepositoryTest : FunSpec({
     context("Update product") {
         test("should update existing product successfully") {
             val targetProduct = repository.products().result.first()
-            val updatedProduct = targetProduct.copy(productName = "Обновленное имя")
+            val updatedProduct = targetProduct.copy(productName = BeProductName("Обновленное имя"))
 
             val request = DbProductRequest(product = updatedProduct)
             val response = repository.updatedProduct(request)
 
             response.isSuccess shouldBe true
-            response.result.productName shouldBe "Обновленное имя"
+            response.result.productName shouldBe BeProductName("Обновленное имя")
 
             // Verify update persisted
             val getResponse = repository.product(DbProductIdRequest(id = targetProduct.productId))
-            getResponse.result.productName shouldBe "Обновленное имя"
+            getResponse.result.productName shouldBe BeProductName("Обновленное имя")
         }
 
         test("should fail updating non-existent product") {
@@ -237,7 +248,7 @@ class ProductRepositoryTest : FunSpec({
 
         test("should preserve product data on update") {
             val originalProduct = repository.products().result.first()
-            val updatedProduct = originalProduct.copy(productName = "New Name")
+            val updatedProduct = originalProduct.copy(productName = BeProductName("New Name"))
 
             repository.updatedProduct(DbProductRequest(product = updatedProduct))
 
@@ -286,25 +297,25 @@ class ProductRepositoryTest : FunSpec({
 
     context("Search products") {
         test("should find product by name") {
-            val searchRequest = DbProductFilterRequest(searchStr = "Куриная")
+            val searchRequest = DbProductFilterRequest(searchStr = BeSearchString("Куриная"))
             val response = repository.foundProducts(searchRequest)
 
             response.isSuccess shouldBe true
             response.result shouldHaveSize 1
-            response.result.first().productName shouldBe "Куриная грудка"
+            response.result.first().productName shouldBe BeProductName("Куриная грудка")
         }
 
         test("should find product by category") {
-            val searchRequest = DbProductFilterRequest(searchStr = "Мясо")
+            val searchRequest = DbProductFilterRequest(searchStr = BeSearchString("Мясо"))
             val response = repository.foundProducts(searchRequest)
 
             response.isSuccess shouldBe true
             response.result shouldHaveSize 1
-            response.result.first().productName shouldBe "Куриная грудка"
+            response.result.first().productName shouldBe BeProductName("Куриная грудка")
         }
 
         test("should find multiple products with common category") {
-            val searchRequest = DbProductFilterRequest(searchStr = "продукты")
+            val searchRequest = DbProductFilterRequest(searchStr = BeSearchString("продукты"))
             val response = repository.foundProducts(searchRequest)
 
             response.isSuccess shouldBe true
@@ -312,16 +323,16 @@ class ProductRepositoryTest : FunSpec({
         }
 
         test("should be case-insensitive search") {
-            val searchRequest = DbProductFilterRequest(searchStr = "РИС")
+            val searchRequest = DbProductFilterRequest(searchStr = BeSearchString("РИС"))
             val response = repository.foundProducts(searchRequest)
 
             response.isSuccess shouldBe true
             response.result shouldHaveSize 1
-            response.result.first().productName shouldBe "Рис белый"
+            response.result.first().productName shouldBe BeProductName("Рис белый")
         }
 
         test("should return empty list for non-matching search") {
-            val searchRequest = DbProductFilterRequest(searchStr = "несуществующий")
+            val searchRequest = DbProductFilterRequest(searchStr = BeSearchString("несуществующий"))
             val response = repository.foundProducts(searchRequest)
 
             response.isSuccess shouldBe true
@@ -329,12 +340,12 @@ class ProductRepositoryTest : FunSpec({
         }
 
         test("should find product by partial name") {
-            val searchRequest = DbProductFilterRequest(searchStr = "масло")
+            val searchRequest = DbProductFilterRequest(searchStr = BeSearchString("масло"))
             val response = repository.foundProducts(searchRequest)
 
             response.isSuccess shouldBe true
             response.result shouldHaveSize 1
-            response.result.first().productName shouldBe "Оливковое масло"
+            response.result.first().productName shouldBe BeProductName("Оливковое масло")
         }
     }
 
@@ -384,43 +395,43 @@ class ProductRepositoryTest : FunSpec({
         fun createTestProduct(name: String = "Test Product"): BeProduct {
             val gramMeasure = BeMeasureTranslation(
                 id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                locale = "ru",
-                name = "грамм",
-                shortName = "г"
+                locale = BeLocale("ru"),
+                name = BeMeasureName("грамм"),
+                shortName = BeMeasureShortName("г")
             )
 
             return BeProduct(
                 productId = BeId.NONE,
-                productName = name,
+                productName = BeProductName(name),
                 productCalories = BeCalories(
-                    title = "Калории",
-                    shortTitle = "ккал",
-                    value = 100.0,
+                    title = BeNutrientTitle("Калории"),
+                    shortTitle = BeNutrientShortTitle("ккал"),
+                    value = BeNutrientValue(100.0),
                     measure = gramMeasure
                 ),
                 productProteins = BeProteins(
-                    title = "Белки",
-                    shortTitle = "Б",
-                    value = 10.0,
+                    title = BeNutrientTitle("Белки"),
+                    shortTitle = BeNutrientShortTitle("Б"),
+                    value = BeNutrientValue(10.0),
                     measure = gramMeasure
                 ),
                 productFats = BeFats(
-                    title = "Жиры",
-                    shortTitle = "Ж",
-                    value = 5.0,
+                    title = BeNutrientTitle("Жиры"),
+                    shortTitle = BeNutrientShortTitle("Ж"),
+                    value = BeNutrientValue(5.0),
                     measure = gramMeasure
                 ),
                 productCarbohydrates = BeCarbohydrates(
-                    title = "Углеводы",
-                    shortTitle = "У",
-                    value = 10.0,
+                    title = BeNutrientTitle("Углеводы"),
+                    shortTitle = BeNutrientShortTitle("У"),
+                    value = BeNutrientValue(10.0),
                     measure = gramMeasure
                 ),
-                weight = BeWeight(value = 100.0, measure = gramMeasure),
+                weight = BeWeight(value = BeWeightValue(100.0), measure = gramMeasure),
                 author = BeAuthor(
                     authorId = BeId(UUID.randomUUID()),
-                    name = "Test Author",
-                    email = "test@example.com"
+                    name = BeAuthorName("Test Author"),
+                    email = BeEmail("test@example.com")
                 ),
                 categories = BeCategories(value = listOf(BeCategory("Test")))
             )

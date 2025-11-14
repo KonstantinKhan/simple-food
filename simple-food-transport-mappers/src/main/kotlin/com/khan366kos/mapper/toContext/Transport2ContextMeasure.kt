@@ -1,7 +1,11 @@
 package com.khan366kos.mapper.toContext
 
 import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.common.BeLocale
 import com.khan366kos.common.model.measure.BeMeasure
+import com.khan366kos.common.model.measure.BeMeasureCode
+import com.khan366kos.common.model.measure.BeMeasureName
+import com.khan366kos.common.model.measure.BeMeasureShortName
 import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.measure.BeMeasureWithTranslations
 import com.khan366kos.transport.model.MeasureDetail
@@ -14,7 +18,7 @@ import java.time.Instant
  */
 fun MeasureDetailCreateRequest.toContext(): BeMeasureWithTranslations = BeMeasureWithTranslations(
     measure = BeMeasure(
-        code = code,
+        code = BeMeasureCode(code),
         createdAt = Instant.now()
     ),
     translations = translations.map { it.toContext(BeId.NONE) }
@@ -26,7 +30,7 @@ fun MeasureDetailCreateRequest.toContext(): BeMeasureWithTranslations = BeMeasur
 fun MeasureDetail.toContext(): BeMeasureWithTranslations = BeMeasureWithTranslations(
     measure = BeMeasure(
         id = BeId(id.toString()),
-        code = code,
+        code = BeMeasureCode(code),
         createdAt = Instant.now()
     ),
     translations = translations.map { it.toContext(BeId(id.toString())) }
@@ -34,7 +38,7 @@ fun MeasureDetail.toContext(): BeMeasureWithTranslations = BeMeasureWithTranslat
 
 fun MeasureTranslation.toContext(measureId: BeId): BeMeasureTranslation = BeMeasureTranslation(
     id = measureId,
-    locale = locale,
-    name = measureName,
-    shortName = measureShortName
+    locale = BeLocale(locale),
+    name = BeMeasureName(measureName),
+    shortName = BeMeasureShortName(measureShortName)
 )

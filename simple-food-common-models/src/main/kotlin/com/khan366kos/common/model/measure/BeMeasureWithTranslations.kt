@@ -1,5 +1,7 @@
 package com.khan366kos.common.model.measure
 
+import com.khan366kos.common.model.common.BeLocale
+
 /**
  * Measure with all its translations.
  *
@@ -21,7 +23,7 @@ data class BeMeasureWithTranslations(
      * @param locale Desired locale code
      * @return Translation for the locale, or first available, or NONE
      */
-    fun getTranslation(locale: String): BeMeasureTranslation {
+    fun getTranslation(locale: BeLocale): BeMeasureTranslation {
         return translations.find { it.locale == locale }
             ?: translations.firstOrNull()
             ?: BeMeasureTranslation.NONE
@@ -34,7 +36,7 @@ data class BeMeasureWithTranslations(
      * @param fallbackLocale Fallback locale if preferred not found
      * @return Translation for the locale, fallback locale, or first available
      */
-    fun getTranslation(locale: String, fallbackLocale: String): BeMeasureTranslation {
+    fun getTranslation(locale: BeLocale, fallbackLocale: BeLocale): BeMeasureTranslation {
         return translations.find { it.locale == locale }
             ?: translations.find { it.locale == fallbackLocale }
             ?: translations.firstOrNull()

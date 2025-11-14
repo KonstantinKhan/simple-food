@@ -14,7 +14,7 @@ related:
 Defines the **domain model layer** of the project.  
 Provides:
 
-- immutable **business entities (`Be*`)** and **repository DTOs (`Db*`)**,
+- immutable **business entities (`Be*`)** and **persistent DTOs (`Db*`)**,
 - type-safe **value objects** for core nutrition metrics,
 - and **repository contracts (`IRepo*`)** for data abstraction.
 
@@ -61,7 +61,7 @@ Type-safe, immutable inline classes for domain primitives:
 | `BeWeight` / `BeCalories` / `BeProteins` / `BeFats` / `BeCarbohydrates` | Nutritional metrics   |
 | `BeCategories` / `BeCategory`                                           | Category model set    |
 
-### Repository DTOs (`Db*` prefix)
+### Persistent DTOs (`Db*` prefix)
 
 Models for repository interaction layer:
 
@@ -72,12 +72,12 @@ Models for repository interaction layer:
 
 ## 🧩 Design Principles
 
-| Principle                  | Explanation                                                        |
-|----------------------------|--------------------------------------------------------------------|
-| **Type Safety**            | Inline value classes prevent primitive obsession                   |
-| **Immutability**           | All entities are `data class` with `val` properties                |
-| **Separation of Concerns** | Distinction between business (`Be*`) and repository (`Db*`) models |
-| **Companion Objects**      | Each model defines `NONE` constant for default value               |
+| Principle                  | Explanation                                                           |
+|----------------------------|-----------------------------------------------------------------------|
+| **Type Safety**            | Inline value classes prevent primitive obsession                      |
+| **Immutability**           | All entities are `data class` with `val` properties                   |
+| **Separation of Concerns** | Distinction between business (`Be*`) and persistent (`Db*`) models    |
+| **Companion Objects**      | Each model and value object defines `NONE` constant for default value |
 
 ---
 

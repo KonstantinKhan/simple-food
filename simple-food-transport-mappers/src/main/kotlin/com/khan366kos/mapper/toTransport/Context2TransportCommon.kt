@@ -16,12 +16,12 @@ import com.khan366kos.transport.model.Weight as TransportWeight
 fun BeMeasureTranslation.toTransport(): TransportMeasure = TransportMeasure(
     id = id.asUUID(),
     code = "",
-    measureName = name,
-    measureShortName = shortName
+    measureName = name.value,
+    measureShortName = shortName.value
 )
 
 fun BeWeight.toMeasureTranslation(): TransportWeight = TransportWeight(
-    weightValue = value.toFloat(),
+    weightValue = value.value.toFloat(),
     measure = measure.toTransport()
 )
 
@@ -29,34 +29,34 @@ fun BeCategories.toMeasureTranslation(): List<String> = value.map { it.value }
 
 fun BeAuthor.toMeasureTranslation(): TransportAuthor = TransportAuthor(
     id = authorId.asUUID(),
-    name = name,
-    email = email
+    name = name.value,
+    email = email.value
 )
 
 fun BeCalories.toMeasureTranslation(): TransportNutritionalValue = TransportNutritionalValue(
-    title = title,
-    shortTitle = shortTitle,
-    nutritionalValue = value.toFloat(),
+    title = title.value,
+    shortTitle = shortTitle.value,
+    nutritionalValue = value.value.toFloat(),
     measure = measure.toTransport()
 )
 
 fun BeProteins.toMeasureTranslation(): TransportNutritionalValue = TransportNutritionalValue(
-    title = title,
-    shortTitle = shortTitle,
-    nutritionalValue = value.toFloat(),
+    title = title.value,
+    shortTitle = shortTitle.value,
+    nutritionalValue = value.value.toFloat(),
     measure = measure.toTransport()
 )
 
 fun BeFats.toMeasureTranslation(): TransportNutritionalValue = TransportNutritionalValue(
-    title = title,
-    shortTitle = shortTitle,
-    nutritionalValue = value.toFloat(),
+    title = title.value,
+    shortTitle = shortTitle.value,
+    nutritionalValue = value.value.toFloat(),
     measure = measure.toTransport()
 )
 
 fun BeCarbohydrates.toMeasureTranslation(): TransportNutritionalValue = TransportNutritionalValue(
-    title = title,
-    shortTitle = shortTitle,
-    nutritionalValue = value.toFloat(),
+    title = title.value,
+    shortTitle = shortTitle.value,
+    nutritionalValue = value.value.toFloat(),
     measure = measure.toTransport()
 )

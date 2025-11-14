@@ -11,7 +11,7 @@ import com.khan366kos.common.model.user.BeAuthor
 
 data class BeProduct(
     val productId: BeId,
-    val productName: String,
+    val productName: BeProductName,
     val productCalories: BeCalories,
     val productProteins: BeProteins,
     val productFats: BeFats,
@@ -22,15 +22,15 @@ data class BeProduct(
 ) {
     companion object {
         val NONE = BeProduct(
-            productId = BeId.Companion.NONE,
-            productName = "",
-            productCalories = BeCalories.Companion.NONE,
-            productProteins = BeProteins.Companion.NONE,
-            productFats = BeFats.Companion.NONE,
-            productCarbohydrates = BeCarbohydrates.Companion.NONE,
-            weight = BeWeight.Companion.NONE,
-            author = BeAuthor.Companion.NONE,
-            categories = BeCategories.Companion.NONE
+            productId = BeId.NONE,
+            productName = BeProductName.NONE,
+            productCalories = BeCalories.NONE,
+            productProteins = BeProteins.NONE,
+            productFats = BeFats.NONE,
+            productCarbohydrates = BeCarbohydrates.NONE,
+            weight = BeWeight.NONE,
+            author = BeAuthor.NONE,
+            categories = BeCategories.NONE
         )
     }
 }

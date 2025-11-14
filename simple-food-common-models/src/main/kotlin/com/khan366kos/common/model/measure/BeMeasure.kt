@@ -12,7 +12,7 @@ import java.time.Instant
  */
 data class BeMeasure(
     val id: BeId = BeId.NONE,
-    val code: String = "",
+    val code: BeMeasureCode = BeMeasureCode.NONE,
     val createdAt: Instant = Instant.EPOCH
 ) {
     companion object {

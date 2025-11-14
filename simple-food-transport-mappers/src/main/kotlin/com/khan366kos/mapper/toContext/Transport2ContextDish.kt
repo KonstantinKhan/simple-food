@@ -2,7 +2,9 @@ package com.khan366kos.mapper.toContext
 
 import com.khan366kos.common.model.user.BeAuthor
 import com.khan366kos.common.model.dish.BeDish
+import com.khan366kos.common.model.dish.BeDishTitle
 import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.common.BeRecipeStep
 import com.khan366kos.common.model.dish.BeProductPortion
 import com.khan366kos.transport.model.Dish as TransportDish
 import com.khan366kos.transport.model.ProductPortion as TransportProductPortion
@@ -14,7 +16,7 @@ private fun TransportProductPortion.toContext(): BeProductPortion = BeProductPor
 
 fun TransportDish.toContext(): BeDish = BeDish(
     id = BeId(id),
-    title = title,
+    title = BeDishTitle(title),
     calories = calories.toContextCalories(),
     proteins = proteins.toContextProteins(),
     fats = fats.toContextFats(),
@@ -22,7 +24,7 @@ fun TransportDish.toContext(): BeDish = BeDish(
     weight = weight.toContext(),
     author = author?.toContext() ?: BeAuthor.NONE,
     categories = categories.toContextCategories(),
-    recipes = recipes ?: emptyList(),
+    recipes = (recipes ?: emptyList()).map { BeRecipeStep(it) },
     products = (products ?: emptyList()).map { it.toContext() }
 )
 

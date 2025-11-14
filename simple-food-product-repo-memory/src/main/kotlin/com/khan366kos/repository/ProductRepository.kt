@@ -59,10 +59,10 @@ class ProductRepository : IRepoProduct {
     }
 
     override fun foundProducts(request: DbProductFilterRequest): DbProductsResponse {
-        val lowerQuery = request.searchStr.lowercase()
+        val lowerQuery = request.searchStr.value.lowercase()
         val foundProducts =
                 products.values.filter { product ->
-                    product.productName.lowercase().contains(lowerQuery) ||
+                    product.productName.value.lowercase().contains(lowerQuery) ||
                             product.categories.value.any {
                                 it.value.lowercase().contains(lowerQuery)
                             }

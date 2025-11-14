@@ -9,10 +9,19 @@ import com.khan366kos.common.model.common.BeFats
 import com.khan366kos.common.model.common.BeId
 import com.khan366kos.common.model.common.BeProteins
 import com.khan366kos.common.model.common.BeWeight
+import com.khan366kos.common.model.common.BeWeightValue
+import com.khan366kos.common.model.common.BeNutrientTitle
+import com.khan366kos.common.model.common.BeNutrientShortTitle
+import com.khan366kos.common.model.common.BeNutrientValue
+import com.khan366kos.common.model.common.BeLocale
 import com.khan366kos.common.model.user.BeAuthor
+import com.khan366kos.common.model.user.BeAuthorName
+import com.khan366kos.common.model.user.BeEmail
 import com.khan366kos.common.model.measure.BeMeasureTranslation
+import com.khan366kos.common.model.measure.BeMeasureName
+import com.khan366kos.common.model.measure.BeMeasureShortName
 import com.khan366kos.common.model.product.BeProduct
-import com.khan366kos.common.model.simple.*
+import com.khan366kos.common.model.product.BeProductName
 import java.util.UUID
 
 /**
@@ -24,51 +33,51 @@ object TestData {
         // GRAM measure (matches V4 migration: 00000000-0000-0000-0000-000000000001)
         val measureGram = BeMeasureTranslation(
             id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-            locale = "ru",
-            name = "грамм",
-            shortName = "г"
+            locale = BeLocale("ru"),
+            name = BeMeasureName("грамм"),
+            shortName = BeMeasureShortName("г")
         )
 
         // KILOCALORIE measure (matches V4 migration: 00000000-0000-0000-0000-000000000007)
         val measureKcal = BeMeasureTranslation(
             id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000007")),
-            locale = "ru",
-            name = "килокалория",
-            shortName = "ккал"
+            locale = BeLocale("ru"),
+            name = BeMeasureName("килокалория"),
+            shortName = BeMeasureShortName("ккал")
         )
 
         val product1 = BeProduct(
             productId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440001")),
-            productName = "Куриная грудка",
+            productName = BeProductName("Куриная грудка"),
             productCalories = BeCalories(
-                title = "Калорийность",
-                shortTitle = "К",
-                value = 165.0,
+                title = BeNutrientTitle("Калорийность"),
+                shortTitle = BeNutrientShortTitle("К"),
+                value = BeNutrientValue(165.0),
                 measure = measureKcal
             ),
             productProteins = BeProteins(
-                title = "Белки",
-                shortTitle = "Б",
-                value = 31.0,
+                title = BeNutrientTitle("Белки"),
+                shortTitle = BeNutrientShortTitle("Б"),
+                value = BeNutrientValue(31.0),
                 measure = measureGram
             ),
             productFats = BeFats(
-                title = "Жиры",
-                shortTitle = "Ж",
-                value = 3.6,
+                title = BeNutrientTitle("Жиры"),
+                shortTitle = BeNutrientShortTitle("Ж"),
+                value = BeNutrientValue(3.6),
                 measure = measureGram
             ),
             productCarbohydrates = BeCarbohydrates(
-                title = "Углеводы",
-                shortTitle = "У",
-                value = 0.0,
+                title = BeNutrientTitle("Углеводы"),
+                shortTitle = BeNutrientShortTitle("У"),
+                value = BeNutrientValue(0.0),
                 measure = measureGram
             ),
-            weight = BeWeight(value = 100.0, measure = measureGram),
+            weight = BeWeight(value = BeWeightValue(100.0), measure = measureGram),
             author = BeAuthor(
                 authorId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440099")),
-                name = "Admin",
-                email = "admin@example.com"
+                name = BeAuthorName("Admin"),
+                email = BeEmail("admin@example.com")
             ),
             categories = BeCategories(
                 value = listOf(
@@ -81,36 +90,36 @@ object TestData {
 
         val product2 = BeProduct(
             productId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440002")),
-            productName = "Рис белый",
+            productName = BeProductName("Рис белый"),
             productCalories = BeCalories(
-                title = "Калорийность",
-                shortTitle = "К",
-                value = 365.0,
+                title = BeNutrientTitle("Калорийность"),
+                shortTitle = BeNutrientShortTitle("К"),
+                value = BeNutrientValue(365.0),
                 measure = measureKcal
             ),
             productProteins = BeProteins(
-                title = "Белки",
-                shortTitle = "Б",
-                value = 7.5,
+                title = BeNutrientTitle("Белки"),
+                shortTitle = BeNutrientShortTitle("Б"),
+                value = BeNutrientValue(7.5),
                 measure = measureGram
             ),
             productFats = BeFats(
-                title = "Жиры",
-                shortTitle = "Ж",
-                value = 0.6,
+                title = BeNutrientTitle("Жиры"),
+                shortTitle = BeNutrientShortTitle("Ж"),
+                value = BeNutrientValue(0.6),
                 measure = measureGram
             ),
             productCarbohydrates = BeCarbohydrates(
-                title = "Углеводы",
-                shortTitle = "У",
-                value = 79.0,
+                title = BeNutrientTitle("Углеводы"),
+                shortTitle = BeNutrientShortTitle("У"),
+                value = BeNutrientValue(79.0),
                 measure = measureGram
             ),
-            weight = BeWeight(value = 100.0, measure = measureGram),
+            weight = BeWeight(value = BeWeightValue(100.0), measure = measureGram),
             author = BeAuthor(
                 authorId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440099")),
-                name = "Admin",
-                email = "admin@example.com"
+                name = BeAuthorName("Admin"),
+                email = BeEmail("admin@example.com")
             ),
             categories = BeCategories(
                 value = listOf(
@@ -123,36 +132,36 @@ object TestData {
 
         val product3 = BeProduct(
             productId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440003")),
-            productName = "Оливковое масло",
+            productName = BeProductName("Оливковое масло"),
             productCalories = BeCalories(
-                title = "Калорийность",
-                shortTitle = "К",
-                value = 884.0,
+                title = BeNutrientTitle("Калорийность"),
+                shortTitle = BeNutrientShortTitle("К"),
+                value = BeNutrientValue(884.0),
                 measure = measureKcal
             ),
             productProteins = BeProteins(
-                title = "Белки",
-                shortTitle = "Б",
-                value = 0.0,
+                title = BeNutrientTitle("Белки"),
+                shortTitle = BeNutrientShortTitle("Б"),
+                value = BeNutrientValue(0.0),
                 measure = measureGram
             ),
             productFats = BeFats(
-                title = "Жиры",
-                shortTitle = "Ж",
-                value = 100.0,
+                title = BeNutrientTitle("Жиры"),
+                shortTitle = BeNutrientShortTitle("Ж"),
+                value = BeNutrientValue(100.0),
                 measure = measureGram
             ),
             productCarbohydrates = BeCarbohydrates(
-                title = "Углеводы",
-                shortTitle = "У",
-                value = 0.0,
+                title = BeNutrientTitle("Углеводы"),
+                shortTitle = BeNutrientShortTitle("У"),
+                value = BeNutrientValue(0.0),
                 measure = measureGram
             ),
-            weight = BeWeight(value = 100.0, measure = measureGram),
+            weight = BeWeight(value = BeWeightValue(100.0), measure = measureGram),
             author = BeAuthor(
                 authorId = BeId(UUID.fromString("550e8400-e29b-41d4-a716-446655440099")),
-                name = "Admin",
-                email = "admin@example.com"
+                name = BeAuthorName("Admin"),
+                email = BeEmail("admin@example.com")
             ),
             categories = BeCategories(
                 value = listOf(

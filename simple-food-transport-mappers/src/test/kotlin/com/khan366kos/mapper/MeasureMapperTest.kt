@@ -26,18 +26,18 @@ class MeasureMapperTest : ShouldSpec({
 
         with(beMeasure.measure) {
             id shouldBe BeId.NONE
-            code shouldBe "GRAM"
+            code.value shouldBe "GRAM"
             createdAt shouldNotBe null
         }
 
         with(beMeasure.translations) {
             size shouldBe 2
-            get(0).locale shouldBe "en"
-            get(0).name shouldBe "gram"
-            get(0).shortName shouldBe "g"
-            get(1).locale shouldBe "ru"
-            get(1).name shouldBe "грамм"
-            get(1).shortName shouldBe "г"
+            get(0).locale.value shouldBe "en"
+            get(0).name.value shouldBe "gram"
+            get(0).shortName.value shouldBe "g"
+            get(1).locale.value shouldBe "ru"
+            get(1).name.value shouldBe "грамм"
+            get(1).shortName.value shouldBe "г"
         }
     }
 
@@ -55,13 +55,13 @@ class MeasureMapperTest : ShouldSpec({
 
         with(beMeasure.measure) {
             id.value shouldBe measureId.toString()
-            code shouldBe "KILOGRAM"
+            code.value shouldBe "KILOGRAM"
         }
 
         with(beMeasure.translations) {
             size shouldBe 1
             get(0).id.value shouldBe measureId.toString()
-            get(0).locale shouldBe "en"
+            get(0).locale.value shouldBe "en"
         }
     }
 
@@ -100,7 +100,7 @@ class MeasureMapperTest : ShouldSpec({
 
         val beMeasure = createRequest.toContext()
 
-        beMeasure.measure.code shouldBe "PIECE"
+        beMeasure.measure.code.value shouldBe "PIECE"
         beMeasure.translations.size shouldBe 0
     }
 

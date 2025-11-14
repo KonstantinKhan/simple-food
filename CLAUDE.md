@@ -8,9 +8,10 @@ The project implements a multi-module architecture ([docs/achitecture.md](docs/a
 
 ### Modules
 
-- **simple-food-transport-models** - Transport models ([docs/modules/simple-food-transpsort-models](docs/modules/simple-food-transport-models.md)) 
-- **simple-food-common-models** - Common domain models and repository
-  interfaces and DTOs ([docs/modules/simple-food-common-models.md](docs/modules/simple-food-common-models.md))
+- **simple-food-transport-models** - Transport
+  models ([docs/modules/simple-food-transpsort-models](docs/modules/simple-food-transport-models.md))
+- **simple-food-common-models** - Common domain models and repository interfaces and
+  DTOs ([docs/modules/simple-food-common-models.md](docs/modules/simple-food-common-models.md))
 
 | Module                                                                     | Description                                   |
 |----------------------------------------------------------------------------|-----------------------------------------------|

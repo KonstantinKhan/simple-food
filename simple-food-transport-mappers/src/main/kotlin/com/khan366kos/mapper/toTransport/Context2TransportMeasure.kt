@@ -7,12 +7,12 @@ import com.khan366kos.transport.model.MeasureTranslation
 
 fun BeMeasureWithTranslations.toMeasureTranslation(): MeasureDetail = MeasureDetail(
     id = measure.id.asUUID(),
-    code = measure.code,
+    code = measure.code.value,
     translations = translations.map { it.toMeasureTranslation() }
 )
 
 fun BeMeasureTranslation.toMeasureTranslation(): MeasureTranslation = MeasureTranslation(
-    locale = locale,
-    measureName = name,
-    measureShortName = shortName
+    locale = locale.value,
+    measureName = name.value,
+    measureShortName = shortName.value
 )

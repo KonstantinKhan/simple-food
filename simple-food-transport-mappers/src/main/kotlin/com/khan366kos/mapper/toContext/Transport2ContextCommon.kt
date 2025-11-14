@@ -1,7 +1,16 @@
 package com.khan366kos.mapper.toContext
 
 import com.khan366kos.common.model.user.BeAuthor
+import com.khan366kos.common.model.user.BeAuthorName
+import com.khan366kos.common.model.user.BeEmail
 import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.common.BeLocale
+import com.khan366kos.common.model.common.BeNutrientTitle
+import com.khan366kos.common.model.common.BeNutrientShortTitle
+import com.khan366kos.common.model.common.BeNutrientValue
+import com.khan366kos.common.model.common.BeWeightValue
+import com.khan366kos.common.model.measure.BeMeasureName
+import com.khan366kos.common.model.measure.BeMeasureShortName
 import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.common.BeWeight
 import com.khan366kos.common.model.common.BeCategories
@@ -17,47 +26,47 @@ import com.khan366kos.transport.model.Author as TransportAuthor
 
 fun TransportAuthor.toContext(): BeAuthor = BeAuthor(
     authorId = BeId(id),
-    name = name ?: "",
-    email = email ?: ""
+    name = BeAuthorName(name ?: ""),
+    email = BeEmail(email ?: "")
 )
 
 fun TransportNutritionalValue.toContextCalories(): BeCalories = BeCalories(
-    title = title,
-    shortTitle = shortTitle,
-    value = nutritionalValue.toDouble(),
+    title = BeNutrientTitle(title),
+    shortTitle = BeNutrientShortTitle(shortTitle),
+    value = BeNutrientValue(nutritionalValue.toDouble()),
     measure = measure.toContext()
 )
 
 fun TransportNutritionalValue.toContextProteins(): BeProteins = BeProteins(
-    title = title,
-    shortTitle = shortTitle,
-    value = nutritionalValue.toDouble(),
+    title = BeNutrientTitle(title),
+    shortTitle = BeNutrientShortTitle(shortTitle),
+    value = BeNutrientValue(nutritionalValue.toDouble()),
     measure = measure.toContext()
 )
 
 fun TransportNutritionalValue.toContextFats(): BeFats = BeFats(
-    title = title,
-    shortTitle = shortTitle,
-    value = nutritionalValue.toDouble(),
+    title = BeNutrientTitle(title),
+    shortTitle = BeNutrientShortTitle(shortTitle),
+    value = BeNutrientValue(nutritionalValue.toDouble()),
     measure = measure.toContext()
 )
 
 fun TransportNutritionalValue.toContextCarbohydrates(): BeCarbohydrates = BeCarbohydrates(
-    title = title,
-    shortTitle = shortTitle,
-    value = nutritionalValue.toDouble(),
+    title = BeNutrientTitle(title),
+    shortTitle = BeNutrientShortTitle(shortTitle),
+    value = BeNutrientValue(nutritionalValue.toDouble()),
     measure = measure.toContext()
 )
 
 fun TransportMeasure.toContext(): BeMeasureTranslation = BeMeasureTranslation(
     id = BeId(id),
-    locale = "",
-    name = measureName,
-    shortName = measureShortName
+    locale = BeLocale(""),
+    name = BeMeasureName(measureName),
+    shortName = BeMeasureShortName(measureShortName)
 )
 
 fun TransportWeight.toContext(): BeWeight = BeWeight(
-    value = weightValue.toDouble(),
+    value = BeWeightValue(weightValue.toDouble()),
     measure = measure.toContext()
 )
 

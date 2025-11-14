@@ -37,14 +37,14 @@ class ProductMapperTest : ShouldSpec({
         val actual = expected.toContext()
 
         actual.productId.value shouldBe expected.productId.toString()
-        actual.productName shouldBe expected.productName
-        actual.productCalories.title shouldBe expected.productCalories.title
-        actual.productCalories.shortTitle shouldBe expected.productCalories.shortTitle
+        actual.productName.value shouldBe expected.productName
+        actual.productCalories.title.value shouldBe expected.productCalories.title
+        actual.productCalories.shortTitle.value shouldBe expected.productCalories.shortTitle
         actual.productCalories.measure shouldBe expected.productCalories.measure.toContext()
-        actual.productProteins.title shouldBe expected.productProteins.title
-        actual.productFats.title shouldBe expected.productFats.title
-        actual.productCarbohydrates.title shouldBe expected.productCarbohydrates.title
-        actual.weight.value shouldBe expected.weight.weightValue.toDouble()
+        actual.productProteins.title.value shouldBe expected.productProteins.title
+        actual.productFats.title.value shouldBe expected.productFats.title
+        actual.productCarbohydrates.title.value shouldBe expected.productCarbohydrates.title
+        actual.weight.value.value shouldBe expected.weight.weightValue.toDouble()
         actual.weight.measure shouldBe expected.weight.measure.toContext()
         actual.author.authorId.value shouldBe expected.author?.id.toString()
         actual.categories.value.map { it.value } shouldBe expected.categories
@@ -83,13 +83,13 @@ class ProductMapperTest : ShouldSpec({
         val actual = createRequest.toContext()
 
         actual.productId shouldBe BeId.NONE
-        actual.productName shouldBe createRequest.productName
-        actual.productCalories.title shouldBe createRequest.productCalories.title
-        actual.productCalories.shortTitle shouldBe createRequest.productCalories.shortTitle
-        actual.productProteins.title shouldBe createRequest.productProteins.title
-        actual.productFats.title shouldBe createRequest.productFats.title
-        actual.productCarbohydrates.title shouldBe createRequest.productCarbohydrates.title
-        actual.weight.value shouldBe createRequest.weight.weightValue.toDouble()
+        actual.productName.value shouldBe createRequest.productName
+        actual.productCalories.title.value shouldBe createRequest.productCalories.title
+        actual.productCalories.shortTitle.value shouldBe createRequest.productCalories.shortTitle
+        actual.productProteins.title.value shouldBe createRequest.productProteins.title
+        actual.productFats.title.value shouldBe createRequest.productFats.title
+        actual.productCarbohydrates.title.value shouldBe createRequest.productCarbohydrates.title
+        actual.weight.value.value shouldBe createRequest.weight.weightValue.toDouble()
         actual.author.authorId.value shouldBe createRequest.author?.id.toString()
         actual.categories.value.map { it.value } shouldBe createRequest.categories
     }

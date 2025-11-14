@@ -8,11 +8,12 @@ import com.khan366kos.common.model.common.BeCarbohydrates
 import com.khan366kos.common.model.common.BeCategories
 import com.khan366kos.common.model.common.BeFats
 import com.khan366kos.common.model.common.BeProteins
+import com.khan366kos.common.model.common.BeRecipeStep
 import com.khan366kos.common.model.user.BeAuthor
 
 data class BeDish(
     val id: BeId,
-    val title: String,
+    val title: BeDishTitle,
     val calories: BeCalories,
     val proteins: BeProteins,
     val fats: BeFats,
@@ -20,20 +21,20 @@ data class BeDish(
     val weight: BeWeight,
     val author: BeAuthor,
     val categories: BeCategories,
-    val recipes: List<String>,
+    val recipes: List<BeRecipeStep>,
     val products: List<BeProductPortion>
 ) {
     companion object {
         val NONE = BeDish(
-            id = BeId.Companion.NONE,
-            title = "",
-            calories = BeCalories.Companion.NONE,
-            proteins = BeProteins.Companion.NONE,
-            fats = BeFats.Companion.NONE,
-            carbohydrates = BeCarbohydrates.Companion.NONE,
-            weight = BeWeight.Companion.NONE,
-            author = BeAuthor.Companion.NONE,
-            categories = BeCategories.Companion.NONE,
+            id = BeId.NONE,
+            title = BeDishTitle.NONE,
+            calories = BeCalories.NONE,
+            proteins = BeProteins.NONE,
+            fats = BeFats.NONE,
+            carbohydrates = BeCarbohydrates.NONE,
+            weight = BeWeight.NONE,
+            author = BeAuthor.NONE,
+            categories = BeCategories.NONE,
             recipes = emptyList(),
             products = emptyList()
         )

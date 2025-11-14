@@ -4,14 +4,14 @@ import com.khan366kos.common.model.common.BeId
 
 data class BeAuthor(
     val authorId: BeId,
-    val name: String,
-    val email: String
+    val name: BeAuthorName,
+    val email: BeEmail
 ) {
     companion object {
         val NONE = BeAuthor(
-            authorId = BeId.Companion.NONE,
-            name = "",
-            email = ""
+            authorId = BeId.NONE,
+            name = BeAuthorName.NONE,
+            email = BeEmail.NONE
         )
     }
 }

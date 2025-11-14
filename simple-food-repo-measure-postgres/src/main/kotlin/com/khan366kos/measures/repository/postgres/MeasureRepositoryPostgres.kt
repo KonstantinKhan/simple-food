@@ -1,7 +1,11 @@
 package com.khan366kos.measures.repository.postgres
 
 import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.common.BeLocale
 import com.khan366kos.common.model.measure.BeMeasure
+import com.khan366kos.common.model.measure.BeMeasureCode
+import com.khan366kos.common.model.measure.BeMeasureName
+import com.khan366kos.common.model.measure.BeMeasureShortName
 import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.measure.BeMeasureWithTranslations
 import com.khan366kos.common.model.measure.repository.*
@@ -34,19 +38,19 @@ class MeasureRepositoryPostgres : IRepoMeasure {
 
                 val filtered = allMeasures.filter { measureWithTranslations ->
                     // Filter by locale if specified
-                    val localeMatch = request.locale?.let { locale ->
+                    val localeMatch = request.locale.let { locale ->
                         measureWithTranslations.translations.any { it.locale == locale }
-                    } ?: true
+                    }
 
                     // Filter by search text if specified
-                    val searchMatch = request.searchText?.let { searchText ->
-                        val lower = searchText.lowercase()
-                        measureWithTranslations.measure.code.lowercase().contains(lower) ||
+                    val searchMatch = request.searchText.let { searchText ->
+                        val lower = searchText.value.lowercase()
+                        measureWithTranslations.measure.code.value.lowercase().contains(lower) ||
                                 measureWithTranslations.translations.any { translation ->
-                                    translation.name.lowercase().contains(lower) ||
-                                            translation.shortName.lowercase().contains(lower)
+                                    translation.name.value.lowercase().contains(lower) ||
+                                            translation.shortName.value.lowercase().contains(lower)
                                 }
-                    } ?: true
+                    }
 
                     localeMatch && searchMatch
                 }
@@ -83,7 +87,7 @@ class MeasureRepositoryPostgres : IRepoMeasure {
     override fun measureByCode(request: DbMeasureCodeRequest): DbMeasureResponse {
         return transaction {
             try {
-                val measureRow = MeasuresTable.selectAll().where { MeasuresTable.code eq request.code }.singleOrNull()
+                val measureRow = MeasuresTable.selectAll().where { MeasuresTable.code eq request.code.value }.singleOrNull()
 
                 if (measureRow != null) {
                     val measure = rowToBeMeasure(measureRow)
@@ -107,13 +111,13 @@ class MeasureRepositoryPostgres : IRepoMeasure {
                 val measure = request.measure
 
                 // Check if code already exists
-                val existingCode = MeasuresTable.selectAll().where { MeasuresTable.code eq measure.code }.count()
+                val existingCode = MeasuresTable.selectAll().where { MeasuresTable.code eq measure.code.value }.count()
                 if (existingCode > 0) {
                     return@transaction DbMeasureResponse(result = BeMeasureWithTranslations.NONE, isSuccess = false)
                 }
                 // Insert measure - let database generate ID and createdAt
                 val insertedId = MeasuresTable.insertAndGetId {
-                    it[code] = measure.code
+                    it[code] = measure.code.value
                     // id and createdAt use database defaults
                 }
 
@@ -121,9 +125,9 @@ class MeasureRepositoryPostgres : IRepoMeasure {
                 request.translations.forEach { translation ->
                     MeasureTranslationsTable.insert {
                         it[measureId] = insertedId.value
-                        it[locale] = translation.locale
-                        it[measureName] = translation.name
-                        it[measureShortName] = translation.shortName
+                        it[locale] = translation.locale.value
+                        it[measureName] = translation.name.value
+                        it[measureShortName] = translation.shortName.value
                     }
                 }
 
@@ -150,7 +154,7 @@ class MeasureRepositoryPostgres : IRepoMeasure {
 
                 // Update measure
                 MeasuresTable.update({ MeasuresTable.id eq measureUuid }) {
-                    it[code] = measure.code
+                    it[code] = measure.code.value
                     it[createdAt] = measure.createdAt
                 }
 
@@ -159,9 +163,9 @@ class MeasureRepositoryPostgres : IRepoMeasure {
                 request.translations.forEach { translation ->
                     MeasureTranslationsTable.insert {
                         it[measureId] = measureUuid
-                        it[locale] = translation.locale
-                        it[measureName] = translation.name
-                        it[measureShortName] = translation.shortName
+                        it[locale] = translation.locale.value
+                        it[measureName] = translation.name.value
+                        it[measureShortName] = translation.shortName.value
                     }
                 }
 
@@ -219,7 +223,7 @@ class MeasureRepositoryPostgres : IRepoMeasure {
                     // Insert measure (or ignore if exists)
                     MeasuresTable.insert {
                         it[id] = measureUuid
-                        it[code] = measure.code
+                        it[code] = measure.code.value
                         it[createdAt] = measure.createdAt
                     }
 
@@ -227,9 +231,9 @@ class MeasureRepositoryPostgres : IRepoMeasure {
                     request.translations.forEach { translation ->
                         MeasureTranslationsTable.insert {
                             it[measureId] = measureUuid
-                            it[locale] = translation.locale
-                            it[measureName] = translation.name
-                            it[measureShortName] = translation.shortName
+                            it[locale] = translation.locale.value
+                            it[measureName] = translation.name.value
+                            it[measureShortName] = translation.shortName.value
                         }
                     }
 
@@ -263,7 +267,7 @@ class MeasureRepositoryPostgres : IRepoMeasure {
     private fun rowToBeMeasure(row: ResultRow): BeMeasure {
         return BeMeasure(
             id = BeId(row[MeasuresTable.id].toString()),
-            code = row[MeasuresTable.code],
+            code = BeMeasureCode(row[MeasuresTable.code]),
             createdAt = row[MeasuresTable.createdAt]
         )
     }
@@ -271,9 +275,9 @@ class MeasureRepositoryPostgres : IRepoMeasure {
     private fun rowToBeMeasureTranslation(row: ResultRow, measureId: BeId): BeMeasureTranslation {
         return BeMeasureTranslation(
             id = measureId,
-            locale = row[MeasureTranslationsTable.locale],
-            name = row[MeasureTranslationsTable.measureName],
-            shortName = row[MeasureTranslationsTable.measureShortName]
+            locale = BeLocale(row[MeasureTranslationsTable.locale]),
+            name = BeMeasureName(row[MeasureTranslationsTable.measureName]),
+            shortName = BeMeasureShortName(row[MeasureTranslationsTable.measureShortName])
         )
     }
 }

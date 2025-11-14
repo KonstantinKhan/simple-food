@@ -12,7 +12,7 @@ fun BeProductPortion.toMeasureTranslation(): TransportProductPortion = Transport
 
 fun BeDish.toMeasureTranslation(): TransportDish = TransportDish(
 	id = id.asUUID(),
-	title = title,
+	title = title.value,
 	calories = calories.toMeasureTranslation(),
 	proteins = proteins.toMeasureTranslation(),
 	fats = fats.toMeasureTranslation(),
@@ -20,7 +20,7 @@ fun BeDish.toMeasureTranslation(): TransportDish = TransportDish(
 	weight = weight.toMeasureTranslation(),
 	author = author.toMeasureTranslation(),
 	categories = categories.toMeasureTranslation(),
-	recipes = recipes,
+	recipes = recipes.map { it.value },
 	products = products.map { it.toMeasureTranslation() }
 )
 

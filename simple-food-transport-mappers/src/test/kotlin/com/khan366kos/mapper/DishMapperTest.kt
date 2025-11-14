@@ -47,15 +47,15 @@ class DishMapperTest : ShouldSpec({
         val actual = expected.toContext()
 
         actual.id.value shouldBe expected.id.toString()
-        actual.title shouldBe expected.title
-        actual.calories.title shouldBe expected.calories.title
-        actual.proteins.title shouldBe expected.proteins.title
-        actual.fats.title shouldBe expected.fats.title
-        actual.carbohydrates.title shouldBe expected.carbohydrates.title
-        actual.weight.value shouldBe expected.weight.weightValue.toDouble()
+        actual.title.value shouldBe expected.title
+        actual.calories.title.value shouldBe expected.calories.title
+        actual.proteins.title.value shouldBe expected.proteins.title
+        actual.fats.title.value shouldBe expected.fats.title
+        actual.carbohydrates.title.value shouldBe expected.carbohydrates.title
+        actual.weight.value.value shouldBe expected.weight.weightValue.toDouble()
         actual.author.authorId.value shouldBe expected.author?.id.toString()
         actual.categories.value.map { it.value } shouldBe expected.categories
-        actual.recipes shouldBe (expected.recipes ?: emptyList())
+        actual.recipes.map { it.value } shouldBe (expected.recipes ?: emptyList())
         actual.products.size shouldBe (expected.products?.size ?: 0)
         actual.products.map { it.productId.value } shouldBe (expected.products?.map { it.productId.toString() } ?: emptyList())
     }

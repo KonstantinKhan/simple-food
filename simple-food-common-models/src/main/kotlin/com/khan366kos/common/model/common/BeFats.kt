@@ -3,17 +3,17 @@ package com.khan366kos.common.model.common
 import com.khan366kos.common.model.measure.BeMeasureTranslation
 
 data class BeFats(
-    val title: String,
-    val shortTitle: String,
-    val value: Double,
+    val title: BeNutrientTitle,
+    val shortTitle: BeNutrientShortTitle,
+    val value: BeNutrientValue,
     val measure: BeMeasureTranslation
 ) {
     companion object {
         val NONE = BeFats(
-            title = "",
-            shortTitle = "",
-            value = 0.0,
-            measure = BeMeasureTranslation.Companion.NONE
+            title = BeNutrientTitle.NONE,
+            shortTitle = BeNutrientShortTitle.NONE,
+            value = BeNutrientValue.NONE,
+            measure = BeMeasureTranslation.NONE
         )
     }
 }

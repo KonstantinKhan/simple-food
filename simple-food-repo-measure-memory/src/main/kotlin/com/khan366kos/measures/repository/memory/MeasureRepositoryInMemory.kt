@@ -30,19 +30,19 @@ class MeasureRepositoryInMemory : IRepoMeasure {
 
         val filtered = allMeasures.filter { measureWithTranslations ->
             // Filter by locale if specified
-            val localeMatch = request.locale?.let { locale ->
+            val localeMatch = request.locale.let { locale ->
                 measureWithTranslations.translations.any { it.locale == locale }
-            } ?: true
+            }
 
             // Filter by search text if specified
-            val searchMatch = request.searchText?.let { searchText ->
-                val lower = searchText.lowercase()
-                measureWithTranslations.measure.code.lowercase().contains(lower) ||
+            val searchMatch = request.searchText.let { searchText ->
+                val lower = searchText.value.lowercase()
+                measureWithTranslations.measure.code.value.lowercase().contains(lower) ||
                         measureWithTranslations.translations.any { translation ->
-                            translation.name.lowercase().contains(lower) ||
-                                    translation.shortName.lowercase().contains(lower)
+                            translation.name.value.lowercase().contains(lower) ||
+                                    translation.shortName.value.lowercase().contains(lower)
                         }
-            } ?: true
+            }
 
             localeMatch && searchMatch
         }

@@ -4,13 +4,14 @@ import com.khan366kos.common.model.user.BeAuthor
 import com.khan366kos.transport.model.Product as TransportProduct
 import com.khan366kos.common.model.common.BeId
 import com.khan366kos.common.model.product.BeProduct
+import com.khan366kos.common.model.product.BeProductName
 import com.khan366kos.common.model.common.BeCategories
 import com.khan366kos.common.model.common.BeCategory
 import com.khan366kos.transport.model.ProductCreateRequest
 
 fun TransportProduct.toContext(): BeProduct = BeProduct(
     productId = productId?.let { BeId(it) } ?: BeId.NONE,
-    productName = productName,
+    productName = BeProductName(productName),
     productCalories = productCalories.toContextCalories(),
     productProteins = productProteins.toContextProteins(),
     productFats = productFats.toContextFats(),
@@ -26,7 +27,7 @@ fun TransportProduct.toContext(): BeProduct = BeProduct(
 
 fun ProductCreateRequest.toContext(): BeProduct = BeProduct(
     productId = BeId.NONE, // Will be assigned by repository
-    productName = productName,
+    productName = BeProductName(productName),
     productCalories = productCalories.toContextCalories(),
     productProteins = productProteins.toContextProteins(),
     productFats = productFats.toContextFats(),

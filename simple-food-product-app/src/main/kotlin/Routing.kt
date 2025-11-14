@@ -1,8 +1,12 @@
 package com.khan366kos
 
 import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.common.BeLocale
 import com.khan366kos.common.model.product.repository.IRepoProduct
 import com.khan366kos.common.model.measure.BeMeasure
+import com.khan366kos.common.model.measure.BeMeasureCode
+import com.khan366kos.common.model.measure.BeMeasureName
+import com.khan366kos.common.model.measure.BeMeasureShortName
 import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.measure.repository.DbMeasureRequest
 import com.khan366kos.common.model.measure.repository.IRepoMeasure
@@ -55,21 +59,21 @@ private fun seedDefaultMeasures(repository: IRepoMeasure) {
         DbMeasureRequest(
             measure = BeMeasure(
                 id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                code = "GRAM",
+                code = BeMeasureCode("GRAM"),
                 createdAt = Instant.now()
             ),
             translations = listOf(
                 BeMeasureTranslation(
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                    locale = "ru",
-                    name = "грамм",
-                    shortName = "г"
+                    locale = BeLocale("ru"),
+                    name = BeMeasureName("грамм"),
+                    shortName = BeMeasureShortName("г")
                 ),
                 BeMeasureTranslation(
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                    locale = "en",
-                    name = "gram",
-                    shortName = "g"
+                    locale = BeLocale("en"),
+                    name = BeMeasureName("gram"),
+                    shortName = BeMeasureShortName("g")
                 )
             )
         ),
@@ -77,21 +81,21 @@ private fun seedDefaultMeasures(repository: IRepoMeasure) {
         DbMeasureRequest(
             measure = BeMeasure(
                 id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000002")),
-                code = "KILOGRAM",
+                code = BeMeasureCode("KILOGRAM"),
                 createdAt = Instant.now()
             ),
             translations = listOf(
                 BeMeasureTranslation(
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000002")),
-                    locale = "ru",
-                    name = "килограмм",
-                    shortName = "кг"
+                    locale = BeLocale("ru"),
+                    name = BeMeasureName("килограмм"),
+                    shortName = BeMeasureShortName("кг")
                 ),
                 BeMeasureTranslation(
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000002")),
-                    locale = "en",
-                    name = "kilogram",
-                    shortName = "kg"
+                    locale = BeLocale("en"),
+                    name = BeMeasureName("kilogram"),
+                    shortName = BeMeasureShortName("kg")
                 )
             )
         ),
@@ -99,21 +103,21 @@ private fun seedDefaultMeasures(repository: IRepoMeasure) {
         DbMeasureRequest(
             measure = BeMeasure(
                 id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000003")),
-                code = "LITER",
+                code = BeMeasureCode("LITER"),
                 createdAt = Instant.now()
             ),
             translations = listOf(
                 BeMeasureTranslation(
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000003")),
-                    locale = "ru",
-                    name = "литр",
-                    shortName = "л"
+                    locale = BeLocale("ru"),
+                    name = BeMeasureName("литр"),
+                    shortName = BeMeasureShortName("л")
                 ),
                 BeMeasureTranslation(
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000003")),
-                    locale = "en",
-                    name = "liter",
-                    shortName = "l"
+                    locale = BeLocale("en"),
+                    name = BeMeasureName("liter"),
+                    shortName = BeMeasureShortName("l")
                 )
             )
         ),
@@ -121,21 +125,21 @@ private fun seedDefaultMeasures(repository: IRepoMeasure) {
         DbMeasureRequest(
             measure = BeMeasure(
                 id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000004")),
-                code = "MILLILITER",
+                code = BeMeasureCode("MILLILITER"),
                 createdAt = Instant.now()
             ),
             translations = listOf(
                 BeMeasureTranslation(
-                    locale = "ru",
+                    locale = BeLocale("ru"),
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000004")),
-                    name = "миллилитр",
-                    shortName = "мл"
+                    name = BeMeasureName("миллилитр"),
+                    shortName = BeMeasureShortName("мл")
                 ),
                 BeMeasureTranslation(
-                    locale = "en",
+                    locale = BeLocale("en"),
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000004")),
-                    name = "milliliter",
-                    shortName = "ml"
+                    name = BeMeasureName("milliliter"),
+                    shortName = BeMeasureShortName("ml")
                 )
             )
         ),
@@ -143,21 +147,21 @@ private fun seedDefaultMeasures(repository: IRepoMeasure) {
         DbMeasureRequest(
             measure = BeMeasure(
                 id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000005")),
-                code = "PIECE",
+                code = BeMeasureCode("PIECE"),
                 createdAt = Instant.now()
             ),
             translations = listOf(
                 BeMeasureTranslation(
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000005")),
-                    locale = "ru",
-                    name = "штука",
-                    shortName = "шт"
+                    locale = BeLocale("ru"),
+                    name = BeMeasureName("штука"),
+                    shortName = BeMeasureShortName("шт")
                 ),
                 BeMeasureTranslation(
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000005")),
-                    locale = "en",
-                    name = "piece",
-                    shortName = "pc"
+                    locale = BeLocale("en"),
+                    name = BeMeasureName("piece"),
+                    shortName = BeMeasureShortName("pc")
                 )
             )
         ),
@@ -165,21 +169,21 @@ private fun seedDefaultMeasures(repository: IRepoMeasure) {
         DbMeasureRequest(
             measure = BeMeasure(
                 id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000006")),
-                code = "SERVING",
+                code = BeMeasureCode("SERVING"),
                 createdAt = Instant.now()
             ),
             translations = listOf(
                 BeMeasureTranslation(
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000006")),
-                    locale = "ru",
-                    name = "порция",
-                    shortName = "порц"
+                    locale = BeLocale("ru"),
+                    name = BeMeasureName("порция"),
+                    shortName = BeMeasureShortName("порц")
                 ),
                 BeMeasureTranslation(
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000006")),
-                    locale = "en",
-                    name = "serving",
-                    shortName = "serv"
+                    locale = BeLocale("en"),
+                    name = BeMeasureName("serving"),
+                    shortName = BeMeasureShortName("serv")
                 )
             )
         ),
@@ -187,21 +191,21 @@ private fun seedDefaultMeasures(repository: IRepoMeasure) {
         DbMeasureRequest(
             measure = BeMeasure(
                 id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000007")),
-                code = "KILOCALORIE",
+                code = BeMeasureCode("KILOCALORIE"),
                 createdAt = Instant.now()
             ),
             translations = listOf(
                 BeMeasureTranslation(
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000007")),
-                    locale = "ru",
-                    name = "килокалория",
-                    shortName = "ккал"
+                    locale = BeLocale("ru"),
+                    name = BeMeasureName("килокалория"),
+                    shortName = BeMeasureShortName("ккал")
                 ),
                 BeMeasureTranslation(
                     id = BeId(UUID.fromString("00000000-0000-0000-0000-000000000007")),
-                    locale = "en",
-                    name = "kilocalorie",
-                    shortName = "kcal"
+                    locale = BeLocale("en"),
+                    name = BeMeasureName("kilocalorie"),
+                    shortName = BeMeasureShortName("kcal")
                 )
             )
         )

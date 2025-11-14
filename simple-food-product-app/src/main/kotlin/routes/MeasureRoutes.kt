@@ -1,6 +1,9 @@
 package com.khan366kos.routes
 
 import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.common.BeLocale
+import com.khan366kos.common.model.common.BeSearchString
+import com.khan366kos.common.model.measure.BeMeasureCode
 import com.khan366kos.mapper.toContext.toContext
 import com.khan366kos.mapper.toTransport.toMeasureTranslation
 import com.khan366kos.common.model.measure.repository.DbMeasureCodeRequest
@@ -25,7 +28,10 @@ fun Route.measureRoutes(repository: IRepoMeasure) {
             val search = call.request.queryParameters["search"]
 
             val response = if (locale != null || search != null) {
-                repository.foundMeasures(DbMeasureFilterRequest(locale = locale, searchText = search))
+                repository.foundMeasures(DbMeasureFilterRequest(
+                    locale = locale?.let { BeLocale(it) } ?: BeLocale.NONE,
+                    searchText = search?.let { BeSearchString(it) } ?: BeSearchString.NONE
+                ))
             } else {
                 repository.measures()
             }
@@ -178,7 +184,7 @@ fun Route.measureRoutes(repository: IRepoMeasure) {
                     return@get
                 }
 
-            val response = repository.measureByCode(DbMeasureCodeRequest(code))
+            val response = repository.measureByCode(DbMeasureCodeRequest(BeMeasureCode(code)))
             if (response.isSuccess) {
                 call.respond(response.result.toMeasureTranslation())
             } else {

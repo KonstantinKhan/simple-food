@@ -6,11 +6,22 @@ import com.khan366kos.common.model.common.BeCategories
 import com.khan366kos.common.model.common.BeCategory
 import com.khan366kos.common.model.common.BeFats
 import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.common.BeLocale
+import com.khan366kos.common.model.common.BeNutrientTitle
+import com.khan366kos.common.model.common.BeSearchString
+import com.khan366kos.common.model.common.BeNutrientShortTitle
+import com.khan366kos.common.model.common.BeNutrientValue
 import com.khan366kos.common.model.common.BeProteins
 import com.khan366kos.common.model.common.BeWeight
+import com.khan366kos.common.model.common.BeWeightValue
 import com.khan366kos.common.model.user.BeAuthor
+import com.khan366kos.common.model.user.BeAuthorName
+import com.khan366kos.common.model.user.BeEmail
+import com.khan366kos.common.model.measure.BeMeasureName
+import com.khan366kos.common.model.measure.BeMeasureShortName
 import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.product.BeProduct
+import com.khan366kos.common.model.product.BeProductName
 import com.khan366kos.common.model.product.repository.DbProductFilterRequest
 import com.khan366kos.common.model.product.repository.DbProductIdRequest
 import com.khan366kos.common.model.product.repository.DbProductRequest
@@ -67,40 +78,40 @@ class ProductRepositoryPostgres : IRepoProduct {
 
                 // Insert product and get the generated UUID
                 val insertedEntityId = ProductsTable.insertAndGetId {
-                    it[name] = product.productName
+                    it[name] = product.productName.value
 
                     // Calories
-                    it[caloriesTitle] = product.productCalories.title
-                    it[caloriesShortTitle] = product.productCalories.shortTitle
-                    it[caloriesValue] = product.productCalories.value
+                    it[caloriesTitle] = product.productCalories.title.value
+                    it[caloriesShortTitle] = product.productCalories.shortTitle.value
+                    it[caloriesValue] = product.productCalories.value.value
                     it[caloriesMeasureId] = UUID.fromString(product.productCalories.measure.id.value)
 
                     // Proteins
-                    it[proteinsTitle] = product.productProteins.title
-                    it[proteinsShortTitle] = product.productProteins.shortTitle
-                    it[proteinsValue] = product.productProteins.value
+                    it[proteinsTitle] = product.productProteins.title.value
+                    it[proteinsShortTitle] = product.productProteins.shortTitle.value
+                    it[proteinsValue] = product.productProteins.value.value
                     it[proteinsMeasureId] = UUID.fromString(product.productProteins.measure.id.value)
 
                     // Fats
-                    it[fatsTitle] = product.productFats.title
-                    it[fatsShortTitle] = product.productFats.shortTitle
-                    it[fatsValue] = product.productFats.value
+                    it[fatsTitle] = product.productFats.title.value
+                    it[fatsShortTitle] = product.productFats.shortTitle.value
+                    it[fatsValue] = product.productFats.value.value
                     it[fatsMeasureId] = UUID.fromString(product.productFats.measure.id.value)
 
                     // Carbohydrates
-                    it[carbohydratesTitle] = product.productCarbohydrates.title
-                    it[carbohydratesShortTitle] = product.productCarbohydrates.shortTitle
-                    it[carbohydratesValue] = product.productCarbohydrates.value
+                    it[carbohydratesTitle] = product.productCarbohydrates.title.value
+                    it[carbohydratesShortTitle] = product.productCarbohydrates.shortTitle.value
+                    it[carbohydratesValue] = product.productCarbohydrates.value.value
                     it[carbohydratesMeasureId] = UUID.fromString(product.productCarbohydrates.measure.id.value)
 
                     // Weight
-                    it[weightValue] = product.weight.value
+                    it[weightValue] = product.weight.value.value
                     it[weightMeasureId] = UUID.fromString(product.weight.measure.id.value)
 
                     // Author
                     it[authorId] = UUID.fromString(product.author.authorId.value)
-                    it[authorName] = product.author.name
-                    it[authorEmail] = product.author.email
+                    it[authorName] = product.author.name.value
+                    it[authorEmail] = product.author.email.value
                 }
 
                 val insertedId = insertedEntityId.value
@@ -115,6 +126,7 @@ class ProductRepositoryPostgres : IRepoProduct {
 
                 DbProductResponse(result = product.copy(productId = BeId(insertedId)), isSuccess = true)
             } catch (e: Exception) {
+                println(e.message)
                 DbProductResponse(result = BeProduct.NONE, isSuccess = false)
             }
         }
@@ -134,40 +146,40 @@ class ProductRepositoryPostgres : IRepoProduct {
 
                 // Update product
                 ProductsTable.update({ ProductsTable.id eq productUuid }) {
-                    it[name] = product.productName
+                    it[name] = product.productName.value
 
                     // Calories
-                    it[caloriesTitle] = product.productCalories.title
-                    it[caloriesShortTitle] = product.productCalories.shortTitle
-                    it[caloriesValue] = product.productCalories.value
+                    it[caloriesTitle] = product.productCalories.title.value
+                    it[caloriesShortTitle] = product.productCalories.shortTitle.value
+                    it[caloriesValue] = product.productCalories.value.value
                     it[caloriesMeasureId] = UUID.fromString(product.productCalories.measure.id.value)
 
                     // Proteins
-                    it[proteinsTitle] = product.productProteins.title
-                    it[proteinsShortTitle] = product.productProteins.shortTitle
-                    it[proteinsValue] = product.productProteins.value
+                    it[proteinsTitle] = product.productProteins.title.value
+                    it[proteinsShortTitle] = product.productProteins.shortTitle.value
+                    it[proteinsValue] = product.productProteins.value.value
                     it[proteinsMeasureId] = UUID.fromString(product.productProteins.measure.id.value)
 
                     // Fats
-                    it[fatsTitle] = product.productFats.title
-                    it[fatsShortTitle] = product.productFats.shortTitle
-                    it[fatsValue] = product.productFats.value
+                    it[fatsTitle] = product.productFats.title.value
+                    it[fatsShortTitle] = product.productFats.shortTitle.value
+                    it[fatsValue] = product.productFats.value.value
                     it[fatsMeasureId] = UUID.fromString(product.productFats.measure.id.value)
 
                     // Carbohydrates
-                    it[carbohydratesTitle] = product.productCarbohydrates.title
-                    it[carbohydratesShortTitle] = product.productCarbohydrates.shortTitle
-                    it[carbohydratesValue] = product.productCarbohydrates.value
+                    it[carbohydratesTitle] = product.productCarbohydrates.title.value
+                    it[carbohydratesShortTitle] = product.productCarbohydrates.shortTitle.value
+                    it[carbohydratesValue] = product.productCarbohydrates.value.value
                     it[carbohydratesMeasureId] = UUID.fromString(product.productCarbohydrates.measure.id.value)
 
                     // Weight
-                    it[weightValue] = product.weight.value
+                    it[weightValue] = product.weight.value.value
                     it[weightMeasureId] = UUID.fromString(product.weight.measure.id.value)
 
                     // Author
                     it[authorId] = UUID.fromString(product.author.authorId.value)
-                    it[authorName] = product.author.name
-                    it[authorEmail] = product.author.email
+                    it[authorName] = product.author.name.value
+                    it[authorEmail] = product.author.email.value
                 }
 
                 // Delete old categories and insert new ones
@@ -212,7 +224,7 @@ class ProductRepositoryPostgres : IRepoProduct {
     override fun foundProducts(request: DbProductFilterRequest): DbProductsResponse {
         return transaction {
             try {
-                val searchStr = request.searchStr.lowercase()
+                val searchStr = request.searchStr.value.lowercase()
 
                 // Search in product name
                 val productIds = ProductsTable
@@ -271,16 +283,16 @@ class ProductRepositoryPostgres : IRepoProduct {
         return if (translation != null) {
             BeMeasureTranslation(
                 id = BeId(measureRow[MeasuresTable.id].value),
-                locale = translation[MeasureTranslationsTable.locale],
-                name = translation[MeasureTranslationsTable.measureName],
-                shortName = translation[MeasureTranslationsTable.measureShortName]
+                locale = BeLocale(translation[MeasureTranslationsTable.locale]),
+                name = BeMeasureName(translation[MeasureTranslationsTable.measureName]),
+                shortName = BeMeasureShortName(translation[MeasureTranslationsTable.measureShortName])
             )
         } else {
             BeMeasureTranslation(
                 id = BeId(measureRow[MeasuresTable.id].value),
-                locale = locale,
-                name = "",
-                shortName = ""
+                locale = BeLocale(locale),
+                name = BeMeasureName(""),
+                shortName = BeMeasureShortName("")
             )
         }
     }
@@ -306,39 +318,39 @@ class ProductRepositoryPostgres : IRepoProduct {
 
         return BeProduct(
             productId = BeId(productId),
-            productName = row[ProductsTable.name],
+            productName = BeProductName(row[ProductsTable.name]),
             productCalories = BeCalories(
-                title = row[ProductsTable.caloriesTitle],
-                shortTitle = row[ProductsTable.caloriesShortTitle],
-                value = row[ProductsTable.caloriesValue],
+                title = BeNutrientTitle(row[ProductsTable.caloriesTitle]),
+                shortTitle = BeNutrientShortTitle(row[ProductsTable.caloriesShortTitle]),
+                value = BeNutrientValue(row[ProductsTable.caloriesValue]),
                 measure = caloriesMeasure
             ),
             productProteins = BeProteins(
-                title = row[ProductsTable.proteinsTitle],
-                shortTitle = row[ProductsTable.proteinsShortTitle],
-                value = row[ProductsTable.proteinsValue],
+                title = BeNutrientTitle(row[ProductsTable.proteinsTitle]),
+                shortTitle = BeNutrientShortTitle(row[ProductsTable.proteinsShortTitle]),
+                value = BeNutrientValue(row[ProductsTable.proteinsValue]),
                 measure = proteinsMeasure
             ),
             productFats = BeFats(
-                title = row[ProductsTable.fatsTitle],
-                shortTitle = row[ProductsTable.fatsShortTitle],
-                value = row[ProductsTable.fatsValue],
+                title = BeNutrientTitle(row[ProductsTable.fatsTitle]),
+                shortTitle = BeNutrientShortTitle(row[ProductsTable.fatsShortTitle]),
+                value = BeNutrientValue(row[ProductsTable.fatsValue]),
                 measure = fatsMeasure
             ),
             productCarbohydrates = BeCarbohydrates(
-                title = row[ProductsTable.carbohydratesTitle],
-                shortTitle = row[ProductsTable.carbohydratesShortTitle],
-                value = row[ProductsTable.carbohydratesValue],
+                title = BeNutrientTitle(row[ProductsTable.carbohydratesTitle]),
+                shortTitle = BeNutrientShortTitle(row[ProductsTable.carbohydratesShortTitle]),
+                value = BeNutrientValue(row[ProductsTable.carbohydratesValue]),
                 measure = carbohydratesMeasure
             ),
             weight = BeWeight(
-                value = row[ProductsTable.weightValue],
+                value = BeWeightValue(row[ProductsTable.weightValue]),
                 measure = weightMeasure
             ),
             author = BeAuthor(
                 authorId = BeId(row[ProductsTable.authorId]),
-                name = row[ProductsTable.authorName],
-                email = row[ProductsTable.authorEmail]
+                name = BeAuthorName(row[ProductsTable.authorName]),
+                email = BeEmail(row[ProductsTable.authorEmail])
             ),
             categories = BeCategories(categories)
         )

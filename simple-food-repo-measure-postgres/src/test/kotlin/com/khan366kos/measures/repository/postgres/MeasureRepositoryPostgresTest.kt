@@ -1,7 +1,11 @@
 package com.khan366kos.measures.repository.postgres
 
 import com.khan366kos.common.model.common.BeId
+import com.khan366kos.common.model.common.BeLocale
 import com.khan366kos.common.model.measure.BeMeasure
+import com.khan366kos.common.model.measure.BeMeasureCode
+import com.khan366kos.common.model.measure.BeMeasureName
+import com.khan366kos.common.model.measure.BeMeasureShortName
 import com.khan366kos.common.model.measure.BeMeasureTranslation
 import com.khan366kos.common.model.measure.repository.DbMeasureIdRequest
 import com.khan366kos.common.model.measure.repository.DbMeasureRequest
@@ -69,7 +73,7 @@ class MeasureRepositoryPostgresTest : ShouldSpec({
 
             measures.forEach { measureWithTranslations ->
                 measureWithTranslations.measure.id shouldNotBe BeId.NONE
-                measureWithTranslations.measure.code shouldNotBe ""
+                measureWithTranslations.measure.code shouldNotBe BeMeasureCode.NONE
                 measureWithTranslations.measure.createdAt shouldNotBe Instant.EPOCH
                 measureWithTranslations.translations.shouldHaveSize(2) // ru and en
             }
@@ -83,7 +87,7 @@ class MeasureRepositoryPostgresTest : ShouldSpec({
 
             measures.forEach { measureWithTranslations ->
                 val locales = measureWithTranslations.translations.map { it.locale }.toSet()
-                locales shouldBe setOf("ru", "en")
+                locales shouldBe setOf(BeLocale("ru"), BeLocale("en"))
             }
         }
 
@@ -95,9 +99,9 @@ class MeasureRepositoryPostgresTest : ShouldSpec({
 
             measures.forEach { measureWithTranslations ->
                 measureWithTranslations.translations.forEach { translation ->
-                    translation.name shouldNotBe ""
-                    translation.shortName shouldNotBe ""
-                    translation.locale shouldNotBe ""
+                    translation.name shouldNotBe BeMeasureName.NONE
+                    translation.shortName shouldNotBe BeMeasureShortName.NONE
+                    translation.locale shouldNotBe BeLocale.NONE
                 }
             }
         }
@@ -109,13 +113,13 @@ class MeasureRepositoryPostgresTest : ShouldSpec({
             val measureCodes = response.result.map { it.measure.code }.toSet()
 
             measureCodes shouldBe setOf(
-                "GRAM",
-                "KILOGRAM",
-                "LITER",
-                "MILLILITER",
-                "PIECE",
-                "SERVING",
-                "KILOCALORIE"
+                BeMeasureCode("GRAM"),
+                BeMeasureCode("KILOGRAM"),
+                BeMeasureCode("LITER"),
+                BeMeasureCode("MILLILITER"),
+                BeMeasureCode("PIECE"),
+                BeMeasureCode("SERVING"),
+                BeMeasureCode("KILOCALORIE")
             )
         }
     }
@@ -125,21 +129,21 @@ class MeasureRepositoryPostgresTest : ShouldSpec({
             val newMeasureId = BeId(UUID.randomUUID().toString())
             val measure = BeMeasure(
                 id = newMeasureId,
-                code = "CUSTOM_UNIT_${System.currentTimeMillis()}",
+                code = BeMeasureCode("CUSTOM_UNIT_${System.currentTimeMillis()}"),
                 createdAt = Instant.now()
             )
             val translations = listOf(
                 BeMeasureTranslation(
                     id = newMeasureId,
-                    locale = "en",
-                    name = "Custom Unit",
-                    shortName = "CU"
+                    locale = BeLocale("en"),
+                    name = BeMeasureName("Custom Unit"),
+                    shortName = BeMeasureShortName("CU")
                 ),
                 BeMeasureTranslation(
                     id = newMeasureId,
-                    locale = "ru",
-                    name = "Пользовательская единица",
-                    shortName = "ПЕ"
+                    locale = BeLocale("ru"),
+                    name = BeMeasureName("Пользовательская единица"),
+                    shortName = BeMeasureShortName("ПЕ")
                 )
             )
             val request = DbMeasureRequest(measure, translations)
@@ -154,15 +158,15 @@ class MeasureRepositoryPostgresTest : ShouldSpec({
         should("generate UUID and createdAt from database") {
             val measure = BeMeasure(
                 id = BeId.NONE,
-                code = "DATABASE_GENERATED_${System.currentTimeMillis()}",
+                code = BeMeasureCode("DATABASE_GENERATED_${System.currentTimeMillis()}"),
                 createdAt = Instant.EPOCH
             )
             val translations = listOf(
                 BeMeasureTranslation(
                     id = BeId.NONE,
-                    locale = "en",
-                    name = "Database Generated",
-                    shortName = "DG"
+                    locale = BeLocale("en"),
+                    name = BeMeasureName("Database Generated"),
+                    shortName = BeMeasureShortName("DG")
                 )
             )
             val request = DbMeasureRequest(measure, translations)
@@ -188,9 +192,9 @@ class MeasureRepositoryPostgresTest : ShouldSpec({
             val translations = listOf(
                 BeMeasureTranslation(
                     id = BeId(UUID.randomUUID().toString()),
-                    locale = "en",
-                    name = "Duplicate",
-                    shortName = "DUP"
+                    locale = BeLocale("en"),
+                    name = BeMeasureName("Duplicate"),
+                    shortName = BeMeasureShortName("DUP")
                 )
             )
             val request = DbMeasureRequest(measure, translations)
@@ -204,27 +208,27 @@ class MeasureRepositoryPostgresTest : ShouldSpec({
             val newMeasureId = BeId(UUID.randomUUID().toString())
             val measure = BeMeasure(
                 id = newMeasureId,
-                code = "MULTI_LANG_${System.currentTimeMillis()}",
+                code = BeMeasureCode("MULTI_LANG_${System.currentTimeMillis()}"),
                 createdAt = Instant.now()
             )
             val translations = listOf(
                 BeMeasureTranslation(
                     id = newMeasureId,
-                    locale = "en",
-                    name = "English Name",
-                    shortName = "EN"
+                    locale = BeLocale("en"),
+                    name = BeMeasureName("English Name"),
+                    shortName = BeMeasureShortName("EN")
                 ),
                 BeMeasureTranslation(
                     id = newMeasureId,
-                    locale = "ru",
-                    name = "Русское имя",
-                    shortName = "РУ"
+                    locale = BeLocale("ru"),
+                    name = BeMeasureName("Русское имя"),
+                    shortName = BeMeasureShortName("РУ")
                 ),
                 BeMeasureTranslation(
                     id = newMeasureId,
-                    locale = "fr",
-                    name = "Nom Français",
-                    shortName = "FR"
+                    locale = BeLocale("fr"),
+                    name = BeMeasureName("Nom Français"),
+                    shortName = BeMeasureShortName("FR")
                 )
             )
             val request = DbMeasureRequest(measure, translations)
@@ -237,7 +241,7 @@ class MeasureRepositoryPostgresTest : ShouldSpec({
 
         should("persist new measure and retrieve it") {
             val newMeasureId = BeId(UUID.randomUUID().toString())
-            val testCode = "PERSISTENT_${System.currentTimeMillis()}"
+            val testCode = BeMeasureCode("PERSISTENT_${System.currentTimeMillis()}")
             val measure = BeMeasure(
                 id = newMeasureId,
                 code = testCode,
@@ -246,9 +250,9 @@ class MeasureRepositoryPostgresTest : ShouldSpec({
             val translations = listOf(
                 BeMeasureTranslation(
                     id = newMeasureId,
-                    locale = "en",
-                    name = "Persistent Measure",
-                    shortName = "PM"
+                    locale = BeLocale("en"),
+                    name = BeMeasureName("Persistent Measure"),
+                    shortName = BeMeasureShortName("PM")
                 )
             )
             val request = DbMeasureRequest(measure, translations)
@@ -269,27 +273,27 @@ class MeasureRepositoryPostgresTest : ShouldSpec({
 
         should("persist measure with correct translations") {
             val newMeasureId = BeId(UUID.randomUUID().toString())
-            val testCode = "TRANS_CHECK_${System.currentTimeMillis()}"
+            val testCode = BeMeasureCode("TRANS_CHECK_${System.currentTimeMillis()}")
             val measure = BeMeasure(
                 id = newMeasureId,
                 code = testCode,
                 createdAt = Instant.now()
             )
-            val englishName = "Translation Check"
-            val englishShort = "TC"
-            val russianName = "Проверка перевода"
-            val russianShort = "ПП"
+            val englishName = BeMeasureName("Translation Check")
+            val englishShort = BeMeasureShortName("TC")
+            val russianName = BeMeasureName("Проверка перевода")
+            val russianShort = BeMeasureShortName("ПП")
 
             val translations = listOf(
                 BeMeasureTranslation(
                     id = newMeasureId,
-                    locale = "en",
+                    locale = BeLocale("en"),
                     name = englishName,
                     shortName = englishShort
                 ),
                 BeMeasureTranslation(
                     id = newMeasureId,
-                    locale = "ru",
+                    locale = BeLocale("ru"),
                     name = russianName,
                     shortName = russianShort
                 )
@@ -308,12 +312,12 @@ class MeasureRepositoryPostgresTest : ShouldSpec({
             retrievedResponse.isSuccess.shouldBeTrue()
             retrievedResponse.result.translations.shouldHaveSize(2)
 
-            val enTranslation = retrievedResponse.result.translations.find { it.locale == "en" }
+            val enTranslation = retrievedResponse.result.translations.find { it.locale == BeLocale("en") }
             enTranslation shouldNotBe null
             enTranslation!!.name shouldBe englishName
             enTranslation.shortName shouldBe englishShort
 
-            val ruTranslation = retrievedResponse.result.translations.find { it.locale == "ru" }
+            val ruTranslation = retrievedResponse.result.translations.find { it.locale == BeLocale("ru") }
             ruTranslation shouldNotBe null
             ruTranslation!!.name shouldBe russianName
             ruTranslation.shortName shouldBe russianShort
@@ -322,7 +326,7 @@ class MeasureRepositoryPostgresTest : ShouldSpec({
         should("handle empty translations list") {
             val measure = BeMeasure(
                 id = BeId(UUID.randomUUID().toString()),
-                code = "EMPTY_TRANS_${System.currentTimeMillis()}",
+                code = BeMeasureCode("EMPTY_TRANS_${System.currentTimeMillis()}"),
                 createdAt = Instant.now()
             )
             val request = DbMeasureRequest(measure, emptyList())
